@@ -53,7 +53,8 @@ The outcomes block is mandatory. A case study without one is a brochure.
 |---|---|---|---|
 | `hero-ward` | LIVE glTF | Clinical environment, look-around | `models.hero*` |
 | `hero-ward-poster` | Still | Frame 0 of above, LCP image | `prerenderedStills` |
-| `problem-abstract` | Still | Restrained conceptual image | `prerenderedStills` |
+| `frontier-s1` | Still | State 1 — first ray crests the ridge (`build_frontier_state1.py`) | `prerenderedStills` |
+| `frontier-s2..s3` | Stills | Light through rising structure | `prerenderedStills` |
 | `pillar-xr` | Loop 4s | Headset POV / environment | `prerenderedVideo` |
 | `pillar-ai` | Loop 4s | Roleplay conversation abstraction | `prerenderedVideo` |
 | `pillar-analytics` | Loop 4s | Data surfacing from a scene | `prerenderedVideo` |

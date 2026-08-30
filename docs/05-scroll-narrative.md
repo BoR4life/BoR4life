@@ -76,6 +76,41 @@ competitors cannot copy in order to look like everyone else.
 
 ---
 
+## Brad's mood reference (added 2026-08-30)
+
+Brad supplied two reference images: night alien vistas — planets and nebulae
+over layered mountain silhouettes, a star cresting a dark horizon, luminous
+teal water.
+
+**What we take:** cosmic scale carried by darkness and silhouette; a single
+light source breaking over a ridge; the luminous teal shoreline (which is
+within a hair of the brand accent `--signal #00E0B8`); layered ridgelines for
+atmospheric depth.
+
+**What we leave:** the literal planets, moons and nebulae — genre signals that
+read "sci-fi wallpaper" rather than "healthcare frontier" to a procurement
+audience. (The reference images themselves are stock CG wallpapers and could
+not be licensed or shipped regardless; they are direction, not assets.)
+
+**The unlock — the ray is the protagonist.** The company is called Bundle of
+Rays. The one element of the reference that is *ours by name* is the light
+cresting the horizon. So the scroll journey is held together by a single
+continuous light source:
+
+```
+STATE 1            STATE 2-3               FINAL STATE
+First ray crests   The same light falls    The same light, now the
+the dark ridge.    through rising          ceiling panels of the
+"The frontier."    structure and frame.    resus bay. Clinical, calm,
+                                           exactly where it belongs.
+```
+
+The metaphor closes on the product: light that began at the frontier ends as
+the light a nurse actually works under. `scripts/build_frontier_state1.py`
+builds State 1 procedurally on brand anchors (ink-900 sky, signal-teal
+shoreline, warm first light); `scripts/build_clinical_bay.py` is already the
+final state — its emissive ceiling panels are the landing point of the ray.
+
 ## The synthesis: "The frontier becomes the ward"
 
 Keep the evolving world. Make what it evolves *into* the point.
