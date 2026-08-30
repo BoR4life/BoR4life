@@ -1,0 +1,73 @@
+{
+  "$comment": "Single source of truth for every quality gate. scripts/validate-assets.mjs and the ship-check skill both read this file. Changing a number here changes the gate everywhere. Numbers are ceilings unless named *_min.",
+
+  "coreWebVitals": {
+    "$comment": "Field-realistic targets at p75 on a mid-tier Android over 4G, not lab-only numbers.",
+    "lcpMs": 2000,
+    "inpMs": 200,
+    "cls": 0.05,
+    "ttfbMs": 600
+  },
+
+  "lighthouse": {
+    "mobile": { "performance_min": 90, "accessibility_min": 100, "bestPractices_min": 95, "seo_min": 100 },
+    "desktop": { "performance_min": 95, "accessibility_min": 100, "bestPractices_min": 100, "seo_min": 100 }
+  },
+
+  "javascript": {
+    "$comment": "Gzipped. The 3D runtime MUST be a lazy chunk so it never counts against first load.",
+    "initialLoadKb": 180,
+    "threeDChunkKb": 350,
+    "totalRouteKb": 600
+  },
+
+  "models": {
+    "$comment": "Per-file, AFTER Draco geometry compression and KTX2 texture compression.",
+    "heroGltfKb": 2048,
+    "secondaryGltfKb": 800,
+    "heroTriangles": 150000,
+    "secondaryTriangles": 40000,
+    "maxDrawCalls": 80,
+    "maxTextureSize": 2048,
+    "requiredExtensions": ["KHR_draco_mesh_compression", "KHR_texture_basisu"],
+    "forbiddenFormats": [".fbx", ".obj", ".blend", ".dae", ".3ds", ".max"],
+    "forbiddenTextureFormats": [".png", ".jpg", ".jpeg", ".tga", ".tif", ".tiff", ".exr"]
+  },
+
+  "prerenderedStills": {
+    "$comment": "The workhorse. Most 3D on the site is this, not live WebGL.",
+    "formats": ["avif", "webp"],
+    "maxWidth": 2400,
+    "avifKb": 250,
+    "webpKb": 400,
+    "requiresAltText": true
+  },
+
+  "prerenderedVideo": {
+    "$comment": "Turntables and camera moves. Poster frame is mandatory so nothing pops in.",
+    "formats": ["av1", "h264"],
+    "maxDurationSec": 6,
+    "av1Kb": 1500,
+    "h264Kb": 2500,
+    "requiresPosterFrame": true,
+    "mustBeMutedAndInline": true
+  },
+
+  "accessibility": {
+    "$comment": "Non-negotiable. A healthcare-education company shipping an inaccessible site is a credibility failure, not just a compliance one.",
+    "wcagLevel": "AA",
+    "contrastNormalText_min": 4.5,
+    "contrastLargeText_min": 3.0,
+    "axeViolations": 0,
+    "respectsPrefersReducedMotion": true,
+    "noContentOnlyInWebGL": true,
+    "keyboardOperable": true
+  },
+
+  "seo": {
+    "requiresStructuredData": true,
+    "requiresOgImage": true,
+    "maxTitleChars": 60,
+    "maxDescriptionChars": 155
+  }
+}

@@ -1,0 +1,12 @@
+# Security contact for Bundle of Rays.
+# https://securitytxt.org/
+
+Contact: mailto:security@bundleofrays.com
+Preferred-Languages: en
+Canonical: https://www.bundleofrays.com/.well-known/security.txt
+
+# TODO before launch: set Expires to a date within 12 months and confirm
+# security@bundleofrays.com is monitored. An unmonitored disclosure address
+# is worse than none — it tells a researcher they were heard when they
+# were not.
+Expires: 2027-08-30T00:00:00.000Z
