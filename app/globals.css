@@ -16,6 +16,9 @@
 :root {
   --ink-900: #0a0c0f;
   --ink-700: #16191f;
+  /* ink-500 is a BORDER/RULE token only. At 1.9:1 on ink-900 it fails WCAG
+     AA for text on any dark ground — it is only legible as text on
+     paper-100 (9.4:1). tests/contrast.spec.ts enforces this. */
   --ink-500: #3a414d;
   --ink-300: #8b939f;
   --paper-100: #f4f5f7;

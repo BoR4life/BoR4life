@@ -104,11 +104,43 @@ to institutional customers — for AU/UK/EU health buyers it usually does.
 - **No WAF / bot protection.** Appropriate at the hosting layer (Vercel/
   Cloudflare), not in application code.
 
+## Enquiry form — the only untrusted-input surface
+
+Implemented as a **Server Action**, not a route handler: Next.js binds
+Server Actions to an origin-checked POST with their own action ID, which
+removes the CSRF surface a hand-rolled `/api` endpoint would have.
+
+Controls, in execution order:
+
+1. **Rate limit** — 5 submissions per IP per 10 minutes. See the scope
+   caveat in `lib/rate-limit.ts`: state is per-process, so it does not
+   hold across serverless instances. Adequate here alongside the other
+   controls; swap for Upstash/Redis before the form ever becomes a login.
+2. **Schema validation** (zod), server-side. Client validation is a
+   convenience, never the boundary.
+3. **Honeypot + timing** — a visually-hidden (not `type="hidden"`) field
+   bots fill, plus a sub-2s submit check. Both answer with the same
+   success response a human gets; telling a spammer what caught them just
+   teaches them what to change.
+
+**Ordering bug found by testing:** the bot checks originally ran *before*
+validation, which meant a human clicking submit on an empty form within
+two seconds got a fake success instead of field errors. Validation now
+runs first. Covered by `tests/enquiry.spec.ts`.
+
+Field errors accumulate into a `Map` rather than an object literal —
+zod's issue paths are schema-derived and not attacker-controlled, but
+assigning a computed key onto an object is a prototype-pollution shape
+and there is no reason to keep it.
+
+Delivery is a **vendor-neutral adapter** (`ENQUIRY_WEBHOOK_URL`). No email
+provider is committed to, because that choice affects data residency and
+is Brad's to make — for AU/UK/EU health buyers it usually matters.
+
 ## Before production
 
-- [ ] **Enquiry form**: server-side validation (zod is installed), rate
-      limiting, and a spam control that is not a third-party script — a
-      hidden honeypot field keeps `connect-src` closed.
+- [ ] Choose an email/delivery provider and set `ENQUIRY_WEBHOOK_URL`.
+      Until then enquiries are logged (without PII) and **not delivered**.
 - [ ] Confirm HTTPS on every subdomain **before** the HSTS preload takes hold.
 - [ ] Add `npm run audit` and `npm run verify` to CI as blocking checks.
 - [ ] Enable Dependabot or Renovate for automated dependency patching.

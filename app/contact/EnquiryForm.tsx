@@ -1,0 +1,217 @@
+'use client';
+
+import { useActionState, useEffect, useRef, useState } from 'react';
+import { useFormStatus } from 'react-dom';
+import { submitEnquiry, type EnquiryState } from './actions';
+import { ROLE_LABELS } from '@/lib/enquiry';
+
+/**
+ * Enquiry form.
+ *
+ * Accessibility notes, since forms are where a11y usually fails:
+ *  - every input has a real <label>, not a placeholder standing in for one
+ *  - errors are tied to inputs via aria-describedby and aria-invalid
+ *  - the status region is aria-live, so screen readers hear the outcome
+ *    rather than only seeing a colour change
+ *  - the honeypot is hidden with a class, NOT type="hidden" — bots skip
+ *    hidden inputs but happily fill visually-hidden ones. It is also
+ *    aria-hidden and tabindex=-1 so real keyboard users never reach it.
+ */
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="rounded-full bg-signal px-6 py-3 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90 disabled:opacity-60"
+    >
+      {pending ? 'Sending…' : 'Send enquiry'}
+    </button>
+  );
+}
+
+const field =
+  'w-full rounded border border-ink-500 bg-ink-700 px-4 py-3 text-paper-100 placeholder:text-ink-300 focus:border-signal';
+const labelCls = 'block text-sm font-medium text-paper-100';
+const errCls = 'mt-1 text-sm text-critical';
+
+export function EnquiryForm() {
+  const [state, formAction] = useActionState<EnquiryState, FormData>(
+    submitEnquiry,
+    { status: 'idle' },
+  );
+  const [startedAt, setStartedAt] = useState('0');
+  const headingRef = useRef<HTMLParagraphElement>(null);
+
+  // Set on mount so the value reflects when the visitor actually saw the
+  // form. Rendering it server-side would bake in build time and defeat the
+  // timing check entirely.
+  useEffect(() => setStartedAt(String(Date.now())), []);
+
+  // Move focus to the confirmation so keyboard and screen-reader users are
+  // not left at the bottom of a form that appears unchanged.
+  useEffect(() => {
+    if (state.status === 'success') headingRef.current?.focus();
+  }, [state.status]);
+
+  const err = state.status === 'error' ? state.fieldErrors : undefined;
+  const describedBy = (name: string) =>
+    err?.[name] ? `${name}-error` : undefined;
+
+  if (state.status === 'success') {
+    return (
+      <div
+        className="rounded border border-signal/40 bg-ink-700 p-8"
+        role="status"
+      >
+        <p
+          ref={headingRef}
+          tabIndex={-1}
+          className="text-lg font-semibold text-paper-0"
+        >
+          Thank you — your enquiry is with us.
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-ink-300">
+          We reply to every enquiry personally, usually within two business
+          days.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form action={formAction} className="space-y-6" noValidate>
+      <div aria-live="polite" className="sr-only">
+        {state.status === 'error' ? state.message : ''}
+      </div>
+
+      {state.status === 'error' && !err && (
+        <p className="rounded border border-critical/40 bg-ink-700 p-4 text-sm text-critical">
+          {state.message}
+        </p>
+      )}
+
+      <div>
+        <label htmlFor="name" className={labelCls}>
+          Your name
+        </label>
+        <input
+          id="name"
+          name="name"
+          autoComplete="name"
+          required
+          aria-invalid={!!err?.name}
+          aria-describedby={describedBy('name')}
+          className={`${field} mt-2`}
+        />
+        {err?.name && (
+          <p id="name-error" className={errCls}>
+            {err.name}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="email" className={labelCls}>
+          Work email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          aria-invalid={!!err?.email}
+          aria-describedby={describedBy('email')}
+          className={`${field} mt-2`}
+        />
+        {err?.email && (
+          <p id="email-error" className={errCls}>
+            {err.email}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="organisation" className={labelCls}>
+          Organisation <span className="text-ink-300">(optional)</span>
+        </label>
+        <input
+          id="organisation"
+          name="organisation"
+          autoComplete="organization"
+          className={`${field} mt-2`}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="role" className={labelCls}>
+          What best describes you?
+        </label>
+        <select
+          id="role"
+          name="role"
+          required
+          defaultValue=""
+          aria-invalid={!!err?.role}
+          aria-describedby={describedBy('role')}
+          className={`${field} mt-2`}
+        >
+          <option value="" disabled>
+            Choose one
+          </option>
+          {Object.entries(ROLE_LABELS).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+        {err?.role && (
+          <p id="role-error" className={errCls}>
+            {err.role}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="message" className={labelCls}>
+          What are you looking to do?
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows={5}
+          required
+          aria-invalid={!!err?.message}
+          aria-describedby={describedBy('message')}
+          className={`${field} mt-2`}
+        />
+        {err?.message && (
+          <p id="message-error" className={errCls}>
+            {err.message}
+          </p>
+        )}
+      </div>
+
+      {/*
+        Honeypot. Visually hidden rather than type="hidden" — bots skip
+        hidden inputs but fill visually-hidden ones. aria-hidden and
+        tabIndex={-1} keep real keyboard and screen-reader users away.
+      */}
+      <div className="sr-only" aria-hidden="true">
+        <label htmlFor="website">Leave this field empty</label>
+        <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
+
+      <input type="hidden" name="startedAt" value={startedAt} />
+
+      <SubmitButton />
+
+      <p className="text-xs leading-relaxed text-ink-300">
+        We use your details only to reply to this enquiry. We do not sell or
+        share them.
+      </p>
+    </form>
+  );
+}

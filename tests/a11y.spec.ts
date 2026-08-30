@@ -11,7 +11,7 @@ import AxeBuilder from '@axe-core/playwright';
  * WebGL disabled, JS disabled) still have to be run before shipping.
  */
 
-const ROUTES = ['/'];
+const ROUTES = ['/', '/platform', '/evidence', '/about', '/contact'];
 
 for (const route of ROUTES) {
   test(`${route} has no accessibility violations`, async ({ page }) => {
@@ -26,8 +26,8 @@ for (const route of ROUTES) {
     const context = await browser.newContext({ reducedMotion: 'reduce' });
     const page = await context.newPage();
     await page.goto(route);
-    // The hero poster must still be the visible composition — with reduced
-    // motion the WebGL canvas must never mount.
+    // With reduced motion the WebGL canvas must never mount — the poster
+    // is the intended composition either way.
     await expect(page.locator('main')).toBeVisible();
     expect(await page.locator('canvas').count()).toBe(0);
     await context.close();

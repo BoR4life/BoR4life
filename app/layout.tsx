@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { headers } from 'next/headers';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
+import { Header } from '@/components/site/Header';
+import { Footer } from '@/components/site/Footer';
 import './globals.css';
 
 /**
@@ -37,6 +39,25 @@ export default async function RootLayout({
   // of needing 'unsafe-inline'.
   const nonce = (await headers()).get('x-nonce') ?? undefined;
 
+  const orgSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Bundle of Rays',
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bundleofrays.com',
+    description:
+      'Clinically authored immersive training for healthcare. Built by nurses, for nurses.',
+    foundingDate: '2018',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Buderim',
+      addressRegion: 'QLD',
+      addressCountry: 'AU',
+    },
+    // Deliberately no `founder.alumniOf` — naming the PhD institution
+    // would breach the ACU NDA. See docs/00-brand-brief.md.
+    founder: { '@type': 'Person', name: 'Brad Chesham' },
+  };
+
   return (
     <html lang="en" className="h-full">
       <body className="min-h-full font-sans antialiased" data-nonce={nonce}>
@@ -47,7 +68,17 @@ export default async function RootLayout({
         >
           Skip to content
         </a>
-        <PostHogProvider>{children}</PostHogProvider>
+        {/* Nonce-carrying so it satisfies the strict CSP in middleware.ts. */}
+        <script
+          type="application/ld+json"
+          nonce={nonce}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
+        <PostHogProvider>
+          <Header />
+          {children}
+          <Footer />
+        </PostHogProvider>
       </body>
     </html>
   );
