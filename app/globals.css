@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Design tokens. Single source of truth for color — see
+  docs/01-art-direction.md. Never hardcode a hex value in a component;
+  extend this file and tailwind.config.ts instead.
+
+  Light tokens live on bare :root. Dark overrides are declared twice per
+  the artifact/theme convention this project follows: once for the OS-level
+  "system" preference, once for an explicit user toggle if one is ever
+  added — so a future toggle wins over prefers-color-scheme in both
+  directions without restructuring this file.
+*/
+:root {
+  --ink-900: #0a0c0f;
+  --ink-700: #16191f;
+  --ink-500: #3a414d;
+  --ink-300: #8b939f;
+  --paper-100: #f4f5f7;
+  --paper-000: #ffffff;
+  --signal: #00e0b8;
+  --critical: #ff5a4e;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  color-scheme: light;
+}
+
+/*
+  No brand typeface is licensed yet (see docs/01-art-direction.md). Rather
+  than reach for a Google Font as a placeholder — a webfont network
+  round-trip is one of the top causes of LCP failure, and it is exactly the
+  kind of "temporary" choice that quietly ships to production — this uses a
+  curated native stack until a real display face is chosen. Swap
+  --font-sans for a next/font/local face when one is licensed; nothing
+  else in the system needs to change.
+*/
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--ink-900);
+  color: var(--paper-100);
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+}

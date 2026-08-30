@@ -12,6 +12,12 @@ Sketchfab" is not an answer you want to give a health department's legal team.
 |---|---|---|---|---|---|
 | _(example)_ `hero-ward.glb` | Bundle of Rays internal — resus module | In-house | Owned | No | — |
 | _(example)_ `studio.hdr` | https://polyhaven.com/ | Poly Haven | CC0 | No | — |
+| `hero-bay-poster.avif` | Generated in-repo by `scripts/build_clinical_bay.py` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `hero-bay-poster.webp` | Generated in-repo by `scripts/build_clinical_bay.py` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `bay-night.avif` | Generated in-repo by `scripts/build_clinical_bay.py --night` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `bay-night.webp` | Generated in-repo by `scripts/build_clinical_bay.py --night` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `frontier-state1.avif` | Generated in-repo by `scripts/build_frontier_state1.py` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `frontier-state1.webp` | Generated in-repo by `scripts/build_frontier_state1.py` | Bundle of Rays | Owned | No | 2026-08-30 |
 
 ## Rules
 

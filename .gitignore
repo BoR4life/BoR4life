@@ -12,3 +12,18 @@ dist/
 *.blend
 *.blend1
 /assets-source/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Next.js
+/.next/
+/out/
+next-env.d.ts
+
+# Test artifacts
+/test-results/
+/playwright-report/
+tsconfig.tsbuildinfo

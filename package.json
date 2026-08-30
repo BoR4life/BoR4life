@@ -2,17 +2,54 @@
   "name": "bor-web-studio",
   "version": "0.1.0",
   "private": true,
-  "description": "Agent system for building and maintaining the Bundle of Rays website.",
+  "description": "Bundle of Rays website \u2014 Next.js app plus the agent system that builds and maintains it.",
   "type": "module",
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
     "validate:assets": "node scripts/validate-assets.mjs",
     "optimize:gltf": "./scripts/optimize-gltf.sh",
-    "verify": "npm run validate:assets",
-    "lighthouse": "echo 'Add once the Next.js app is scaffolded: lhci autorun'",
-    "a11y": "echo 'Add once the Next.js app is scaffolded: axe against every route'",
-    "analyze": "echo 'Add once the Next.js app is scaffolded: ANALYZE=true next build'"
+    "audit": "npm audit --omit=dev --audit-level=high",
+    "verify": "npm run typecheck && npm run lint && npm run validate:assets && npm run build",
+    "lighthouse": "echo 'Add once deployed to a stable URL: lhci autorun'",
+    "a11y": "playwright test tests/a11y.spec.ts",
+    "analyze": "ANALYZE=true next build"
+  },
+  "dependencies": {
+    "next": "15.5.24",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "three": "0.180.0",
+    "@react-three/fiber": "9.7.0",
+    "@react-three/drei": "10.7.8",
+    "zod": "3.24.1",
+    "posthog-js": "1.203.1"
+  },
+  "devDependencies": {
+    "typescript": "5.7.3",
+    "@types/node": "22.10.5",
+    "@types/react": "19.0.7",
+    "@types/react-dom": "19.0.3",
+    "@types/three": "0.180.0",
+    "tailwindcss": "3.4.17",
+    "postcss": "8.5.26",
+    "autoprefixer": "10.4.20",
+    "eslint": "9.39.1",
+    "eslint-config-next": "15.5.24",
+    "eslint-plugin-security": "3.0.1",
+    "@next/bundle-analyzer": "15.5.24",
+    "@playwright/test": "1.62.1",
+    "@axe-core/playwright": "4.10.1",
+    "@eslint/eslintrc": "3.2.0"
   },
   "engines": {
     "node": ">=20"
+  },
+  "overrides": {
+    "sharp": "0.35.4",
+    "postcss": "8.5.26"
   }
 }
