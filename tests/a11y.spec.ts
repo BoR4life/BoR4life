@@ -14,25 +14,26 @@ import AxeBuilder from '@axe-core/playwright';
 const ROUTES = ['/', '/platform', '/evidence', '/about', '/contact'];
 
 for (const route of ROUTES) {
-  test(`${route} has no accessibility violations`, async ({ page }) => {
+  test(`${route} has no accessibility violations`, async ({ browser }) => {
+    // Scan with reduced motion. Axe evaluates *computed* colour, so any
+    // element captured mid-fade reports a false contrast failure — an
+    // opacity-0 node reads as ~1.04:1 against its own background, and a
+    // half-faded one as ~3.5:1. Those artifacts mask real violations.
+    //
+    // Under reduced motion the reveals and the opening narrative do not
+    // animate at all: every element renders at its final opacity
+    // immediately, which is exactly the state whose colours we need to
+    // verify. The animated path settles to this same state by design, and
+    // tests/contrast.spec.ts independently proves the token maths.
+    const context = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await context.newPage();
     await page.goto(route);
-
-    // Settle scroll-reveals before scanning. Axe evaluates computed colour,
-    // so an element mid-fade at opacity 0 reports as ~1.04:1 against its
-    // own background — a false failure that masks real ones. Scrolling
-    // through first tests the state a user actually reads.
-    await page.evaluate(async () => {
-      for (let y = 0; y < document.body.scrollHeight; y += 600) {
-        window.scrollTo(0, y);
-        await new Promise((r) => setTimeout(r, 120));
-      }
-      window.scrollTo(0, 0);
-    });
-    await page.waitForTimeout(900);
+    await page.waitForTimeout(600);
 
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();
+    await context.close();
     expect(results.violations).toEqual([]);
   });
 

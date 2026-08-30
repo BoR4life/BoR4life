@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { HeroCanvas } from '@/components/3d/HeroCanvas';
+import { ScrollNarrative } from '@/components/site/ScrollNarrative';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { ScenarioVideo } from '@/components/site/ScenarioVideo';
@@ -86,12 +86,14 @@ export default function Home() {
         Bundle of Rays — clinically authored immersive training for healthcare
       </h1>
 
-      {/* 1. Hero */}
+      {/* 1. Opening narrative. The frontier becomes the ward — one light
+          source carried from a dark ridge to the ceiling panels of a lit
+          bay. See docs/05-scroll-narrative.md. */}
       <section aria-labelledby="hero-heading">
         <h2 id="hero-heading" className="sr-only">
           Practise the moment before it counts
         </h2>
-        <HeroCanvas />
+        <ScrollNarrative />
       </section>
 
       {/* 2. Credibility. Immediately below the hero, by design — the
