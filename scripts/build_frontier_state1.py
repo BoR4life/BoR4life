@@ -76,7 +76,7 @@ def make_terrain(name, location, scale, noise_scale, height, seed,
     tex = bpy.data.textures.new(f"{name}_noise", 'MUSGRAVE')
     tex.noise_basis = 'ORIGINAL_PERLIN'
     tex.noise_scale = noise_scale
-    tex.octaves = 6.0
+    tex.octaves = 3.0
     tex.lacunarity = 2.2
     tex.dimension_max = 1.05
     tex.musgrave_type = 'RIDGED_MULTIFRACTAL'
@@ -89,7 +89,7 @@ def make_terrain(name, location, scale, noise_scale, height, seed,
     obj.location.x += seed * 0.001
 
     smooth = obj.modifiers.new("Smooth", 'SMOOTH')
-    smooth.iterations = 2
+    smooth.iterations = 6
 
     obj.data.materials.append(material)
     bpy.ops.object.shade_smooth()
@@ -110,13 +110,13 @@ def build_world():
     bg = nt.nodes.new('ShaderNodeBackground')
 
     noise = nt.nodes.new('ShaderNodeTexNoise')
-    noise.inputs['Scale'].default_value = 900.0
+    noise.inputs['Scale'].default_value = 420.0
     noise.inputs['Detail'].default_value = 0.0
 
     ramp = nt.nodes.new('ShaderNodeValToRGB')
-    ramp.color_ramp.elements[0].position = 0.795
+    ramp.color_ramp.elements[0].position = 0.885
     ramp.color_ramp.elements[0].color = (0, 0, 0, 1)
-    ramp.color_ramp.elements[1].position = 0.815
+    ramp.color_ramp.elements[1].position = 0.925
     ramp.color_ramp.elements[1].color = (1.0, 0.98, 0.92, 1)
 
     add = nt.nodes.new('ShaderNodeMixRGB')
@@ -143,7 +143,7 @@ def build_lights():
 
     # The visible source: a small intense emissive disc cresting the ridge.
     # The compositor's glare node turns this into the star-burst.
-    bpy.ops.mesh.primitive_circle_add(vertices=32, radius=1.6, fill_type='NGON',
+    bpy.ops.mesh.primitive_circle_add(vertices=32, radius=0.85, fill_type='NGON',
                                       location=(14, 58, 7.4))
     disc = bpy.context.object
     disc.name = "SunDisc"
@@ -153,7 +153,7 @@ def build_lights():
     nt.nodes.clear()
     em = nt.nodes.new('ShaderNodeEmission')
     em.inputs['Color'].default_value = (*SUN_WARM, 1)
-    em.inputs['Strength'].default_value = 400.0
+    em.inputs['Strength'].default_value = 900.0
     outn = nt.nodes.new('ShaderNodeOutputMaterial')
     nt.links.new(em.outputs['Emission'], outn.inputs['Surface'])
     disc.data.materials.append(m)
@@ -186,9 +186,9 @@ def build_scene():
     plane.data.materials.append(water)
 
     # Three terrain layers: near bank, mid ridge, far ridge (sun crests this)
-    make_terrain("Bank_Near", (-14, 6, -0.4), (34, 18, 1), 0.55, 2.6, 11, rock)
-    make_terrain("Ridge_Mid", (18, 30, -0.5), (46, 22, 1), 0.42, 5.2, 37, rock)
-    make_terrain("Ridge_Far", (0, 56, -0.5), (90, 26, 1), 0.30, 8.0, 71, rock)
+    make_terrain("Bank_Near", (-14, 6, -0.4), (34, 18, 1), 11.0, 3.0, 11, rock)
+    make_terrain("Ridge_Mid", (18, 30, -0.5), (46, 22, 1), 17.0, 7.5, 37, rock)
+    make_terrain("Ridge_Far", (0, 56, -0.5), (90, 26, 1), 26.0, 13.0, 71, rock)
 
     build_world()
     build_lights()
@@ -208,32 +208,6 @@ def build_scene():
     con.track_axis = 'TRACK_NEGATIVE_Z'
     con.up_axis = 'UP_Y'
     bpy.context.scene.camera = cam
-
-
-def build_compositor():
-    """Glare node: fog glow for atmosphere plus streaks for the star-burst on
-    the cresting sun — the effect that carries the reference image."""
-    sc = bpy.context.scene
-    sc.use_nodes = True
-    nt = sc.node_tree
-    nt.nodes.clear()
-    rl = nt.nodes.new('CompositorNodeRLayers')
-    fog = nt.nodes.new('CompositorNodeGlare')
-    fog.glare_type = 'FOG_GLOW'
-    fog.quality = 'HIGH'
-    fog.threshold = 1.2
-    fog.size = 8
-    streaks = nt.nodes.new('CompositorNodeGlare')
-    streaks.glare_type = 'STREAKS'
-    streaks.quality = 'HIGH'
-    streaks.threshold = 6.0
-    streaks.streaks = 4
-    streaks.angle_offset = math.radians(15)
-    streaks.fade = 0.86
-    comp = nt.nodes.new('CompositorNodeComposite')
-    nt.links.new(rl.outputs['Image'], fog.inputs['Image'])
-    nt.links.new(fog.outputs['Image'], streaks.inputs['Image'])
-    nt.links.new(streaks.outputs['Image'], comp.inputs['Image'])
 
 
 def configure_render(width, height, samples):
@@ -263,7 +237,6 @@ def main():
 
     os.makedirs(args.out, exist_ok=True)
     build_scene()
-    build_compositor()
 
     if args.preview:
         configure_render(960, 540, args.samples or 48)

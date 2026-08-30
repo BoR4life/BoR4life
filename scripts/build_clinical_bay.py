@@ -384,7 +384,7 @@ def build_lighting(night=False):
         # Brad's night-ward reference), screens carrying the rest. Darkness
         # here is narrative — the stake, not styling.
         strip = bpy.data.lights.new("NightStrip", 'AREA')
-        strip.energy = 26
+        strip.energy = 40
         strip.color = (1.0, 0.72, 0.42)
         strip.size = 2.0
         strip.size_y = 0.08
@@ -394,7 +394,7 @@ def build_lighting(night=False):
         o.rotation_euler = (math.radians(28), 0, 0)
         bpy.context.collection.objects.link(o)
         # Faint cool spill from the corridor side, so shadows aren't dead black
-        area("NightSpill", (0.6, 0.6, 1.8), (1.5, 1.5), 1.6,
+        area("NightSpill", (0.6, 0.6, 1.8), (1.8, 1.8), 3.4,
              rot=(math.radians(60), 0, math.radians(30)))
         return
 
