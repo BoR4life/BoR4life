@@ -1,10 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "regions": ["syd1"],
   "headers": [
     {
-      "source": "/(.*)\\.(avif|webp|png|jpg|woff2|glb|gltf)",
+      "source": "/(.*)\\.(avif|webp|png|jpg|woff2|glb|gltf|mp4)",
       "headers": [
         {
           "key": "Cache-Control",

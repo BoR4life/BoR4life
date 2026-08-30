@@ -160,3 +160,16 @@ curl -I https://…     # confirm headers survive the hosting layer
 
 The last one matters: some hosts strip or override security headers. Always
 verify against the deployed URL, not just locally.
+
+## Deployment notes
+
+`vercel.json` deliberately does **not** pin a region. It originally set
+`regions: ["syd1"]` for latency to Australian users, but region selection is
+plan-gated on Vercel and the first deployment failed config validation in
+about forty seconds — too fast to have been a compile error. If the account
+moves to a plan that allows it, re-adding `syd1` is worthwhile: most of the
+audience is in Australia and the difference is real.
+
+Long-lived immutable caching is applied to media by extension. Every one of
+those assets is content-addressed by filename via the render pipeline, so a
+changed asset gets a changed name and the year-long cache is safe.
