@@ -1,6 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
+  "build": {
+    "env": {
+      "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "1",
+      "PLAYWRIGHT_BROWSERS_PATH": "0"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)\\.(avif|webp|png|jpg|woff2|glb|gltf|mp4)",
