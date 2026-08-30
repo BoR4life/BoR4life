@@ -33,6 +33,32 @@ export default function AboutPage() {
 
       <section className="border-t border-ink-700 px-6 py-16 md:px-16">
         <div className="mx-auto max-w-content">
+          <figure className="mb-16 overflow-hidden rounded border border-ink-700">
+            <picture>
+              <source
+                srcSet="/images/team-learning-development.avif"
+                type="image/avif"
+              />
+              <source
+                srcSet="/images/team-learning-development.webp"
+                type="image/webp"
+              />
+              <img
+                src="/images/team-learning-development.webp"
+                alt="Brad Chesham with a hospital learning and development team, all wearing VR headsets during a Bundle of Rays training session."
+                width={2400}
+                height={1350}
+                loading="lazy"
+                decoding="async"
+                className="w-full object-cover"
+              />
+            </picture>
+            <figcaption className="border-t border-ink-700 px-4 py-3 text-xs text-ink-300">
+              A hospital learning and development team during a Bundle of Rays
+              session.
+            </figcaption>
+          </figure>
+
           <div className="max-w-prose space-y-6 text-[1.0625rem] leading-relaxed text-ink-300">
             <p>
               Bundle of Rays was founded in 2018 by Brad Chesham, a nurse who

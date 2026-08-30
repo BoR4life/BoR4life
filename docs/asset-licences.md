@@ -18,6 +18,15 @@ Sketchfab" is not an answer you want to give a health department's legal team.
 | `bay-night.webp` | Generated in-repo by `scripts/build_clinical_bay.py --night` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `frontier-state1.avif` | Generated in-repo by `scripts/build_frontier_state1.py` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `frontier-state1.webp` | Generated in-repo by `scripts/build_frontier_state1.py` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `team-learning-development.avif` | Drive "Marketing Images" — `VR training group.jpg` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `team-learning-development.webp` | Drive "Marketing Images" — `VR training group.jpg` | Bundle of Rays | Owned | No | 2026-08-30 |
+
+> **Model releases outstanding.** `team-learning-development.*` shows six
+> identifiable adults. It came from a folder named "Marketing Images", which
+> implies intent to publish, but **written consent has not been sighted**.
+> Confirm with the pictured team (and their employer, whose uniform is
+> visible) before this goes to a production domain. If any person declines,
+> the image comes down — a face is not worth a relationship.
 
 ## Rules
 

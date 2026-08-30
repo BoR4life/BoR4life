@@ -48,12 +48,24 @@ async function clientKey(): Promise<string> {
 }
 
 /**
- * Delivery adapter.
+ * Delivery.
  *
- * Deliberately vendor-neutral: no email provider is committed to yet, and
- * picking one is Brad's call (it affects data residency, which matters for
- * AU/UK/EU health buyers). Wire Resend/Postmark/SES here. Until then the
- * enquiry is logged without PII so the flow is testable end to end.
+ * Resend is the default provider: it is the simplest to operate, needs only
+ * a verified sending domain, and its API is a single HTTPS POST — so no SDK
+ * enters the client bundle and `connect-src 'self'` stays closed (this all
+ * runs server-side).
+ *
+ * Two escape hatches are kept deliberately:
+ *   - ENQUIRY_WEBHOOK_URL posts the raw enquiry anywhere (Zapier, a CRM,
+ *     an internal endpoint) without touching this file.
+ *   - Neither configured means enquiries are logged without PII, so the
+ *     form is testable end to end before any provider exists.
+ *
+ * Data residency note: Resend processes in the US. For AU/UK/EU health
+ * buyers that can matter in a procurement questionnaire. An enquiry form
+ * carries only name, work email, organisation and a message — low
+ * sensitivity — but if a buyer requires in-region processing, swap this
+ * function for SES in ap-southeast-2 or Postmark EU. Nothing else changes.
  */
 async function deliver(enquiry: {
   name: string;
@@ -62,6 +74,44 @@ async function deliver(enquiry: {
   role: keyof typeof ROLE_LABELS;
   message: string;
 }): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const to = process.env.ENQUIRY_TO_EMAIL;
+  const from = process.env.ENQUIRY_FROM_EMAIL;
+
+  if (apiKey && to && from) {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        // Replying goes straight back to the enquirer rather than to the
+        // sending domain — the single detail that makes this usable daily.
+        reply_to: enquiry.email,
+        subject: `Enquiry — ${enquiry.name}${
+          enquiry.organisation ? ` (${enquiry.organisation})` : ''
+        }`,
+        // Plain text only. No HTML means no injection surface in the mail
+        // client, and the content is attacker-supplied by definition.
+        text: [
+          `Name:         ${enquiry.name}`,
+          `Email:        ${enquiry.email}`,
+          `Organisation: ${enquiry.organisation || '—'}`,
+          `Role:         ${ROLE_LABELS[enquiry.role]}`,
+          '',
+          enquiry.message,
+        ].join('\n'),
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+
+    if (!res.ok) throw new Error(`Resend responded ${res.status}`);
+    return;
+  }
+
   const endpoint = process.env.ENQUIRY_WEBHOOK_URL;
 
   if (!endpoint) {
@@ -70,7 +120,8 @@ async function deliver(enquiry: {
     console.warn(
       `[enquiry] received (role=${enquiry.role}, org=${
         enquiry.organisation ? 'provided' : 'none'
-      }) but ENQUIRY_WEBHOOK_URL is unset — not delivered.`,
+      }) but no delivery is configured (set RESEND_API_KEY + ` +
+        `ENQUIRY_TO_EMAIL + ENQUIRY_FROM_EMAIL, or ENQUIRY_WEBHOOK_URL) — not delivered.`,
     );
     return;
   }
