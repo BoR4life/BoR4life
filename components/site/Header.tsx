@@ -36,7 +36,13 @@ export function Header() {
           Bundle of Rays
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
+        <nav
+          aria-label="Main"
+          // Five links plus the CTA is the most this row can hold. The tighter
+          // gap keeps it on one line at exactly 768px, where an extra nav
+          // item would otherwise wrap the CTA under the wordmark.
+          className="hidden items-center gap-6 md:flex lg:gap-8"
+        >
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}

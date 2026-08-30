@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { NAV_LINKS, CTA } from '@/lib/nav';
+import { NAV_LINKS, LEGAL_LINKS, CTA } from '@/lib/nav';
 import { SOCIAL_LINKS } from '@/lib/social';
 
 export function Footer() {
@@ -57,11 +57,29 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-ink-700 pt-6">
+        <div className="mt-12 flex flex-col gap-4 border-t border-ink-700 pt-6 md:flex-row md:items-center md:justify-between">
           <p className="text-xs text-ink-300">
             © {new Date().getFullYear()} Bundle of Rays. Operating across
             Australia, the UK, the USA, Sri Lanka, South Korea and India.
           </p>
+
+          {/* Procurement and ethics reviewers look for these in the footer
+              and nowhere else, so they sit on the baseline of every page
+              rather than in the header. */}
+          <nav aria-label="Legal">
+            <ul className="flex gap-6">
+              {LEGAL_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-xs text-ink-300 transition-colors hover:text-paper-100"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>

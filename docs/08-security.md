@@ -53,6 +53,23 @@ third-party dependency and a privacy leak (every visitor's IP reaching that
 CDN). It was removed in favour of local lights. Widen `connect-src`
 deliberately and never as a quick fix for a blocked request.
 
+**The one configured exception.** `connect-src` gains exactly one origin —
+the configured PostHog host — and only when `NEXT_PUBLIC_POSTHOG_KEY` is
+also set. This was itself a latent bug: the policy was `'self'` only while
+`PostHogProvider` was free to initialise, so setting the key produced a
+site where analytics ran and had every request refused by the browser. That
+fails *silently* — no server log, no visible error, just an empty dashboard
+and a false belief that traffic is measured.
+
+The allow-list is built in `lib/csp.ts` and hardened against its own inputs:
+the host is parsed with `new URL()`, reduced to a bare origin (a path in a
+CSP source expression is matched as a prefix and would not match the real
+request URLs), rejected unless it is `https:`, and dropped entirely if it
+does not parse — so an env var can never inject a `;` and rewrite the rest
+of the policy. `tests/csp-build.spec.ts` covers each of those cases; it is
+a unit test precisely because these configurations are not the one the dev
+server runs under.
+
 ### Response headers
 
 Set once in `next.config.mjs`; verified live with `curl -I`.
@@ -97,6 +114,32 @@ Set once in `next.config.mjs`; verified live with `curl -I`.
 
 Use the **EU host** (`https://eu.i.posthog.com`) if data residency matters
 to institutional customers — for AU/UK/EU health buyers it usually does.
+
+### The published statements
+
+`/privacy` and `/accessibility` are written *from this implementation*, not
+from a template, and both name the files that make each claim true. That is
+a maintenance obligation, not a stylistic flourish: **if the behaviour
+changes, the page changes in the same commit.** A privacy notice that has
+drifted from the code is not merely stale — it is a written
+misrepresentation to a health-sector buyer, and it is the document they are
+most likely to check against observed behaviour.
+
+Specifically, changing any of the following requires editing
+`app/privacy/page.tsx`:
+
+- `persistence`, `maskAllInputs`, `maskTextSelector`, `respect_dnt`,
+  `element_allowlist` or `sanitize_properties` in `PostHogProvider.tsx`
+- the `connect-src` allow-list in `lib/csp.ts`
+- the field list in `EnquirySchema` (`lib/enquiry.ts`)
+- the delivery provider or its processing region (`app/contact/actions.ts`)
+- whether `lib/rate-limit.ts` persists anything beyond process memory
+
+And changing the a11y gate, the reduced-motion path, or the manual
+pre-release checks requires editing `app/accessibility/page.tsx`.
+
+`/resources` deliberately publishes **no certification claims**. Add a
+standard to that page only once we have actually been assessed against it.
 
 ## Deliberately NOT done, and why
 

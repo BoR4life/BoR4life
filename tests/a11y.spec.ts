@@ -19,8 +19,11 @@ const ROUTES = [
   '/solutions/patient',
   '/solutions/custom',
   '/evidence',
+  '/resources',
   '/about',
   '/contact',
+  '/privacy',
+  '/accessibility',
 ];
 
 for (const route of ROUTES) {

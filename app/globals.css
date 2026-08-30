@@ -74,3 +74,41 @@ body {
   outline: 2px solid var(--signal);
   outline-offset: 2px;
 }
+
+/*
+  Long-form document body (privacy notice, accessibility statement).
+
+  Scoped rather than global: these are the only places on the site with
+  multi-paragraph prose, nested lists and inline links, and styling them
+  here keeps that formatting out of every content string. Link colour is
+  inherited ink-900 with an underline rather than a coloured link — the
+  signal green is 1.7:1 on paper and would fail AA as text.
+*/
+.policy-body > * + * {
+  margin-top: 1rem;
+}
+
+.policy-body ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.policy-body ul > li + li {
+  margin-top: 0.5rem;
+}
+
+.policy-body a {
+  color: var(--ink-900);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in srgb, var(--ink-900) 30%, transparent);
+}
+
+.policy-body a:hover {
+  text-decoration-color: var(--ink-900);
+}
+
+.policy-body strong {
+  color: var(--ink-900);
+  font-weight: 600;
+}

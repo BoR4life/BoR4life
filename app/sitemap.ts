@@ -12,8 +12,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/solutions',
     ...SOLUTIONS.map((s) => `/solutions/${s.slug}`),
     '/evidence',
+    '/resources',
     '/about',
     '/contact',
+    '/privacy',
+    '/accessibility',
   ];
   return routes.map((route) => ({
     url: `${BASE}${route}`,
