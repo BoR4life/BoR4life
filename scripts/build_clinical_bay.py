@@ -353,15 +353,19 @@ def build_sundries():
 # ----------------------------------------------------------------------------
 # Lighting, camera, render
 # ----------------------------------------------------------------------------
-def build_lighting():
+def build_lighting(night=False):
     """Soft, high-key, broad. Matches how a real bay actually looks and keeps
     every clinical detail legible — which is the whole point of the image."""
     world = bpy.data.worlds.new("World")
     bpy.context.scene.world = world
     world.use_nodes = True
     bg = world.node_tree.nodes["Background"]
-    bg.inputs["Color"].default_value = (0.55, 0.60, 0.66, 1)
-    bg.inputs["Strength"].default_value = 0.22
+    if night:
+        bg.inputs["Color"].default_value = (0.04, 0.05, 0.08, 1)
+        bg.inputs["Strength"].default_value = 0.06
+    else:
+        bg.inputs["Color"].default_value = (0.55, 0.60, 0.66, 1)
+        bg.inputs["Strength"].default_value = 0.22
 
     def area(name, loc, size, energy, rot=(0, 0, 0)):
         d = bpy.data.lights.new(name, 'AREA')
@@ -374,6 +378,25 @@ def build_lighting():
         o.rotation_euler = rot
         bpy.context.collection.objects.link(o)
         return o
+
+    if night:
+        # The moment before: one warm strip washing down the headwall (per
+        # Brad's night-ward reference), screens carrying the rest. Darkness
+        # here is narrative — the stake, not styling.
+        strip = bpy.data.lights.new("NightStrip", 'AREA')
+        strip.energy = 26
+        strip.color = (1.0, 0.72, 0.42)
+        strip.size = 2.0
+        strip.size_y = 0.08
+        strip.shape = 'RECTANGLE'
+        o = bpy.data.objects.new("NightStrip", strip)
+        o.location = (2.6, ROOM_D - 0.22, 2.10)
+        o.rotation_euler = (math.radians(28), 0, 0)
+        bpy.context.collection.objects.link(o)
+        # Faint cool spill from the corridor side, so shadows aren't dead black
+        area("NightSpill", (0.6, 0.6, 1.8), (1.5, 1.5), 1.6,
+             rot=(math.radians(60), 0, math.radians(30)))
+        return
 
     # Ceiling panels as real emitters, matching the visible fixtures
     for i, (x, y) in enumerate([(1.6, 2.0), (1.6, 4.2), (3.6, 2.0), (3.6, 4.2)]):
@@ -435,7 +458,7 @@ def configure_render(width, height, samples):
     sc.view_settings.exposure = -0.35
 
 
-def build_all(dof=True):
+def build_all(dof=True, night=False):
     reset_scene()
     build_materials()
     build_room()
@@ -447,8 +470,13 @@ def build_all(dof=True):
     build_overbed_table()
     build_curtain()
     build_sundries()
-    build_lighting()
+    build_lighting(night=night)
     build_camera(dof=dof)
+    if night:
+        # Panels off; the wall monitor stays lit and becomes a key light.
+        mat = MATS["ceiling_light"]
+        _set(mat.node_tree.nodes["Principled BSDF"], "Emission Strength", 0.0)
+        _set(MATS["screen_vitals"].node_tree.nodes["Principled BSDF"], "Emission Strength", 16.0)
 
 
 def main():
@@ -456,12 +484,14 @@ def main():
     ap.add_argument("--preview", action="store_true")
     ap.add_argument("--render-4k", action="store_true")
     ap.add_argument("--export-gltf", action="store_true")
+    ap.add_argument("--night", action="store_true",
+                    help="the 'moment before' lighting state: one warm strip, screens glowing")
     ap.add_argument("--out", default="renders")
     ap.add_argument("--samples", type=int, default=0)
     args = ap.parse_args()
 
     os.makedirs(args.out, exist_ok=True)
-    build_all(dof=not args.export_gltf)
+    build_all(dof=not args.export_gltf, night=args.night)
 
     tris = sum(len(o.data.loop_triangles) if o.type == 'MESH' else 0
                for o in bpy.data.objects
@@ -470,13 +500,13 @@ def main():
 
     if args.preview:
         configure_render(960, 540, args.samples or 48)
-        bpy.context.scene.render.filepath = os.path.join(args.out, "preview.png")
+        bpy.context.scene.render.filepath = os.path.join(args.out, "preview-night.png" if args.night else "preview.png")
         bpy.ops.render.render(write_still=True)
         print("[render] preview written")
 
     if args.render_4k:
         configure_render(3840, 2160, args.samples or 110)
-        bpy.context.scene.render.filepath = os.path.join(args.out, "hero-ward-4k.png")
+        bpy.context.scene.render.filepath = os.path.join(args.out, "hero-ward-night-4k.png" if args.night else "hero-ward-4k.png")
         bpy.ops.render.render(write_still=True)
         print("[render] 4K written")
 

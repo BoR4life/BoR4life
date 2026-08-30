@@ -98,12 +98,20 @@ cresting the horizon. So the scroll journey is held together by a single
 continuous light source:
 
 ```
-STATE 1            STATE 2-3               FINAL STATE
-First ray crests   The same light falls    The same light, now the
-the dark ridge.    through rising          ceiling panels of the
-"The frontier."    structure and frame.    resus bay. Clinical, calm,
-                                           exactly where it belongs.
+STATE 1            STATE 2-3            STATE 4a              STATE 4b
+First ray crests   The same light       The bay at night —    THE LIGHTS COME ON.
+the dark ridge.    falls through        one warm strip, an    Full clinical
+"The frontier."    rising structure.    empty bed. The        high-key. The team
+                                        moment before.        is ready. Live
+                                                              WebGL begins here.
 ```
+
+State 4a is taken directly from Brad's night-ward reference (empty bed,
+single warm light): darkness as narrative — the stake — never as styling.
+The 4a→4b cut is the climax of the whole page: the ray that began at the
+frontier ends as the lights coming on when the moment arrives. It is also
+the natural LCP-safe handoff — 4b's still is the poster the live WebGL
+scene fades in over.
 
 The metaphor closes on the product: light that began at the frontier ends as
 the light a nurse actually works under. `scripts/build_frontier_state1.py`

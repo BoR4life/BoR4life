@@ -90,6 +90,41 @@ One family, two registers.
 Self-host with `font-display: swap` and preload the display weight. A webfont
 network round-trip is a top cause of LCP failure — see the budget gate.
 
+### Clinical photo references (Brad, 2026-08-30) — and two rule changes
+
+Brad supplied three clinical references: a bright ordinary ward (green
+blanket, tiled floor), a night ward — empty bed under a single warm strip
+light — and an operating theatre mid-case (teams, teal scrubs, cold grade).
+Two standing rules change as a result:
+
+**1. Darkness is permitted when it is narrative.** The original look-dev rule
+said clinical spaces are bright and even, and dramatic darkness reads as
+videogame. The night-ward reference is the exception that defines the rule
+properly: an empty bed under one warm light is not styling — it is *the
+moment before*, the stake that explains why anyone trains. So:
+
+- Default state: high-key clinical (unchanged).
+- Narrative dark is allowed **only when the darkness itself carries the
+  story**, and it always resolves — the scroll sequence ends with the lights
+  coming on. Dark-for-mood with no resolution stays banned.
+- `build_clinical_bay.py --night` renders this state: panels off, one warm
+  strip over the headwall, monitor glowing.
+
+**2. People come from photography, environments from 3D.** The theatre
+reference is full of people — and people are where procedural 3D dies.
+Believable clinicians cannot be rendered on this budget, and near-miss humans
+are worse than none (uncanny, and clinically wrong in ways nurses spot).
+The division of labour is now explicit:
+
+- **3D owns spaces**: the bay, the frontier, environments, equipment.
+- **Photography owns people**: real training sessions, real nurses, real
+  teams. Commission or use Brad's own deployment photos — never stock
+  clinicians (every competitor uses the same six stock nurses), never
+  AI-generated people (a fake nurse on a clinician-led brand is
+  self-sabotage).
+- The two meet in the grade: photography gets the cold-teal clinical grade
+  of the theatre reference so it sits in the same world as the renders.
+
 ### Motion
 
 - Easing: `cubic-bezier(0.16, 1, 0.3, 1)` for entrances. Weighted, no overshoot.
