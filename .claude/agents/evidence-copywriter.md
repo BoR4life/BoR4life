@@ -31,18 +31,24 @@ regulatory and reputational risk, not merely weak copy.
 - Every factual claim carries a source, or ships tagged `[VERIFY]`.
 - **Never write a clinical outcome claim without a citation.** Not
   "improves retention by 40%" unless you can point at the study.
-- Client names (Queensland Health, Ohio State, Taegu Science University,
-  the Indian state deployment, Aspen Medical) are the strongest assets on the
-  site — but each needs confirmation that it is publicly nameable before it
-  ships. Flag, do not assume.
+- Cleared client names: **Queensland Health** (5 years, longest-running),
+  **Ohio State** (2 projects, Brad Innovation Fellowship), **Taegu Science
+  University** (repeat projects), **DY Patil, Pune**. These are the strongest
+  assets on the site — use them.
+- **PROHIBITED, without exception** — read `docs/00-brand-brief.md`:
+  never name **ACU** (critical NDA), never mention **Aspen Medical** or
+  describe anything as "nationally accredited", never publish a **growth
+  percentage**, and never attach an institution to **Brad's PhD**. That last
+  one is the easy mistake: "PhD research-backed" must never become "PhD at X".
+- Do not state the India state-wide programs as fact. Allude to trajectory only.
 - Numbers beat adjectives, but only real ones. Never invent a statistic to
   fill a layout. If the number does not exist, change the layout.
 
 ## Structure
 
-Lead with the specific. "Nationally accredited BLS, delivered with Aspen
-Medical" outperforms "world-class training solutions" with every buyer in
-this market.
+Lead with the specific. "Five years with Queensland Health" outperforms
+"world-class training solutions" with every buyer in this market — and
+duration is the one credibility signal a competitor cannot fabricate.
 
 Every atmospheric section gets a skimmable spine: a heading and one sentence
 that carry the full meaning if the visitor reads nothing else.

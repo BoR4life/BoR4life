@@ -10,7 +10,6 @@ names its **3D slot** so the shot list falls straight out of the sitemap.
 /platform                What the platform is — XR + AI roleplay + analytics
 /solutions/nursing       VR for nursing education
 /solutions/patient       Patient education
-/solutions/bls           Accredited BLS (Aspen Medical)
 /solutions/custom        Custom content development
 /evidence                Outcomes, research, methodology      ← the tender-winner
 /case-studies            Index
@@ -33,9 +32,9 @@ immersive-tech sites. Build them first, not last.
 | 3 | The problem | Training gap, stated clinically | Still — abstract, restrained |
 | 4 | Platform | XR + AI roleplay + analytics, three cards | 3× loop (4s, muted) — one per pillar |
 | 5 | Evidence | 3 headline numbers, link to `/evidence` | none — data is the visual |
-| 6 | Deployments | Map/list: AU, US, UK, Brazil, South Korea, India | Still — stylised globe or none |
+| 6 | Deployments | Map/list: AU, UK, USA, Sri Lanka, South Korea, India | Still — stylised globe or none |
 | 7 | Case study feature | One deep story | Loop, full-bleed |
-| 8 | Founder note | Brad, nurse-founder — the differentiator | Photograph, not 3D |
+| 8 | Founder note | Brad, nurse-founder, doctoral researcher — the differentiator. **Never name the PhD institution.** | Photograph, not 3D |
 | 9 | CTA | Book a demo | none |
 
 **Rule: sections 1 and 2 must both be reachable without scrolling on a 1440×900
@@ -66,8 +65,10 @@ Total live WebGL scenes: **1**. Everything else is baked.
 ## Copy rules
 
 - Every claim carries a source or a `[VERIFY]` tag until Brad confirms it.
-- Numbers beat adjectives. "300% year-on-year growth" beats "rapidly growing" —
-  if it is publishable.
+- Numbers beat adjectives — but **no growth percentages** (see the PROHIBITED
+  list in the brand brief). The publishable number is "five years with
+  Queensland Health". Duration and repeat business outperform a growth rate
+  with procurement readers anyway: they buy continuity, not momentum.
 - Never claim clinical outcomes without a citation. In this sector an
   unsourced efficacy claim is a regulatory and reputational risk, not just
   weak copy.

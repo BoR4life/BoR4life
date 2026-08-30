@@ -15,8 +15,8 @@ is enforced by a validator that exits non-zero. The agent cannot talk its way
 past the gate, and is explicitly forbidden from widening it.
 
 **2. Beautiful and effective are not the same goal here.** Bundle of Rays sells
-to Queensland Health, Ohio State, and a five-year Indian national nursing
-strategy. Those readers want evidence, accreditation and outcomes — fast, on a
+to Queensland Health (five years and counting), Ohio State, and institutions
+across India and South Korea. Those readers want evidence, accreditation and outcomes — fast, on a
 locked-down laptop. The art direction takes the craft vocabulary of a
 high-end 3D portfolio and grafts it onto an evidence-led information
 architecture. Where the two conflict, evidence wins, and the agent is
@@ -86,10 +86,10 @@ scripts/optimize-gltf.sh       Draco + KTX2 optimisation
 Two things need Brad:
 
 1. **Verify the `[VERIFY]` claims** in `docs/00-brand-brief.md` — client names,
-   the 300% growth figure, accreditation scope. These were assembled from
-   public sources because this environment's network policy blocked fetching
-   bundleofrays.com directly. Nothing tagged `[VERIFY]` should ship as copy
-   until confirmed publicly nameable.
+   Client facts are now **confirmed** (Queensland Health 5yrs, Ohio State via
+   the Brad Innovation Fellowship, TSU, DY Patil Pune). Note the **PROHIBITED**
+   list in that doc — ACU (critical NDA), Aspen Medical, growth percentages,
+   and any institution attached to Brad's PhD. Agents check copy against it.
 2. **Point the pipeline at existing Unity/Unreal product scenes.** They are the
    best 3D source available — authentic, differentiated, zero licence risk —
    and better than anything that can be bought.

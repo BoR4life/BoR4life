@@ -35,6 +35,30 @@ the visitor can look around, one they'd otherwise need a headset to see.
   product scenes                          gltf-transform
 ```
 
+### Step 0 — Procedural, as a fallback and a baseline
+
+`scripts/build_clinical_bay.py` builds, lights, renders and exports a complete
+resuscitation bay from code, using Blender-as-a-module (`pip install bpy`). No
+GUI, no `.blend` binary in version control — the scene is a reviewable diff, and
+CI can regenerate every asset from scratch.
+
+```bash
+python scripts/build_clinical_bay.py --preview      # 960x540 look check
+python scripts/build_clinical_bay.py --render-4k    # 3840x2160 hero still
+python scripts/build_clinical_bay.py --export-gltf  # web model
+```
+
+**What it is:** a procedural blockout with deliberate look-dev — correct
+clinical value range, soft high-key lighting, 32mm lens, AgX transform. Good
+enough to art-direct against, to lock composition, and to use as a stylised
+hero if that is the chosen direction.
+
+**What it is not:** photoreal. There are no scanned textures, no CAD-accurate
+equipment, no surface imperfection. Photorealism needs real source assets
+(Quixel/Poly Haven textures, manufacturer-accurate device models) — see Step 1.
+
+Use it to prove the pipeline and lock the shot before spending money on assets.
+
 ### Step 1 — Source
 
 Priority order:

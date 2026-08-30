@@ -10,7 +10,7 @@ Sketchfab" is not an answer you want to give a health department's legal team.
 
 | File | Source | Author | Licence | Attribution required | Date added |
 |---|---|---|---|---|---|
-| _(example)_ `hero-ward.glb` | Bundle of Rays internal — BLS module v3 | In-house | Owned | No | — |
+| _(example)_ `hero-ward.glb` | Bundle of Rays internal — resus module | In-house | Owned | No | — |
 | _(example)_ `studio.hdr` | https://polyhaven.com/ | Poly Haven | CC0 | No | — |
 
 ## Rules

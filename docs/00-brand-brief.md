@@ -10,7 +10,8 @@
 Immersive learning for healthcare. Founded 2018 by Brad Chesham — a nurse who
 worked across Australia, the UK, Afghanistan and Iraq, and saw that
 conventional training does not prepare people for high-consequence moments.
-Based in Buderim, Queensland.
+Based in Buderim, Queensland. Operating across Australia, the UK, the USA,
+Sri Lanka, South Korea and India.
 
 The line that matters: **built by nurses, for nurses.** That is the moat. Every
 competitor in this space is a software company that hired a clinical advisor.
@@ -20,25 +21,60 @@ Bundle of Rays is the inverse, and the site should never let a visitor forget it
 
 | Offer | Buyer | Proof to lead with |
 |---|---|---|
-| VR nursing education modules | Universities, nursing schools | Retention and skills-transfer outcomes |
+| VR nursing education modules | Universities, nursing schools | Clinician authorship; PhD research grounding |
 | Patient education | Health services, hospitals | Comprehension and anxiety outcomes |
-| Nationally accredited BLS (with Aspen Medical) | Employers, health services | The accreditation itself `[VERIFY scope]` |
 | Custom content development | Enterprise, government | Deployment scale and speed |
 | AI roleplay + learning analytics | All of the above | Decision, communication and procedural data |
 
-## Evidence assets (the site's most under-used weapon)
+## Evidence assets — CONFIRMED BY BRAD, 2026-08-30
 
-- Queensland Health `[VERIFY]`
-- Ohio State University (USA) `[VERIFY]`
-- Taegu Science University (South Korea) `[VERIFY]`
-- Largest immersive learning program deployed in a single Indian state; part of
-  a five-year national nursing-education strategy `[VERIFY]`
-- Aspen Medical partnership — nationally accredited BLS `[VERIFY]`
-- 300% year-on-year growth `[VERIFY — and decide whether to publish]`
-- Operating across Australia, US, UK, Brazil, South Korea `[VERIFY]`
+These are cleared for publication. They are the strongest assets on the site
+and the current site under-uses them.
 
-These names do more selling than any hero animation will. The current site
-appears to under-use them; the rebuild must not.
+| Client | Detail | How to describe it |
+|---|---|---|
+| **Queensland Health** | Longest-running customer, 5 years | Lead with the duration — five years of continuous renewal is the single most persuasive fact available. Retention beats logos. |
+| **Ohio State University** | 2 projects, via the Brad Innovation Fellowship | Name the Fellowship; it is third-party validation of the founder, not just the product. |
+| **Taegu Science University** (South Korea) | Repeat one-off projects | "Repeat engagements" — do not imply a single large contract. |
+| **DY Patil, Pune** (India) | Currently deployed | Nameable now. `[CONFIRM SPELLING: "DY Patil" is the standard rendering of the Pune institution — Brad wrote "DY Patel". Verify before publishing.]` |
+
+**Markets:** Australia, UK, USA, Sri Lanka, South Korea, India.
+*(Brazil was in earlier public sources and is NOT current — do not use it.)*
+
+**Forward-looking, handle carefully:** large state-wide programs in India are
+expected within ~3 months. Allude to scale and trajectory; **do not state them
+as fact or name a state until signed.** Suggested framing: "expanding from
+institutional deployments toward state-level programs" — ambition without a
+claim.
+
+## PROHIBITED — do not publish, anywhere, in any form
+
+This list is a hard constraint on every agent. Check copy against it before
+shipping.
+
+1. **ACU (Australian Catholic University) — NDA is critical.** Never named as a
+   client, partner, or in any case study.
+2. **Aspen Medical — do not mention.** Remove the partnership and the
+   nationally-accredited BLS claim entirely. Do not describe any offering as
+   "nationally accredited".
+3. **No growth percentages.** The "300% year-on-year" figure from public
+   sources is not to be used. Say "growing" and let the five-year Queensland
+   Health relationship carry the credibility.
+
+### The ACU trap — read this before writing the founder story
+
+Brad's PhD is a core credibility asset and the brief instructs you to lead with
+"PhD research-backed". **Brad's PhD is enrolled at ACU, and ACU is under a
+critical NDA.**
+
+The natural next sentence after "PhD research-backed" is "...at ACU", and a
+copywriter, a bio, a conference blurb or a schema.org `alumniOf` field will
+reach for it automatically. It must not appear.
+
+**Rule: describe the research, never the institution.** "Doctoral research into
+immersive learning" is safe. Any university name attached to Brad's PhD is not,
+until Brad clears it in writing — the NDA question (client relationship vs.
+enrolment) is his to answer, not ours to assume.
 
 ## Audience — and why this changes the design
 
@@ -64,10 +100,12 @@ how you earn the right to be evaluated — it is not the conversion mechanism.
 
 Three pillars to structure the whole site around:
 
-- **Clinically authored** — nurses wrote it, not a studio guessing.
-- **Measurably effective** — analytics capture decisions, communication,
-  procedural accuracy. Bring the numbers forward.
-- **Deployed at national scale** — this is not a pilot vendor.
+- **Clinician-led** — nurses wrote it, not a studio guessing. This is the moat.
+- **Research-backed** — grounded in Brad's doctoral research into immersive
+  learning. (Institution unnamed — see the ACU trap above.)
+- **Proven in service** — five years with Queensland Health, repeat work at
+  Ohio State and TSU, live deployment in India. Longevity and repeat business
+  are the proof, not a growth percentage.
 
 ## Voice
 

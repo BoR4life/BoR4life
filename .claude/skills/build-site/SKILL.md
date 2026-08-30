@@ -12,8 +12,8 @@ subagent that owns it, and you do not skip the gate.
 
 Bundle of Rays: immersive learning for healthcare, founded 2018 by Brad
 Chesham (nurse-founder). Sells clinically authored VR training to health
-departments, universities and governments across AU, US, UK, Brazil, South
-Korea and India.
+departments, universities and governments across Australia, the UK, the USA,
+Sri Lanka, South Korea and India.
 
 Read before starting: `docs/00-brand-brief.md`, `docs/01-art-direction.md`,
 `docs/02-content-architecture.md`, `docs/03-3d-production-spec.md`,
@@ -78,6 +78,10 @@ observed fact.
 2. **One live WebGL scene.** Requests for more get costed and pushed back on.
 3. **No unsourced clinical claims. Ever.** This is a regulated-adjacent sector;
    an invented efficacy statistic is a genuine liability.
+3a. **Check every piece of copy against the PROHIBITED list** in
+   `docs/00-brand-brief.md`: never name ACU (NDA), never mention Aspen Medical
+   or "nationally accredited", never publish a growth percentage, and never
+   attach an institution to Brad's PhD.
 4. **Never invent evidence.** No fake client names, testimonials, or numbers to
    fill a layout. If the asset does not exist, change the layout and tell Brad
    what is missing.
