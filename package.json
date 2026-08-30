@@ -2,7 +2,7 @@
   "name": "bor-web-studio",
   "version": "0.1.0",
   "private": true,
-  "description": "Bundle of Rays website \u2014 Next.js app plus the agent system that builds and maintains it.",
+  "description": "Bundle of Rays website — Next.js app plus the agent system that builds and maintains it.",
   "type": "module",
   "scripts": {
     "dev": "next dev",
@@ -31,9 +31,6 @@
   "devDependencies": {
     "@axe-core/playwright": "4.10.1",
     "@eslint/eslintrc": "3.2.0",
-    "@gltf-transform/core": "^4.2.1",
-    "@gltf-transform/extensions": "^4.2.1",
-    "@gltf-transform/functions": "^4.2.1",
     "@next/bundle-analyzer": "15.5.24",
     "@playwright/test": "1.62.1",
     "@types/node": "22.10.5",
