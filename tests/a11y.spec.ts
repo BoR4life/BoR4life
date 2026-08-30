@@ -11,7 +11,17 @@ import AxeBuilder from '@axe-core/playwright';
  * WebGL disabled, JS disabled) still have to be run before shipping.
  */
 
-const ROUTES = ['/', '/platform', '/evidence', '/about', '/contact'];
+const ROUTES = [
+  '/',
+  '/platform',
+  '/solutions',
+  '/solutions/nursing',
+  '/solutions/patient',
+  '/solutions/custom',
+  '/evidence',
+  '/about',
+  '/contact',
+];
 
 for (const route of ROUTES) {
   test(`${route} has no accessibility violations`, async ({ browser }) => {
