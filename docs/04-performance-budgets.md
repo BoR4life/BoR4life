@@ -24,7 +24,7 @@ CI is what turns "we care about performance" into something that actually holds.
 | CLS | 0.05 | Half the 0.1 threshold. With full-bleed media and a webfont, drift is easy — the tight budget forces reserved aspect-ratio boxes and preloaded fonts. |
 | Initial JS | 180KB gz | A mid-tier Android takes ~1s just to parse and execute 180KB. Three.js alone is ~150KB gz, which is exactly why it must be a lazy chunk. |
 | 3D chunk | 350KB gz | three + r3f + a narrow drei import. If this is exceeded, someone imported all of drei — import per-module. |
-| Hero glTF | 2MB | After Draco + KTX2, a well-authored clinical scene lands at 1.2–1.8MB. Above 2MB means it was authored too heavy. |
+| Hero glTF | 2MB | After meshopt, a well-authored clinical scene lands at 1.2–1.8MB; the procedural bay is 196KB. Above 2MB means it was authored too heavy. Draco and KTX2 are unusable here — their decoders need `unsafe-eval`, see `docs/03-3d-production-spec.md`. |
 | Hero triangles | 150k | Comfortable for integrated graphics at 60fps. Beyond this, mobile drops frames before it runs out of memory. |
 | Draw calls | 80 | Each is CPU overhead. Merging meshes and atlasing materials is far cheaper than reducing polygons. |
 | AVIF still | 250KB | At 2400px this is achievable for a path-traced render at quality that survives a 5K display. |
