@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+dist/
+.DS_Store
+*.log
+.env*.local
+.lighthouseci/
+
+# Large 3D source files — optimised output in public/models/ is committed,
+# multi-hundred-MB Blender and DCC sources are not.
+*.blend
+*.blend1
+/assets-source/

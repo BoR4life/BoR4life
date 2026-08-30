@@ -1,0 +1,18 @@
+{
+  "name": "bor-web-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent system for building and maintaining the Bundle of Rays website.",
+  "type": "module",
+  "scripts": {
+    "validate:assets": "node scripts/validate-assets.mjs",
+    "optimize:gltf": "./scripts/optimize-gltf.sh",
+    "verify": "npm run validate:assets",
+    "lighthouse": "echo 'Add once the Next.js app is scaffolded: lhci autorun'",
+    "a11y": "echo 'Add once the Next.js app is scaffolded: axe against every route'",
+    "analyze": "echo 'Add once the Next.js app is scaffolded: ANALYZE=true next build'"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
