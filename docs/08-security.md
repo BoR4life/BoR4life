@@ -251,7 +251,10 @@ is Brad's to make — for AU/UK/EU health buyers it usually matters.
 
 ## Before production
 
-- [ ] Choose an email/delivery provider and set `ENQUIRY_WEBHOOK_URL`.
+- [ ] Choose an email/delivery provider and configure it. **Verify a sending
+      subdomain, never the root domain** — a second SPF record at the root
+      breaks SPF for all mail from the domain. Sequence in
+      `docs/09-go-live.md`.
       Until then enquiries are logged (without PII) and **not delivered**.
 - [ ] Confirm HTTPS on every subdomain **before** the HSTS preload takes hold.
 - [ ] Add `npm run audit` and `npm run verify` to CI as blocking checks.
