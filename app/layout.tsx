@@ -4,6 +4,7 @@ import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 import { SOCIAL_LINKS } from '@/lib/social';
+import { siteUrl } from '@/lib/site';
 import './globals.css';
 
 /**
@@ -12,9 +13,7 @@ import './globals.css';
  * localhost in production, which is a real and common misconfiguration.
  */
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bundleofrays.com',
-  ),
+  metadataBase: new URL(siteUrl()),
   title: {
     default: 'Bundle of Rays — Immersive learning for healthcare',
     template: '%s — Bundle of Rays',
@@ -66,7 +65,7 @@ export default async function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Bundle of Rays',
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bundleofrays.com',
+    url: siteUrl(),
     description:
       'Clinically authored immersive training for healthcare. Built by nurses, for nurses.',
     foundingDate: '2018',

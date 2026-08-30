@@ -1,8 +1,19 @@
-import bundleAnalyzer from '@next/bundle-analyzer';
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
-});
+/**
+ * The bundle analyzer is a development tool and must never be a hard
+ * requirement of the config.
+ *
+ * A static `import` of it makes next.config.mjs fail to load whenever
+ * devDependencies are absent — which is precisely what happens on a build
+ * server that installs with NODE_ENV=production. The build then dies while
+ * loading its own configuration, before compiling a single file, which
+ * looks like an inexplicable early failure rather than a missing optional
+ * tool. Loaded on demand instead, so `ANALYZE=true npm run build` still
+ * works locally and production builds never reach for it.
+ */
+const withBundleAnalyzer =
+  process.env.ANALYZE === 'true'
+    ? (await import('@next/bundle-analyzer')).default({ enabled: true })
+    : (config) => config;
 
 /**
  * Security headers, applied to every route. This is the single place they
@@ -44,6 +55,7 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false, // don't advertise the framework/version to scanners
+
 
   images: {
     formats: ['image/avif', 'image/webp'],

@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next';
 
-const BASE =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.bundleofrays.com';
+import { siteUrl } from '@/lib/site';
+
+const BASE = siteUrl();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ['', '/platform', '/evidence', '/about', '/contact'];
