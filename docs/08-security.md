@@ -28,7 +28,12 @@ What is actually at risk:
 
 ### Content Security Policy — strict, nonce-based
 
-`middleware.ts` generates a fresh nonce per request. **No `'unsafe-inline'`,
+`middleware.ts` generates a fresh nonce per request using **Web Crypto and
+`btoa`, never Node's `Buffer`**. Middleware runs in the Edge Runtime, where
+`Buffer` does not exist — but the local dev sandbox provides it, so
+`Buffer.from(...)` builds and runs perfectly on a laptop and then fails only
+once deployed. That mistake broke the first Vercel deployments and is now
+covered by `tests/csp.spec.ts`. **No `'unsafe-inline'`,
 no `'unsafe-eval'`** anywhere in the policy — this is the actual boundary
 against injected scripts, and the reason the rest of the header list is
 supporting rather than primary.

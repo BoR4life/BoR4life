@@ -16,7 +16,14 @@ import type { NextRequest } from 'next/server';
  * as a quick fix for a blocked request.
  */
 export function middleware(request: NextRequest) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  // Web Crypto + btoa, NOT Buffer. Middleware runs in the Edge Runtime,
+  // where Node's Buffer does not exist — it is provided by the local dev
+  // sandbox, so `Buffer.from(...)` builds and runs fine on a laptop and
+  // then fails once deployed to the edge. Sixteen random bytes is also a
+  // stronger nonce than base64-encoding a UUID string.
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  const nonce = btoa(String.fromCharCode(...bytes));
 
   const csp = [
     `default-src 'self'`,
