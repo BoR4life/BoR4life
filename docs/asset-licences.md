@@ -23,6 +23,21 @@ Sketchfab" is not an answer you want to give a health department's legal team.
 | `pillar-analytics.avif` | `scripts/build_clinical_bay.py --view monitor` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `pillar-analytics.webp` | `scripts/build_clinical_bay.py --view monitor` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `og-default.png` | `scripts/make_og_card.py` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `video/scenario-av1.mp4` | In-headset capture, vascular access scenario (Brad, 2025-07-19) | Bundle of Rays | Owned | No | 2026-08-30 |
+| `video/scenario-h264.mp4` | In-headset capture, vascular access scenario (Brad, 2025-07-19) | Bundle of Rays | Owned | No | 2026-08-30 |
+| `video/scenario.avif` / `.webp` | Poster frame from the above | Bundle of Rays | Owned | No | 2026-08-30 |
+
+> **Clearance outstanding on the scenario clip.** The footage is Bundle of
+> Rays' own product with no third-party watermark, and the patient is
+> synthetic — but if this scenario was built under contract for a specific
+> client, that contract may restrict public display. Confirm before a
+> production domain.
+
+> **3D Organon footage is NOT usable.** A second video supplied on
+> 2026-08-30 (`3dorganonweb.mp4`) is 3D Organon's anatomy platform,
+> watermarked throughout. It is a third-party commercial product and
+> presenting it on this site would misrepresent it as ours. Excluded unless
+> a partnership and written permission exist.
 | `assets/textures/vitals-screen.png` | `scripts/make_vitals_screen.py` — synthetic, not real patient data | Bundle of Rays | Owned | No | 2026-08-30 |
 | `team-learning-development.avif` | Drive "Marketing Images" — `VR training group.jpg` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `team-learning-development.webp` | Drive "Marketing Images" — `VR training group.jpg` | Bundle of Rays | Owned | No | 2026-08-30 |

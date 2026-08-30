@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { HeroCanvas } from '@/components/3d/HeroCanvas';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
+import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 
 /**
  * Home page.
@@ -137,7 +138,9 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* 4. Platform */}
+      {/* 4. Platform. Opens with real captured footage — after the problem
+          is stated is the moment a visitor wants to see the thing rather
+          than read another description of it. */}
       <Section ground="ink" size="lg" labelledBy="platform-heading">
         <Reveal>
           <Eyebrow id="platform-heading">The platform</Eyebrow>
@@ -145,6 +148,25 @@ export default function Home() {
             Rehearse the moment. Capture what happened. Show the change.
           </p>
         </Reveal>
+
+        <div className="mt-14 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <Reveal>
+            {/* Held in a column, not full-bleed: the source is 720x405 and
+                would look soft stretched across a hero. */}
+            <ScenarioVideo />
+          </Reveal>
+          <Reveal delay={100}>
+            <h3 className="text-xl font-semibold text-paper-0">
+              This is a scenario, not a showreel.
+            </h3>
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+              Sterile field, ultrasound guidance, a colleague who responds to
+              what you say. The learner works the procedure in sequence and
+              the system records every decision along the way — including the
+              ones not taken.
+            </p>
+          </Reveal>
+        </div>
 
         <div className="mt-16 grid gap-12 md:grid-cols-3">
           {PILLARS.map((pillar, i) => (

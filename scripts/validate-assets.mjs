@@ -233,7 +233,15 @@ function checkVideo(files) {
 
     if (v.requiresPosterFrame) {
       const stem = f.replace(/\.[^.]+$/, '');
-      if (!existsSync(`${stem}.avif`) && !existsSync(`${stem}.webp`) && !existsSync(`${stem}-poster.avif`)) {
+      // A single poster legitimately serves every codec variant of the same
+      // clip, so strip a trailing codec suffix before looking for it.
+      // Requiring one poster per encode would just duplicate bytes.
+      const base = stem.replace(/-(av1|h264|vp9|hevc)$/i, '');
+      const candidates = [
+        `${stem}.avif`, `${stem}.webp`, `${stem}-poster.avif`,
+        `${base}.avif`, `${base}.webp`, `${base}-poster.avif`,
+      ];
+      if (!candidates.some((c) => existsSync(c))) {
         fail(rel(f), 'no poster frame found — every loop needs one or it pops in and shifts layout');
       }
     }
