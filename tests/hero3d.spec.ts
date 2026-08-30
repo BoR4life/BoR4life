@@ -143,3 +143,38 @@ test('reduced motion never mounts the canvas', async ({ browser }) => {
   expect(await page.locator('canvas').count()).toBe(0);
   await context.close();
 });
+
+test('the scene settles into stillness instead of animating forever', async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto('/');
+  await page
+    .locator('section', { hasText: 'This is a real environment' })
+    .scrollIntoViewIfNeeded();
+  await expect(page.getByText('Drag to look around')).toBeVisible({
+    timeout: 60_000,
+  });
+
+  const canvas = page.locator('canvas');
+  const frame = async () => (await canvas.screenshot()).toString('base64');
+
+  // The settling move must actually happen. It previously did not: under
+  // frameloop="demand" a useFrame callback only runs when something calls
+  // invalidate(), so the drift ran for exactly one frame and stopped — which
+  // is indistinguishable from a working static scene, and was shipped that
+  // way. Sampling across the arc catches it.
+  const a = await frame();
+  await page.waitForTimeout(1500);
+  const b = await frame();
+  expect(a, 'scene never moved — invalidate() is probably missing').not.toEqual(b);
+
+  // And it must then stop. An endless drift would defeat demand mode: every
+  // frame of movement is a frame rendered, on a page nobody is interacting
+  // with, forever.
+  await page.waitForTimeout(6000);
+  const c = await frame();
+  await page.waitForTimeout(2500);
+  const d = await frame();
+  expect(c, 'scene is still animating after its arc should have ended').toEqual(d);
+});

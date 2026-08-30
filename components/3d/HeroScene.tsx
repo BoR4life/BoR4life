@@ -138,65 +138,98 @@ function Bay({ onReady }: { onReady: () => void }) {
 }
 
 /**
- * A very slow, very small orbital drift.
+ * A brief settling move when the scene first appears, then stillness.
  *
- * Vestibular safety is a hard rule (docs/03-3d-production-spec.md), so this
- * is deliberately below the threshold at which motion reads as motion: a few
- * degrees over a minute, easing to a stop the moment the visitor touches the
- * controls. It exists only to signal "this is live, you can move it" — a
- * completely static canvas is indistinguishable from the poster underneath
- * it, which would make the whole WebGL layer pointless.
+ * Three constraints collide here and the shape below is what satisfies all
+ * of them.
  *
- * It never runs under reduced motion, because the capability gate in
+ * A completely static canvas is indistinguishable from the poster
+ * underneath it, so the WebGL layer would be paying its cost for nothing.
+ * But an indefinite drift defeats `frameloop="demand"` entirely: every
+ * frame of movement is a frame rendered, so "renders only when something
+ * changes" becomes "renders forever" and the power saving that justified
+ * demand mode is gone. And vestibular safety is a hard rule for this
+ * audience (docs/03-3d-production-spec.md), not a preference — so whatever
+ * moves has to move very little.
+ *
+ * So: a finite arc, eased to a stop over a few seconds, then the loop goes
+ * quiet and stays quiet until the visitor drags. Long enough to read as
+ * alive, short enough that nothing is moving while anyone is reading.
+ *
+ * The invalidate() call is load-bearing and easy to omit. Under demand mode
+ * useFrame subscribers only run during a render, and a render only happens
+ * when something invalidates — so without it this ran exactly once and
+ * stopped. Which looked precisely like a working static scene, as did
+ * driving camera.position directly while OrbitControls owned it.
+ *
+ * It never runs under reduced motion: the capability gate in
  * lib/capability.ts refuses to mount the canvas at all in that case.
  */
-function Drift({ enabled }: { enabled: React.RefObject<boolean> }) {
-  const camera = useThree((s) => s.camera);
+const DRIFT_SECONDS = 5;
+const DRIFT_ARC = 0.055; // radians — about 3 degrees
 
-  // Orbit around the look-at point, not around the world origin. Orbiting
-  // the origin swings the camera through the room's corner, because the bay
-  // is built in positive-x space with the origin outside the framing.
-  const { radius, base, height } = useMemo(() => {
-    const [tx, ty, tz] = CAMERA_TARGET;
-    const dx = camera.position.x - tx;
-    const dz = camera.position.z - tz;
-    return {
-      radius: Math.hypot(dx, dz),
-      base: Math.atan2(dx, dz),
-      height: camera.position.y - ty,
-    };
-  }, [camera]);
+type Controls = { getAzimuthalAngle(): number; setAzimuthalAngle(a: number): void; update(): boolean };
 
-  const t = useRef(0);
+function Drift({
+  enabled,
+  controls,
+}: {
+  enabled: React.RefObject<boolean>;
+  controls: React.RefObject<Controls | null>;
+}) {
+  const invalidate = useThree((s) => s.invalidate);
+  const elapsed = useRef(0);
+  const base = useRef<number | null>(null);
 
   useFrame((_, delta) => {
-    if (!enabled.current) return;
-    t.current += delta * 0.03;
-    const a = base + Math.sin(t.current) * 0.05; // ~3 degrees either side
-    const [tx, ty, tz] = CAMERA_TARGET;
-    camera.position.set(
-      tx + Math.sin(a) * radius,
-      ty + height,
-      tz + Math.cos(a) * radius,
-    );
-    camera.lookAt(tx, ty, tz);
+    const ctl = controls.current;
+    if (!enabled.current || !ctl) return;
+
+    // Drive OrbitControls, NOT camera.position directly.
+    //
+    // This is the whole reason the first version did nothing visible.
+    // OrbitControls owns the camera: update() recomputes its position from
+    // an internal spherical coordinate around the target, every frame. Any
+    // camera.position.set() made from a useFrame callback is silently
+    // overwritten before the frame is drawn, so the drift ran, had no
+    // effect, and looked exactly like a working static scene.
+    if (base.current === null) base.current = ctl.getAzimuthalAngle();
+
+    elapsed.current += delta;
+    const t = Math.min(elapsed.current / DRIFT_SECONDS, 1);
+    // Ease-out cubic: quickest at the start, imperceptible as it settles,
+    // so there is no moment where the motion visibly stops dead.
+    const eased = 1 - Math.pow(1 - t, 3);
+
+    ctl.setAzimuthalAngle(base.current + DRIFT_ARC * eased);
+    ctl.update();
+
+    if (t >= 1) {
+      // Done. Stop asking for frames so demand mode can go quiet.
+      enabled.current = false;
+      return;
+    }
+    invalidate();
   });
 
   return null;
 }
 
 export default function HeroScene({ onReady }: { onReady: () => void }) {
-  // Drift stops permanently on first interaction. A camera that resumes
-  // moving after the visitor let go feels broken, not alive.
+  // Drift stops permanently — on first interaction, or when its own arc
+  // completes. A camera that resumes moving after the visitor let go feels
+  // broken, not alive.
   const drifting = useRef(true);
+  const controls = useRef<Controls | null>(null);
 
   return (
     <Canvas
       // dpr capped at 2: retina phones otherwise render at 3x and drop frames.
       dpr={[1, 2]}
       // "demand" renders only when something changes — a large power and
-      // thermal saving. Drift calls invalidate() through useFrame, so the
-      // loop still runs while it is active and stops dead when it is not.
+      // thermal saving, and the reason Drift is a finite settling move
+      // rather than a continuous one: an endless drift would request a
+      // frame forever and turn this back into a full render loop.
       frameloop="demand"
       shadows="soft"
       gl={{
@@ -220,7 +253,7 @@ export default function HeroScene({ onReady }: { onReady: () => void }) {
     >
       <Suspense fallback={null}>
         <Bay onReady={onReady} />
-        <Drift enabled={drifting} />
+        <Drift enabled={drifting} controls={controls} />
       </Suspense>
 
       {/* Exactly one shadow-casting light — the budget allows no more. The
@@ -235,6 +268,7 @@ export default function HeroScene({ onReady }: { onReady: () => void }) {
       <ambientLight intensity={0.15} />
 
       <OrbitControls
+        ref={controls as never}
         // The user moves the camera or it holds still. No involuntary
         // motion beyond the drift above — vestibular safety is a hard rule
         // here, not a preference.
