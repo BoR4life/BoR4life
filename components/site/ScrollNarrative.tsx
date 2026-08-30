@@ -139,13 +139,24 @@ export function ScrollNarrative() {
               loading={i === last ? 'eager' : 'lazy'}
               decoding="async"
               aria-hidden={i === last ? undefined : true}
-              className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-reveal"
               // z-index makes the active stage authoritative. Opacity alone
               // proved fragile: during a cross-fade two absolutely-stacked
               // layers can both be opaque for a frame, and the later one in
               // DOM order silently covered the intended image — which is
               // why the opening frontier frame was never visible.
-              style={{ opacity: opacityFor(i), zIndex: i === activeIndex ? 2 : 1 }}
+              //
+              // Utility classes, NOT an inline style prop: Next.js renders
+              // a style prop as a `style="..."` attribute, and a strict
+              // style-src refuses those outright — a nonce cannot be
+              // attached to a style attribute. With inline styles this
+              // whole stack rendered at its CSS default until hydration,
+              // meaning all three frames were opaque at once and the last
+              // in DOM order won. The opening frame was invisible for the
+              // entire pre-hydration window, which is precisely the LCP
+              // window this narrative exists to fill.
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-reveal ${
+                opacityFor(i) === 1 ? 'opacity-100' : 'opacity-0'
+              } ${i === activeIndex ? 'z-[2]' : 'z-[1]'}`}
             />
           </picture>
         ))}

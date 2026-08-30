@@ -47,11 +47,30 @@ export function buildCsp(
   nonce: string,
   env: Record<string, string | undefined>,
 ): string {
-  const connect = ["'self'", ...analyticsOrigins(env)].join(' ');
+  // blob: is required by the KTX2 transcoder, which hands its decoded
+  // texture back through a blob URL that three then fetches. Without it the
+  // model loads, the geometry draws, and the monitor screen is silently
+  // untextured — the browser logs "Refused to connect to blob:" and nothing
+  // else surfaces. It is not a widening of trust: a blob URL is created by
+  // this page, is same-origin by construction, and cannot address a remote
+  // host, so no data can leave the origin through it.
+  const connect = ["'self'", 'blob:', ...analyticsOrigins(env)].join(' ');
 
   return [
     `default-src 'self'`,
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
+    // 'wasm-unsafe-eval' is NOT 'unsafe-eval'. It permits exactly one
+    // thing — compiling and instantiating WebAssembly — and grants no
+    // ability to eval() JavaScript, which is the capability that actually
+    // matters for script injection. The hero model's geometry decoder is
+    // WebAssembly, so without this Chrome blocks WebAssembly.instantiate
+    // and the model silently never appears.
+    //
+    // Keeping full 'unsafe-eval' out is what forced the asset pipeline to
+    // meshopt: Draco and KTX2 both decode through Emscripten embind, which
+    // calls `new Function`, and neither can run under this policy. The gate
+    // that used to require them is corrected in budgets.json. See
+    // docs/08-security.md and components/3d/HeroScene.tsx.
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'wasm-unsafe-eval'`,
     `style-src 'self' 'nonce-${nonce}'`,
     `img-src 'self' data:`,
     `font-src 'self'`,

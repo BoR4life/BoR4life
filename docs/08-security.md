@@ -39,12 +39,76 @@ against injected scripts, and the reason the rest of the header list is
 supporting rather than primary.
 
 ```
-default-src 'self'; script-src 'self' 'nonce-<per-request>' 'strict-dynamic';
+default-src 'self';
+script-src 'self' 'nonce-<per-request>' 'strict-dynamic' 'wasm-unsafe-eval';
 style-src 'self' 'nonce-...'; img-src 'self' data:; font-src 'self';
-connect-src 'self'; media-src 'self'; worker-src 'self' blob:;
+connect-src 'self' blob: [analytics origin, only when configured];
+media-src 'self'; worker-src 'self' blob:;
 frame-ancestors 'none'; base-uri 'self'; form-action 'self';
 object-src 'none'; upgrade-insecure-requests
 ```
+
+### `'wasm-unsafe-eval'`, and what it cost the 3D pipeline
+
+`'wasm-unsafe-eval'` is **not** `'unsafe-eval'`. It permits compiling and
+instantiating WebAssembly and nothing else — no `eval()`, no
+`new Function()`. The hero model's geometry decoder is WebAssembly, so
+without it Chrome blocks `WebAssembly.instantiate` and the model never
+renders.
+
+Holding the line on full `'unsafe-eval'` is what dictated the asset format,
+and this is the least obvious constraint in the whole repository:
+
+**Draco and KTX2/Basis cannot be used on this site.** Both decoders are
+Emscripten *embind* builds, and embind constructs its invoker functions at
+runtime with `new Function` — `craftInvokerFunction` in the Emscripten glue.
+Under this CSP that throws `EvalError` inside the decoder worker. The
+failure is completely silent: the poster underneath the canvas keeps
+rendering, the page looks correct, the build passes, and nothing anywhere
+reports the loss.
+
+So geometry is **meshopt** (`EXT_meshopt_compression`), whose decoder is
+hand-written, contains no `eval`, and embeds its own WebAssembly as base64 —
+meaning there is no decoder file to host and no CDN fetch. Textures are not
+supercompressed at all; GPU memory is controlled by clamping dimensions
+instead, which is what `maxGpuTextureMb` in `budgets.json` now measures.
+
+`budgets.json` used to *require* `KHR_draco_mesh_compression` and
+`KHR_texture_basisu`. That gate was unsatisfiable on this site — it demanded
+a format the site's own security policy forbids decoding. It has been
+corrected rather than relaxed.
+
+**Never point a loader at a CDN to fix a decoder problem.** three's
+`DRACOLoader` and drei's `useGLTF` both default to Google's gstatic
+endpoint. That would be the same mistake as drei's `<Environment preset>`
+fetching an HDRI from `raw.githack.com`: an undeclared third-party
+dependency and every visitor's IP reaching a third party from a healthcare
+vendor's site.
+
+### `connect-src blob:`
+
+Required by three's decoder workers, which pass data back through blob URLs.
+Not a widening of trust: a blob URL is minted by the page, is same-origin by
+construction, and cannot address a remote host, so nothing can leave the
+origin through it. `tests/csp-build.spec.ts` asserts no `http(s)` source ever
+appears in `connect-src` except a deliberately configured analytics origin.
+
+### Inline styles are refused, and that broke first paint
+
+`style-src 'self' 'nonce-...'` refuses inline `style="..."` attributes, and a
+CSP nonce **cannot** be attached to a style attribute — the browser says so
+explicitly. React `style` props are server-rendered by Next.js as exactly
+those attributes, so every one of them was silently dropped until hydration.
+
+On the homepage that was 28 refusals, and it mattered: the scroll
+narrative's three stacked frames all rendered at their CSS default opacity,
+so the last in DOM order covered the opening frame for the entire
+pre-hydration window — the LCP window the narrative exists to fill. Fixed by
+moving to utility classes, which the stylesheet applies at first paint.
+
+**Rule: no `style` prop on anything whose appearance must be correct before
+JavaScript runs.** Use a class. `tests/hero3d.spec.ts` and the a11y suite
+would not have caught this; it was found by reading console output.
 
 `connect-src 'self'` means the browser cannot reach any third-party host.
 **This caught a real bug during the build:** drei's `<Environment preset>`

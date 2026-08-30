@@ -27,3 +27,7 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 tsconfig.tsbuildinfo
+
+# Blender intermediates. The optimised model in public/models is the
+# deliverable; the raw export is reproducible from scripts/build_clinical_bay.py.
+renders/

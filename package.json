@@ -31,6 +31,9 @@
   "devDependencies": {
     "@axe-core/playwright": "4.10.1",
     "@eslint/eslintrc": "3.2.0",
+    "@gltf-transform/core": "^4.2.1",
+    "@gltf-transform/extensions": "^4.2.1",
+    "@gltf-transform/functions": "^4.2.1",
     "@next/bundle-analyzer": "15.5.24",
     "@playwright/test": "1.62.1",
     "@types/node": "22.10.5",

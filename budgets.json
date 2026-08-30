@@ -1,6 +1,5 @@
 {
   "$comment": "Single source of truth for every quality gate. scripts/validate-assets.mjs and the ship-check skill both read this file. Changing a number here changes the gate everywhere. Numbers are ceilings unless named *_min.",
-
   "coreWebVitals": {
     "$comment": "Field-realistic targets at p75 on a mid-tier Android over 4G, not lab-only numbers.",
     "lcpMs": 2000,
@@ -8,51 +7,82 @@
     "cls": 0.05,
     "ttfbMs": 600
   },
-
   "lighthouse": {
-    "mobile": { "performance_min": 90, "accessibility_min": 100, "bestPractices_min": 95, "seo_min": 100 },
-    "desktop": { "performance_min": 95, "accessibility_min": 100, "bestPractices_min": 100, "seo_min": 100 }
+    "mobile": {
+      "performance_min": 90,
+      "accessibility_min": 100,
+      "bestPractices_min": 95,
+      "seo_min": 100
+    },
+    "desktop": {
+      "performance_min": 95,
+      "accessibility_min": 100,
+      "bestPractices_min": 100,
+      "seo_min": 100
+    }
   },
-
   "javascript": {
     "$comment": "Gzipped. The 3D runtime MUST be a lazy chunk so it never counts against first load.",
     "initialLoadKb": 180,
     "threeDChunkKb": 350,
     "totalRouteKb": 600
   },
-
   "models": {
-    "$comment": "Per-file, AFTER Draco geometry compression and KTX2 texture compression.",
+    "$comment": "Per-file, AFTER geometry compression. Textures are resized rather than supercompressed: see requiredExtensions$comment.",
     "heroGltfKb": 2048,
     "secondaryGltfKb": 800,
     "heroTriangles": 150000,
     "secondaryTriangles": 40000,
     "maxDrawCalls": 80,
     "maxTextureSize": 2048,
-    "requiredExtensions": ["KHR_draco_mesh_compression", "KHR_texture_basisu"],
-    "forbiddenFormats": [".fbx", ".obj", ".blend", ".dae", ".3ds", ".max"],
-    "forbiddenTextureFormats": [".png", ".jpg", ".jpeg", ".tga", ".tif", ".tiff", ".exr"]
+    "maxGpuTextureMb": 4,
+    "maxGpuTextureMb$comment": "Resident VRAM for all of a model's textures: width*height*4 bytes plus a third again for mipmaps. This is the number that decides whether a mid-tier phone keeps the tab alive, and it is invisible in download size \u2014 a 29KB PNG at 1024x640 costs 3.5MB here.",
+    "requiredExtensions": [
+      "EXT_meshopt_compression"
+    ],
+    "forbiddenFormats": [
+      ".fbx",
+      ".obj",
+      ".blend",
+      ".dae",
+      ".3ds",
+      ".max"
+    ],
+    "forbiddenTextureFormats": [
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".tga",
+      ".tif",
+      ".tiff",
+      ".exr"
+    ],
+    "requiredExtensions$comment": "Was [KHR_draco_mesh_compression, KHR_texture_basisu]. Both are unreachable on this site and the gate was therefore unsatisfiable: their decoders are Emscripten embind, and embind builds invoker functions at runtime with new Function. Our CSP forbids 'unsafe-eval' (lib/csp.ts), so both throw EvalError inside the decoder worker and the model silently never renders. meshoptimizer's decoder contains no eval and is the only geometry compression a strict CSP can run. Texture memory is controlled by the 512px clamp in scripts/optimize-gltf.sh instead \u2014 GPU cost is width*height*4, independent of the file size on disk.",
+    "forbiddenTextureFormats$comment": "External texture references only. Embedded PNG/JPEG is permitted because KTX2 cannot be decoded under this site's CSP; dimensions and maxGpuTextureMb are the control."
   },
-
   "prerenderedStills": {
     "$comment": "The workhorse. Most 3D on the site is this, not live WebGL.",
-    "formats": ["avif", "webp"],
+    "formats": [
+      "avif",
+      "webp"
+    ],
     "maxWidth": 2400,
     "avifKb": 250,
     "webpKb": 400,
     "requiresAltText": true
   },
-
   "prerenderedVideo": {
     "$comment": "Turntables and camera moves. Poster frame is mandatory so nothing pops in.",
-    "formats": ["av1", "h264"],
+    "formats": [
+      "av1",
+      "h264"
+    ],
     "maxDurationSec": 6,
     "av1Kb": 1500,
     "h264Kb": 2500,
     "requiresPosterFrame": true,
     "mustBeMutedAndInline": true
   },
-
   "accessibility": {
     "$comment": "Non-negotiable. A healthcare-education company shipping an inaccessible site is a credibility failure, not just a compliance one.",
     "wcagLevel": "AA",
@@ -63,7 +93,6 @@
     "noContentOnlyInWebGL": true,
     "keyboardOperable": true
   },
-
   "seo": {
     "requiresStructuredData": true,
     "requiresOgImage": true,

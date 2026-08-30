@@ -54,7 +54,7 @@ export default async function SolutionPage({
           </p>
         </Reveal>
 
-        <Reveal delay={80}>
+        <Reveal step={1}>
           <figure className="mt-12 overflow-hidden rounded border border-ink-700">
             <picture>
               <source srcSet={`${solution.image}.avif`} type="image/avif" />
@@ -81,7 +81,7 @@ export default async function SolutionPage({
         </Reveal>
         <div className="mt-12 grid gap-10 md:grid-cols-3">
           {solution.points.map((point, i) => (
-            <Reveal key={point.title} delay={i * 80}>
+            <Reveal key={point.title} step={i}>
               <h2 className="text-lg font-semibold text-ink-900">
                 {point.title}
               </h2>

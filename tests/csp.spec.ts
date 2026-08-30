@@ -19,7 +19,9 @@ test('CSP is strict and the nonce rotates per request', async ({ request }) => {
   expect(csp).not.toContain("'unsafe-inline'");
   expect(csp).not.toContain("'unsafe-eval'");
   expect(csp).toContain("frame-ancestors 'none'");
-  expect(csp).toContain("connect-src 'self'");
+  expect(csp).toContain("connect-src 'self' blob:");
+  // No remote host may appear in connect-src on the served policy.
+  expect(csp).not.toMatch(/connect-src[^;]*https?:\/\//);
 
   const nonceOf = (h: string) => h.match(/'nonce-([A-Za-z0-9+/=]+)'/)?.[1];
   const a = nonceOf(csp);

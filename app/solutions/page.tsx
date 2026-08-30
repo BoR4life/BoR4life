@@ -61,7 +61,7 @@ export default function SolutionsPage() {
               </figure>
             </Reveal>
 
-            <Reveal delay={90}>
+            <Reveal step={1}>
               <Eyebrow ground={i % 2 === 0 ? 'paper' : 'ink'}>
                 {solution.audience}
               </Eyebrow>

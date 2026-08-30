@@ -3,6 +3,7 @@ import { ScrollNarrative } from '@/components/site/ScrollNarrative';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { ScenarioVideo } from '@/components/site/ScenarioVideo';
+import { HeroCanvas } from '@/components/3d/HeroCanvas';
 
 /**
  * Home page.
@@ -103,7 +104,7 @@ export default function Home() {
         <ul className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {CLIENTS.map((client, i) => (
             <li key={client.name}>
-              <Reveal delay={i * 60}>
+              <Reveal step={i}>
                 <p className="text-lg font-semibold text-paper-0">
                   {client.name}
                 </p>
@@ -157,7 +158,7 @@ export default function Home() {
                 would look soft stretched across a hero. */}
             <ScenarioVideo />
           </Reveal>
-          <Reveal delay={100}>
+          <Reveal step={1}>
             <h3 className="text-xl font-semibold text-paper-0">
               This is a scenario, not a showreel.
             </h3>
@@ -172,7 +173,7 @@ export default function Home() {
 
         <div className="mt-16 grid gap-12 md:grid-cols-3">
           {PILLARS.map((pillar, i) => (
-            <Reveal key={pillar.title} delay={i * 90}>
+            <Reveal key={pillar.title} step={i}>
               <figure className="overflow-hidden rounded border border-ink-700">
                 <picture>
                   <source srcSet={`${pillar.image}.avif`} type="image/avif" />
@@ -208,7 +209,52 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* 5. What we measure — the evidence framing, without inventing
+      {/* 5. The live scene.
+          This is the one interactive WebGL surface on the site, and it sits
+          here rather than in the hero on purpose. In the hero it would be
+          decoration competing with the headline for the LCP; here it lands
+          immediately after the recorded scenario, so the beat reads watch
+          it, then touch it, then see what it measures — which is the actual
+          argument. It is also the only place on the site where the medium
+          demonstrates itself instead of describing itself.
+
+          Everything about the fallback path is deliberate: the pre-rendered
+          still is the LCP element and never leaves the DOM, and the canvas
+          only ever mounts over it on a device that passes the capability
+          gate. A locked-down hospital laptop gets the composition as a
+          fast image, which is the visitor who matters most. */}
+      <Section ground="ink" size="lg" labelledBy="live-heading">
+        <Reveal>
+          <Eyebrow id="live-heading">Look around</Eyebrow>
+          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+            This is a real environment, running in your browser.
+          </p>
+        </Reveal>
+
+        <div className="mt-12 grid items-center gap-12 lg:grid-cols-5 lg:gap-16">
+          <Reveal className="lg:col-span-3">
+            <HeroCanvas alt="A resuscitation bay: bed with rails and a folded blanket, a wall-mounted patient monitor showing an ECG trace, a sharps bin, and a procedure trolley within arm's reach of the bedside." />
+          </Reveal>
+          <Reveal step={1} className="lg:col-span-2">
+            <h3 className="text-xl font-semibold text-paper-0">
+              Built to the layout, not to the render.
+            </h3>
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+              A resuscitation bay, built to the layout learners actually work
+              in — bed, monitor, trolley, the reach distances that decide
+              whether a procedure flows or stalls. In the headset it is the
+              same geometry at full scale, with the scenario running.
+            </p>
+            <p className="mt-4 max-w-prose text-sm leading-relaxed text-ink-300">
+              If your device is set to reduce motion, or is conserving data,
+              you are seeing the still frame instead — deliberately, and it is
+              the same composition.
+            </p>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* 6. What we measure — the evidence framing, without inventing
           outcome statistics we cannot cite. */}
       <Section ground="paper" size="lg" labelledBy="measure-heading">
         <Reveal>
@@ -222,7 +268,7 @@ export default function Home() {
 
         <dl className="mt-14 grid gap-10 md:grid-cols-3">
           {MEASURES.map((m, i) => (
-            <Reveal key={m.title} delay={i * 80}>
+            <Reveal key={m.title} step={i}>
               <dt className="text-lg font-semibold">{m.title}</dt>
               <dd className="mt-3 text-sm leading-relaxed text-ink-500">
                 {m.body}
@@ -263,7 +309,7 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <Reveal delay={100}>
+          <Reveal step={1}>
             <ul className="grid grid-cols-2 gap-x-8 gap-y-4">
               {MARKETS.map((market) => (
                 <li
@@ -321,7 +367,7 @@ export default function Home() {
             </figure>
           </Reveal>
 
-          <Reveal delay={100}>
+          <Reveal step={1}>
             <Eyebrow ground="paper" id="founder-heading">
               Built by nurses, for nurses
             </Eyebrow>
