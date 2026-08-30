@@ -12,19 +12,19 @@ const PILLARS = [
     title: 'Contextual environments',
     body: 'Learners step into the clinical space the scenario actually happens in — a ward, a resus bay, a patient’s home — rather than a lecture theatre or a checklist. Context is what makes recall transfer to the real setting.',
     image: '/images/hero-bay-poster',
-    alt: 'A clinical resuscitation bay, lit and equipped for a scenario.',
+    alt: 'A clinical resuscitation bay, lit and equipped, with a patient monitor showing live vital signs.',
   },
   {
     title: 'AI-driven roleplay',
     body: 'Simulated patients and colleagues respond to what the learner actually says, adapting as the conversation develops. Communication is practised and assessed rather than scripted and skipped.',
-    image: '/images/bay-night',
-    alt: 'The same bay before a scenario begins, lit by a single warm light.',
+    image: '/images/pillar-environment',
+    alt: 'Bedside view of the clinical bay, at the vantage a clinician works from.',
   },
   {
     title: 'Learning analytics',
     body: 'Every scenario produces data: which decisions were made and when, how escalation was handled, where procedure diverged from the expected pathway. Visible per learner and per cohort.',
-    image: '/images/frontier-state1',
-    alt: 'An abstract landscape at first light, representing new capability.',
+    image: '/images/pillar-analytics',
+    alt: 'A patient monitor displaying ECG, oxygen saturation and respiration traces with numeric values.',
   },
 ];
 

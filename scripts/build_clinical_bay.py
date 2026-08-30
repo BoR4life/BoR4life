@@ -28,6 +28,8 @@ from mathutils import Vector
 # Clinical palette. Getting stainless, PVC, vinyl and skin right is ~80% of
 # believability in a clinical space, so these are tuned rather than guessed.
 # ----------------------------------------------------------------------------
+VITALS_STRENGTH = 2.4   # raised in night mode, where the screen is the key light
+
 PALETTE = {
     "floor_vinyl":   ((0.15, 0.17, 0.19, 1), 0.0, 0.20),
     "wall_paint":    ((0.52, 0.54, 0.55, 1), 0.0, 0.65),
@@ -51,7 +53,6 @@ PALETTE = {
 
 EMISSIVE = {
     # name: (colour, strength)
-    "screen_vitals": ((0.06, 0.42, 0.40, 1), 9.0),
     "screen_defib":  ((0.10, 0.40, 0.18, 1), 7.0),
     "ceiling_light": ((1.00, 0.98, 0.95, 1), 2.2),
 }
@@ -68,6 +69,33 @@ def _set(bsdf, key, value):
     """Socket names shift between Blender versions; fail soft rather than hard."""
     if key in bsdf.inputs:
         bsdf.inputs[key].default_value = value
+
+
+def make_screen_material(name, texture_path, strength=2.4):
+    """Emissive material driven by an image texture, for the monitor.
+
+    Falls back to a plain emissive fill if the texture is missing, so the
+    scene always renders — a missing asset should degrade the frame, never
+    break the build.
+    """
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    nt = mat.node_tree
+    nt.nodes.clear()
+    out = nt.nodes.new('ShaderNodeOutputMaterial')
+    em = nt.nodes.new('ShaderNodeEmission')
+    em.inputs['Strength'].default_value = strength
+
+    if texture_path and os.path.exists(texture_path):
+        tex = nt.nodes.new('ShaderNodeTexImage')
+        tex.image = bpy.data.images.load(texture_path)
+        tex.interpolation = 'Cubic'
+        nt.links.new(tex.outputs['Color'], em.inputs['Color'])
+    else:
+        em.inputs['Color'].default_value = (0.06, 0.42, 0.40, 1)
+
+    nt.links.new(em.outputs['Emission'], out.inputs['Surface'])
+    return mat
 
 
 def make_material(name, base_color, metallic, roughness,
@@ -96,6 +124,15 @@ def build_materials():
     for name, (col, strength) in EMISSIVE.items():
         MATS[name] = make_material(name, (0.02, 0.02, 0.02, 1), 0.0, 0.5,
                                    emission=col, emission_strength=strength)
+
+    # The patient monitor gets the generated vitals display rather than a
+    # flat fill. Generate it with scripts/make_vitals_screen.py.
+    here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    MATS["screen_vitals"] = make_screen_material(
+        "screen_vitals",
+        os.path.join(here, "assets", "textures", "vitals-screen.png"),
+        strength=VITALS_STRENGTH,
+    )
 
 
 def box(name, size, location, material, rotation=(0, 0, 0)):
@@ -232,6 +269,26 @@ def build_bed():
                     (BED_X - 0.30, BED_Y + 0.75), (BED_X + 0.30, BED_Y + 0.75)], r=0.055)
 
 
+def screen_plane(name, size, location, yaw=0.0):
+    """A single-faced plane for an image-textured display.
+
+    Deliberately not a box: a cube's UVs are laid out per-face, so an image
+    texture appears as a sliver rather than filling the screen. A plane
+    unwraps 0-1 across its one face, which is what the vitals texture needs.
+    Created flat then stood upright and yawed into place.
+    """
+    bpy.ops.mesh.primitive_plane_add(size=1, location=location)
+    obj = bpy.context.object
+    obj.name = name
+    obj.scale = (size[0], size[1], 1)
+    # location/rotation MUST be False: transform_apply applies all three by
+    # default, which silently moved this plane to the world origin.
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    obj.rotation_euler = (math.radians(90), 0, yaw)
+    obj.data.materials.append(MATS["screen_vitals"])
+    return obj
+
+
 def build_monitor():
     """Patient monitor on an articulated wall arm, angled toward the camera."""
     cylinder("Mon_Arm_Pivot", 0.035, 0.22, (3.72, ROOM_D - 0.16, 1.86), "stainless")
@@ -242,12 +299,8 @@ def build_monitor():
     body = box("Mon_Body", (0.44, 0.14, 0.34), (3.22, ROOM_D - 0.62, 1.86),
                "device_body", rotation=(0, 0, math.radians(-24)))
     bevel(body, 0.010, 3)
-    scr = box("Mon_Screen", (0.38, 0.02, 0.26), (3.205, ROOM_D - 0.695, 1.87),
-              "screen_vitals", rotation=(0, 0, math.radians(-24)))
-
-    # Trace bar under the screen suggesting a rhythm strip
-    box("Mon_Trace", (0.34, 0.015, 0.03), (3.20, ROOM_D - 0.700, 1.70),
-        "screen_vitals", rotation=(0, 0, math.radians(-24)))
+    screen_plane("Mon_Screen", (0.38, 0.26), (3.205, ROOM_D - 0.700, 1.87),
+                 yaw=math.radians(-24))
 
 
 def build_iv_pole():
@@ -408,16 +461,32 @@ def build_lighting(night=False):
     area("Bounce", (2.5, 0.30, 1.40), (3.0, 2.0), 7, rot=(math.radians(-90), 0, 0))
 
 
-def build_camera(dof=True):
+# Named views. Each is a real vantage in the same bay — the platform page
+# uses these rather than abstract "concept" imagery, because a picture of
+# the actual environment is both more honest and more persuasive than a
+# metaphor for it.
+VIEWS = {
+    # The established hero framing.
+    'hero':    {'lens': 32.0, 'loc': (1.05, 0.66, 1.64), 'target': (2.86, 3.66, 1.10)},
+    # Bedside: closer, lower, the vantage a clinician actually works from.
+    'bedside': {'lens': 40.0, 'loc': (1.55, 1.95, 1.32), 'target': (2.75, 3.55, 0.98)},
+    # The monitor, where measurement becomes visible.
+    'monitor': {'lens': 62.0, 'loc': (2.15, 3.30, 1.72), 'target': (3.22, 5.38, 1.84)},
+}
+
+
+def build_camera(dof=True, view='hero'):
+    spec = VIEWS.get(view, VIEWS['hero'])
+
     cam_data = bpy.data.cameras.new("Camera")
-    cam_data.lens = 32.0           # 32mm — wide enough to read the room, short of distortion
+    cam_data.lens = spec['lens']
     cam_data.sensor_width = 36.0
     cam = bpy.data.objects.new("Camera", cam_data)
-    cam.location = (1.05, 0.66, 1.64)   # foot-corner, standing eye height
+    cam.location = spec['loc']
     bpy.context.collection.objects.link(cam)
 
     target = bpy.data.objects.new("CamTarget", None)
-    target.location = (2.86, 3.66, 1.10)
+    target.location = spec['target']
     bpy.context.collection.objects.link(target)
     con = cam.constraints.new('TRACK_TO')
     con.target = target
@@ -458,7 +527,7 @@ def configure_render(width, height, samples):
     sc.view_settings.exposure = -0.35
 
 
-def build_all(dof=True, night=False):
+def build_all(dof=True, night=False, view='hero'):
     reset_scene()
     build_materials()
     build_room()
@@ -471,19 +540,25 @@ def build_all(dof=True, night=False):
     build_curtain()
     build_sundries()
     build_lighting(night=night)
-    build_camera(dof=dof)
+    build_camera(dof=dof, view=view)
     if night:
         # Panels off; the wall monitor stays lit and becomes a key light.
         mat = MATS["ceiling_light"]
         _set(mat.node_tree.nodes["Principled BSDF"], "Emission Strength", 0.0)
-        _set(MATS["screen_vitals"].node_tree.nodes["Principled BSDF"], "Emission Strength", 16.0)
+        for node in MATS["screen_vitals"].node_tree.nodes:
+            if node.type == 'EMISSION':
+                node.inputs['Strength'].default_value = 9.0
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--preview", action="store_true")
     ap.add_argument("--render-4k", action="store_true")
+    ap.add_argument("--web", action="store_true",
+                    help="2400x1350 — the site's max image width, far cheaper than 4K")
     ap.add_argument("--export-gltf", action="store_true")
+    ap.add_argument("--view", default="hero", choices=sorted(VIEWS),
+                    help="which vantage in the bay to render")
     ap.add_argument("--night", action="store_true",
                     help="the 'moment before' lighting state: one warm strip, screens glowing")
     ap.add_argument("--out", default="renders")
@@ -491,7 +566,7 @@ def main():
     args = ap.parse_args()
 
     os.makedirs(args.out, exist_ok=True)
-    build_all(dof=not args.export_gltf, night=args.night)
+    build_all(dof=not args.export_gltf, night=args.night, view=args.view)
 
     tris = sum(len(o.data.loop_triangles) if o.type == 'MESH' else 0
                for o in bpy.data.objects
@@ -500,13 +575,25 @@ def main():
 
     if args.preview:
         configure_render(960, 540, args.samples or 48)
-        bpy.context.scene.render.filepath = os.path.join(args.out, "preview-night.png" if args.night else "preview.png")
+        suffix = f"-{args.view}" if args.view != "hero" else ""
+        name = f"preview{suffix}-night.png" if args.night else f"preview{suffix}.png"
+        bpy.context.scene.render.filepath = os.path.join(args.out, name)
         bpy.ops.render.render(write_still=True)
         print("[render] preview written")
 
+    if args.web:
+        configure_render(2400, 1350, args.samples or 56)
+        suffix = f"-{args.view}" if args.view != "hero" else ""
+        name = f"web{suffix}-night.png" if args.night else f"web{suffix}.png"
+        bpy.context.scene.render.filepath = os.path.join(args.out, name)
+        bpy.ops.render.render(write_still=True)
+        print(f"[render] {name}")
+
     if args.render_4k:
         configure_render(3840, 2160, args.samples or 110)
-        bpy.context.scene.render.filepath = os.path.join(args.out, "hero-ward-night-4k.png" if args.night else "hero-ward-4k.png")
+        suffix = f"-{args.view}" if args.view != "hero" else ""
+        name = f"hero-ward{suffix}-night-4k.png" if args.night else f"hero-ward{suffix}-4k.png"
+        bpy.context.scene.render.filepath = os.path.join(args.out, name)
         bpy.ops.render.render(write_still=True)
         print("[render] 4K written")
 

@@ -81,7 +81,9 @@ def make_terrain(name, location, scale, noise_scale, height, seed,
     obj = bpy.context.object
     obj.name = name
     obj.scale = scale
-    bpy.ops.object.transform_apply(scale=True)
+    # As above: transform_apply applies location by default, which would
+    # move every terrain layer to the origin.
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
 
     tex = bpy.data.textures.new(f"{name}_noise", 'MUSGRAVE')
     tex.noise_basis = 'ORIGINAL_PERLIN'

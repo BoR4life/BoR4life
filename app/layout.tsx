@@ -3,6 +3,7 @@ import { headers } from 'next/headers';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
+import { SOCIAL_LINKS } from '@/lib/social';
 import './globals.css';
 
 /**
@@ -22,6 +23,28 @@ export const metadata: Metadata = {
     'Clinically authored immersive training that measurably changes what practitioners do under pressure. Built by nurses, for nurses.',
   robots: { index: true, follow: true },
   icons: { icon: '/favicon.ico' },
+  openGraph: {
+    type: 'website',
+    siteName: 'Bundle of Rays',
+    title: 'Bundle of Rays — Immersive learning for healthcare',
+    description:
+      'Clinically authored immersive training that measurably changes what practitioners do under pressure.',
+    images: [
+      {
+        url: '/images/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'Bundle of Rays — practise the moment before it counts.',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bundle of Rays — Immersive learning for healthcare',
+    description:
+      'Clinically authored immersive training that measurably changes what practitioners do under pressure.',
+    images: ['/images/og-default.png'],
+  },
 };
 
 export const viewport: Viewport = {
@@ -56,6 +79,7 @@ export default async function RootLayout({
     // Deliberately no `founder.alumniOf` — naming the PhD institution
     // would breach the ACU NDA. See docs/00-brand-brief.md.
     founder: { '@type': 'Person', name: 'Brad Chesham' },
+    sameAs: SOCIAL_LINKS.map((s) => s.href),
   };
 
   return (
