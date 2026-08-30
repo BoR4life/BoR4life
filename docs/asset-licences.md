@@ -42,6 +42,8 @@ Sketchfab" is not an answer you want to give a health department's legal team.
 | `team-learning-development.avif` | Drive "Marketing Images" — `VR training group.jpg` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `team-learning-development.webp` | Drive "Marketing Images" — `VR training group.jpg` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `models/hero-bay.glb` | `scripts/build_clinical_bay.py` — procedurally generated, no third-party geometry | Bundle of Rays | Owned | No | 2026-08-30 |
+| `bay-doorway.avif` | `scripts/build_clinical_bay.py --view doorway --web` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `bay-doorway.webp` | `scripts/build_clinical_bay.py --view doorway --web` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `video/scenario.webp` | Poster frame extracted from `VID_20250719_233639_579.mp4` (own capture) | Bundle of Rays | Owned | No | 2026-08-30 |
 
 > **Model releases outstanding.** `team-learning-development.*` shows six

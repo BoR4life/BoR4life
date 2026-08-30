@@ -67,8 +67,13 @@ export const SOLUTIONS: Solution[] = [
         body: 'Every patient receives the same explanation regardless of which clinician is on shift or how busy the department is that day.',
       },
     ],
-    image: '/images/bay-night',
-    alt: 'A clinical bay at night, lit by a single warm light.',
+    // The doorway view, not the night resus framing this used to carry.
+    // The copy above is about consent conversations — "the room they will
+    // be in" — and a bay at night lit by one warm light reads as an
+    // emergency, which is the wrong register for a calm pre-procedure
+    // explanation and quietly contradicts the argument the page makes.
+    image: '/images/bay-doorway',
+    alt: 'A clinical room seen from the doorway in daylight: bed made and empty, a patient monitor on the wall, an over-bed table and a supply trolley.',
   },
   {
     slug: 'custom',
