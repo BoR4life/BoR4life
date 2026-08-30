@@ -8,8 +8,9 @@ for (const route of PAGES) {
   test(`capture ${route}`, async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(route, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(1800);
     const name = route === '/' ? 'home' : route.slice(1).replace(/\//g, '-');
     await page.screenshot({ path: `/tmp/shot-${name}.png` });
+    await page.screenshot({ path: `/tmp/full-${name}.png`, fullPage: true });
   });
 }
