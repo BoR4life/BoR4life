@@ -76,6 +76,17 @@ export function buildCsp(
     `font-src 'self'`,
     `connect-src ${connect}`,
     `media-src 'self'`,
+    // The ONLY third-party host in this policy, and it is a frame rather
+    // than a script or a connection — youtube-nocookie can render inside
+    // that frame under its own origin's rules, and can reach nothing in
+    // this page. It exists for one partner video on the homepage.
+    //
+    // components/site/VideoEmbed.tsx does not create the iframe until the
+    // visitor presses play, so on a normal page load this directive
+    // permits something that never happens. That distinction is what keeps
+    // /privacy honest: we do not involve a third party on the visitor's
+    // behalf, they choose to.
+    `frame-src https://www.youtube-nocookie.com`,
     `worker-src 'self' blob:`, // three.js/R3F workers
     `frame-ancestors 'none'`,
     `base-uri 'self'`,

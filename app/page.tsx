@@ -4,6 +4,7 @@ import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 import { HeroCanvas } from '@/components/3d/HeroCanvas';
+import { VideoEmbed } from '@/components/site/VideoEmbed';
 
 /**
  * Home page.
@@ -167,6 +168,41 @@ export default function Home() {
               what you say. The learner works the procedure in sequence and
               the system records every decision along the way — including the
               ones not taken.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* AI-driven roleplay, shown rather than described. De-escalation is
+            the clearest case for conversational practice: it is the skill
+            most obviously untrainable from a manual, and the one where a
+            wrong sentence has immediate consequences. The video is
+            Bodyswaps' own and is labelled as theirs — see
+            components/site/VideoEmbed.tsx for why it does not contact
+            YouTube until someone presses play. */}
+        <div className="mt-16 grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
+          <Reveal className="lg:col-span-3">
+            <VideoEmbed
+              videoId="0h1FcfavIwU"
+              source="Bodyswaps"
+              title="De-escalation and aggression management"
+              summary="Conversational practice for the situations that escalate fastest — where what you say, and when, changes the outcome."
+            />
+          </Reveal>
+          <Reveal step={1} className="lg:col-span-2">
+            <h3 className="text-xl font-semibold text-paper-0">
+              The conversation is the skill.
+            </h3>
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+              De-escalation cannot be learned from a policy document. It
+              needs a person in front of you who reacts to your tone, your
+              distance and your timing — and who does not reset politely when
+              you get it wrong.
+            </p>
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+              Simulated patients and colleagues respond to what the learner
+              actually says and adapt as the exchange develops, so
+              communication is practised and assessed rather than scripted
+              and skipped.
             </p>
           </Reveal>
         </div>

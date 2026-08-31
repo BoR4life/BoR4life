@@ -210,7 +210,23 @@ const SECTIONS: PolicySection[] = [
           permits the page to make network requests to{' '}
           <strong>this website only</strong> — plus the analytics endpoint
           described above, and nothing else. Fonts are the ones already on your
-          device. Images and video are served from our own domain.
+          device. Our own images and video are served from our own domain.
+        </p>
+        <p>
+          <strong>One exception, and it is yours to trigger.</strong> The home
+          page carries a video published by Bodyswaps on YouTube. It is not
+          embedded in the ordinary way: on page load there is no iframe, no
+          YouTube script, no cookie and no request — only our own markup.
+          Nothing reaches YouTube unless you press play, at which point your
+          browser connects to them and they will see your IP address and that
+          you watched it, exactly as they would if you opened the video on
+          their own site. We use the no-cookie player, which suppresses the
+          advertising cookies the standard one sets.
+        </p>
+        <p>
+          The distinction matters: we do not hand a third party your details on
+          your behalf. You decide whether to involve them, and the page works
+          perfectly well if you never do.
         </p>
         <p>
           This is enforced by your browser, not merely promised by us: if a

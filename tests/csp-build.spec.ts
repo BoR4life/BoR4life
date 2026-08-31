@@ -74,6 +74,12 @@ test('the strict directives hold in every configuration', () => {
     expect(csp).not.toContain("'unsafe-eval'");
     expect(csp).toContain("'wasm-unsafe-eval'");
     expect(csp).toContain("frame-ancestors 'none'");
+    // The one permitted third-party host, and only as a frame. It must
+    // never appear in script-src or connect-src, where it could reach
+    // into this page rather than merely render beside it.
+    expect(csp).toContain('frame-src https://www.youtube-nocookie.com');
+    expect(csp).not.toMatch(/script-src[^;]*youtube/);
+    expect(csp).not.toMatch(/connect-src[^;]*youtube/);
     expect(csp).toContain("object-src 'none'");
     expect(csp).toContain("form-action 'self'");
     expect(csp).toContain(`'nonce-${NONCE}'`);
