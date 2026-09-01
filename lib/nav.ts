@@ -22,8 +22,9 @@ export const NAV_LINKS = [
  * never renders them.
  */
 export const LEGAL_LINKS = [
+  { href: '/customers', label: 'For customers' },
   { href: '/privacy', label: 'Privacy' },
   { href: '/accessibility', label: 'Accessibility' },
 ] as const;
 
-export const CTA = { href: '/contact', label: 'Book a demo' } as const;
+export const CTA = { href: '/contact', label: 'Request a demo' } as const;

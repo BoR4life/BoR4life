@@ -16,6 +16,7 @@ const PAGES = [
   '/contact',
   '/privacy',
   '/accessibility',
+  '/customers',
 ];
 
 for (const route of PAGES) {

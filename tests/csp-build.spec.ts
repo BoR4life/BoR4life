@@ -16,7 +16,7 @@ test('connect-src reaches no remote host when analytics are not configured', () 
   const csp = buildCsp(NONCE, {});
   // blob: is same-origin by construction — the page mints it and nothing
   // remote can be addressed through it. No http(s) source may appear here.
-  expect(csp).toContain("connect-src 'self' blob:;");
+  expect(csp).toContain("connect-src 'self';");
   expect(csp).not.toMatch(/connect-src[^;]*https?:\/\//);
 });
 
@@ -27,7 +27,7 @@ test('a configured analytics host is allowed, as a bare origin', () => {
   });
   // Origin only. A path in a CSP source expression is matched as a path
   // prefix, which would silently fail to match the real request URLs.
-  expect(csp).toContain("connect-src 'self' blob: https://eu.i.posthog.com;");
+  expect(csp).toContain("connect-src 'self' https://eu.i.posthog.com;");
 });
 
 test('a host without a key does not widen the policy', () => {
@@ -52,7 +52,7 @@ test('malformed or insecure hosts are dropped, never concatenated', () => {
       NEXT_PUBLIC_POSTHOG_KEY: 'phc_example',
       NEXT_PUBLIC_POSTHOG_HOST: host,
     });
-    expect(csp, host).toContain("connect-src 'self' blob:;");
+    expect(csp, host).toContain("connect-src 'self';");
     expect(csp, host).not.toContain("'unsafe-inline'");
   }
 });
@@ -67,12 +67,12 @@ test('the strict directives hold in every configuration', () => {
   ]) {
     const csp = buildCsp(NONCE, env);
     expect(csp).not.toContain("'unsafe-inline'");
-    // Note this does NOT match 'wasm-unsafe-eval', which the policy does
-    // carry: the substring needs a quote directly before "unsafe", and in
-    // 'wasm-unsafe-eval' that character is a hyphen. The distinction is the
-    // point — WebAssembly compilation is permitted, eval() is not.
+    // Nothing on the site compiles WebAssembly any more, so neither form
+    // of eval is granted. 'wasm-unsafe-eval' returns with the 3D scene, if
+    // it returns.
     expect(csp).not.toContain("'unsafe-eval'");
-    expect(csp).toContain("'wasm-unsafe-eval'");
+    expect(csp).not.toContain("'wasm-unsafe-eval'");
+    expect(csp).not.toContain('blob:');
     expect(csp).toContain("frame-ancestors 'none'");
     // The one permitted third-party host, and only as a frame. It must
     // never appear in script-src or connect-src, where it could reach

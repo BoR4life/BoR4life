@@ -31,6 +31,12 @@ export const EnquirySchema = z.object({
   //   - startedAt: form render time; a submit under ~2s is not a human.
   website: z.string().max(0).optional().or(z.literal('')),
   startedAt: z.coerce.number().int().nonnegative(),
+
+  // Lead source. Free-form on purpose: it is client-reported and parsed
+  // as untrusted text by lib/lead-source.ts, so validating its shape here
+  // would only reject the enquiry of a real person whose browser sent
+  // something odd. Bounded so it cannot be used as a payload.
+  leadSource: z.string().max(4000).optional().or(z.literal('')),
 });
 
 export type Enquiry = z.infer<typeof EnquirySchema>;

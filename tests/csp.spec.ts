@@ -19,7 +19,7 @@ test('CSP is strict and the nonce rotates per request', async ({ request }) => {
   expect(csp).not.toContain("'unsafe-inline'");
   expect(csp).not.toContain("'unsafe-eval'");
   expect(csp).toContain("frame-ancestors 'none'");
-  expect(csp).toContain("connect-src 'self' blob:");
+  expect(csp).toContain("connect-src 'self'");
   // No remote host may appear in connect-src on the served policy.
   expect(csp).not.toMatch(/connect-src[^;]*https?:\/\//);
 

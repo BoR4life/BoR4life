@@ -24,6 +24,7 @@ const ROUTES = [
   '/contact',
   '/privacy',
   '/accessibility',
+  '/customers',
 ];
 
 for (const route of ROUTES) {

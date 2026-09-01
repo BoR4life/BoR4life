@@ -42,7 +42,7 @@ export const metadata: Metadata = {
  * standard we have not been assessed against. See docs/08-security.md.
  */
 
-const UPDATED = '2026-08-30';
+const UPDATED = '2026-09-02';
 
 const SECTIONS: PolicySection[] = [
   {
@@ -53,7 +53,8 @@ const SECTIONS: PolicySection[] = [
         <p>
           This website sets <strong>no cookies</strong>, shows no advertising,
           loads no third-party fonts, embeds no social widgets, and shares
-          nothing with data brokers. The only personal information we receive
+          nothing with data brokers. Analytics, where enabled, keep one
+          anonymous identifier on this site only. The only personal information we receive
           is what you choose to type into the enquiry form.
         </p>
         <p>
@@ -114,8 +115,13 @@ const SECTIONS: PolicySection[] = [
           it is a general enquiry channel, not a clinical system.
         </p>
         <p>
-          Your enquiry reaches us as an email. We keep it for as long as we are
-          in conversation with you and afterwards in our business
+          Your enquiry reaches us as an email, together with where your visit
+          began — the site that linked you here (its address only, never the
+          page), any campaign tag on the link, which of our pages you read
+          first, and the country your connection came from. That is how we
+          learn whether a conference, a post or a referral actually leads to
+          conversations. It is stored nowhere except inside that email. We
+          keep it for as long as we are in conversation with you and afterwards in our business
           correspondence records; we do not copy it into a marketing database.
           Our email is delivered through Resend, which processes in the United
           States. If your organisation requires in-region processing before you
@@ -166,11 +172,13 @@ const SECTIONS: PolicySection[] = [
         </p>
         <ul>
           <li>
-            <strong>No cookies and no device storage.</strong> Analytics state
-            lives in memory for the length of your visit and is discarded when
-            you close the tab. Nothing persists to identify you on a return
-            visit, which means we cannot tell a returning reader from a new one
-            — a real analytical cost we accepted on purpose.
+            <strong>No cookies.</strong> Analytics keeps one anonymous
+            identifier in your browser&rsquo;s local storage — not a cookie,
+            so it is never sent to any other website and cannot be used to
+            follow you across the web. It lets us tell that a reader came back,
+            which for a site that existing customers return to is most of
+            what the numbers are for. It carries no name, no email and nothing
+            you typed, and clearing your browser data removes it.
           </li>
           <li>
             <strong>All text and all form inputs are masked.</strong> Anything

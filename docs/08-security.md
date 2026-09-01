@@ -40,58 +40,34 @@ supporting rather than primary.
 
 ```
 default-src 'self';
-script-src 'self' 'nonce-<per-request>' 'strict-dynamic' 'wasm-unsafe-eval';
+script-src 'self' 'nonce-<per-request>' 'strict-dynamic';
 style-src 'self' 'nonce-...'; img-src 'self' data:; font-src 'self';
-connect-src 'self' blob: [analytics origin, only when configured];
-media-src 'self'; worker-src 'self' blob:;
+connect-src 'self' [analytics origin, only when configured];
+media-src 'self'; frame-src https://www.youtube-nocookie.com;
 frame-ancestors 'none'; base-uri 'self'; form-action 'self';
 object-src 'none'; upgrade-insecure-requests
 ```
 
-### `'wasm-unsafe-eval'`, and what it cost the 3D pipeline
+### WebAssembly and `blob:` — granted for the 3D scene, withdrawn with it
 
-`'wasm-unsafe-eval'` is **not** `'unsafe-eval'`. It permits compiling and
-instantiating WebAssembly and nothing else — no `eval()`, no
-`new Function()`. The hero model's geometry decoder is WebAssembly, so
-without it Chrome blocks `WebAssembly.instantiate` and the model never
-renders.
+While the live 3D scene shipped, `script-src` carried `'wasm-unsafe-eval'`
+(WebAssembly compilation only — never `eval()`) and `connect-src` and
+`worker-src` carried `blob:` for the decoder workers. The scene is parked
+(`docs/03-3d-production-spec.md`), so all three grants are withdrawn and
+`tests/csp-build.spec.ts` now asserts their absence. The policy is as tight
+as it was before 3D existed.
 
-Holding the line on full `'unsafe-eval'` is what dictated the asset format,
-and this is the least obvious constraint in the whole repository:
-
-**Draco and KTX2/Basis cannot be used on this site.** Both decoders are
-Emscripten *embind* builds, and embind constructs its invoker functions at
-runtime with `new Function` — `craftInvokerFunction` in the Emscripten glue.
-Under this CSP that throws `EvalError` inside the decoder worker. The
-failure is completely silent: the poster underneath the canvas keeps
-rendering, the page looks correct, the build passes, and nothing anywhere
-reports the loss.
-
-So geometry is **meshopt** (`EXT_meshopt_compression`), whose decoder is
-hand-written, contains no `eval`, and embeds its own WebAssembly as base64 —
-meaning there is no decoder file to host and no CDN fetch. Textures are not
-supercompressed at all; GPU memory is controlled by clamping dimensions
-instead, which is what `maxGpuTextureMb` in `budgets.json` now measures.
-
-`budgets.json` used to *require* `KHR_draco_mesh_compression` and
-`KHR_texture_basisu`. That gate was unsatisfiable on this site — it demanded
-a format the site's own security policy forbids decoding. It has been
-corrected rather than relaxed.
+What was learned stays written down, because it will matter the day 3D
+returns: **Draco and KTX2 cannot be used on this site.** Both decoders are
+Emscripten *embind*, which builds invoker functions at runtime with
+`new Function`, and under this policy that throws `EvalError` inside the
+decoder worker — silently, behind a poster that keeps the page looking
+correct. meshopt was the only geometry compression that could run here.
 
 **Never point a loader at a CDN to fix a decoder problem.** three's
 `DRACOLoader` and drei's `useGLTF` both default to Google's gstatic
-endpoint. That would be the same mistake as drei's `<Environment preset>`
-fetching an HDRI from `raw.githack.com`: an undeclared third-party
-dependency and every visitor's IP reaching a third party from a healthcare
-vendor's site.
-
-### `connect-src blob:`
-
-Required by three's decoder workers, which pass data back through blob URLs.
-Not a widening of trust: a blob URL is minted by the page, is same-origin by
-construction, and cannot address a remote host, so nothing can leave the
-origin through it. `tests/csp-build.spec.ts` asserts no `http(s)` source ever
-appears in `connect-src` except a deliberately configured analytics origin.
+endpoint, which would put every visitor's IP in front of a third party on a
+healthcare vendor's site.
 
 ### Inline styles are refused, and that broke first paint
 

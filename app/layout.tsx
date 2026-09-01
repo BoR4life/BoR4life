@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { headers } from 'next/headers';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
+import { LeadSourceCapture } from '@/components/analytics/LeadSourceCapture';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 import { SOCIAL_LINKS } from '@/lib/social';
@@ -97,6 +98,7 @@ export default async function RootLayout({
           nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
+        <LeadSourceCapture />
         <PostHogProvider>
           <Header />
           {children}

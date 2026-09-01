@@ -22,11 +22,11 @@ Automated a11y tooling catches roughly 40% of real problems. Verify by hand:
   visible, order logical, no traps.
 - **Reduced motion** — every loop frozen to its poster, no scroll-scrub, no
   parallax, page still coherent.
-- **WebGL disabled** — hero shows its poster, page is complete.
+- **Video blocked** — the scenario clip shows its poster; the page is complete without it.
 - **JavaScript disabled** — content readable, nav usable.
-- **LCP element** — confirm it is the hero poster image, not a canvas and not
+- **LCP element** — confirm it is the hero heading, not an image and not
   a late font.
-- **Content parity** — no fact exists only inside the canvas or an image.
+- **Content parity** — no fact exists only inside a video or an image.
 
 ## Verdict
 

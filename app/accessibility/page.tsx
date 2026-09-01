@@ -21,7 +21,7 @@ export const metadata: Metadata = {
  *   - the automated gate            tests/a11y.spec.ts (axe, WCAG 2.2 AA)
  *   - zero-violations budget        budgets.json
  *   - contrast proven by maths      tests/contrast.spec.ts
- *   - reduced motion / no WebGL     tests/a11y.spec.ts, ScrollNarrative.tsx
+ *   - reduced motion                tests/a11y.spec.ts, Reveal.tsx
  *   - works without JavaScript      components/site/Reveal.tsx
  *   - skip link and landmarks       app/layout.tsx
  *   - manual pass before release    .claude/skills/ship-check/SKILL.md
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
  * buyer, because it is the one they would check.
  */
 
-const UPDATED = '2026-08-30';
+const UPDATED = '2026-09-02';
 
 const SECTIONS: PolicySection[] = [
   {
@@ -120,18 +120,14 @@ const SECTIONS: PolicySection[] = [
           </li>
           <li>
             <strong>Reduced motion.</strong> With the operating system set to
-            reduce motion, nothing animates and the 3D canvas never loads at
-            all. The still composition is the intended design, not a
+            reduce motion, nothing animates: every element renders in its
+            final position immediately. That is the intended design, not a
             degradation.
           </li>
           <li>
             <strong>Without JavaScript.</strong> All content is present and
             readable. Nothing on this site depends on an animation firing to
             become visible.
-          </li>
-          <li>
-            <strong>Without WebGL.</strong> If 3D is unavailable or blocked,
-            every page still reads correctly.
           </li>
           <li>
             <strong>Screen reader structure.</strong> One first-level heading
@@ -149,28 +145,25 @@ const SECTIONS: PolicySection[] = [
   },
   {
     id: 'motion',
-    heading: 'Motion, 3D and photosensitivity',
+    heading: 'Motion and photosensitivity',
     body: (
       <>
         <p>
-          We are an immersive-learning company, so this site uses motion and
-          real-time 3D. Both are treated as enhancements that must never be
-          required:
+          Motion on this site is limited to short fades as content comes into
+          view, and to video that you start yourself:
         </p>
         <ul>
           <li>
-            The scroll narrative cross-fades between still frames. It contains
-            no flashing, no strobing, and nothing that flashes more than three
-            times per second.
+            Nothing flashes, strobes, or changes more than three times per
+            second.
           </li>
           <li>
-            If you have asked your device to reduce motion, the animated
-            sequence does not run and the WebGL canvas is never created — which
-            also means it consumes no battery and no GPU.
+            If you have asked your device to reduce motion, the fades do not
+            run at all — every element is simply present.
           </li>
           <li>
-            No content auto-plays with sound, and nothing moves for longer than
-            five seconds without a way to stop it.
+            No video plays with sound until you press play, and nothing moves
+            for longer than five seconds without a way to stop it.
           </li>
         </ul>
       </>

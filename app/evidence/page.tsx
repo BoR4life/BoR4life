@@ -31,7 +31,7 @@ const DEPLOYMENTS = [
   },
   {
     client: 'Ohio State University',
-    detail: 'Two projects, via the Brad Innovation Fellowship.',
+    detail: 'Two projects; the founder is an Innovation Fellow there.',
     note: 'Third-party validation of the founder, not only the product.',
   },
   {

@@ -1,5 +1,12 @@
 # 3D Production Spec
 
+> **Parked, September 2026.** The live 3D scene and the scroll narrative
+> were removed from the site after review — the opening frame did not
+> land, and the founder chose to go type-led with real footage for
+> now. Everything below still works and stays for when 3D or 360 video
+> returns. Nothing in it currently ships.
+
+
 The answer to "what do we need to do to make this happen". Decisions are locked
 here so the agent does not relitigate them on every run.
 

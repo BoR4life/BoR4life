@@ -4,6 +4,8 @@ import { useActionState, useEffect, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { submitEnquiry, type EnquiryState } from './actions';
 import { ROLE_LABELS } from '@/lib/enquiry';
+import { LEAD_SOURCE_FIELD, readLeadSource } from '@/lib/lead-source';
+import { trackEnquiry } from '@/components/analytics/PostHogProvider';
 
 /**
  * Enquiry form.
@@ -42,17 +44,27 @@ export function EnquiryForm() {
     { status: 'idle' },
   );
   const [startedAt, setStartedAt] = useState('0');
+  const [leadSource, setLeadSource] = useState('');
   const headingRef = useRef<HTMLParagraphElement>(null);
 
   // Set on mount so the value reflects when the visitor actually saw the
   // form. Rendering it server-side would bake in build time and defeat the
   // timing check entirely.
-  useEffect(() => setStartedAt(String(Date.now())), []);
+  useEffect(() => {
+    setStartedAt(String(Date.now()));
+    // Where this visit came from, captured on entry by the layout and read
+    // here so it travels with the enquiry. See lib/lead-source.ts.
+    setLeadSource(readLeadSource());
+  }, []);
 
   // Move focus to the confirmation so keyboard and screen-reader users are
   // not left at the bottom of a form that appears unchanged.
+  const roleRef = useRef('');
   useEffect(() => {
-    if (state.status === 'success') headingRef.current?.focus();
+    if (state.status === 'success') {
+      headingRef.current?.focus();
+      trackEnquiry(roleRef.current || 'unknown');
+    }
   }, [state.status]);
 
   const err = state.status === 'error' ? state.fieldErrors : undefined;
@@ -154,6 +166,9 @@ export function EnquiryForm() {
           name="role"
           required
           defaultValue=""
+          onChange={(e) => {
+            roleRef.current = e.currentTarget.value;
+          }}
           aria-invalid={!!err?.role}
           aria-describedby={describedBy('role')}
           className={`${field} mt-2`}
@@ -205,6 +220,7 @@ export function EnquiryForm() {
       </div>
 
       <input type="hidden" name="startedAt" value={startedAt} />
+      <input type="hidden" name={LEAD_SOURCE_FIELD} value={leadSource} />
 
       <SubmitButton />
 

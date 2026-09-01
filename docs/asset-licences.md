@@ -14,10 +14,10 @@ Sketchfab" is not an answer you want to give a health department's legal team.
 | _(example)_ `studio.hdr` | https://polyhaven.com/ | Poly Haven | CC0 | No | — |
 | `hero-bay-poster.avif` | Generated in-repo by `scripts/build_clinical_bay.py` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `hero-bay-poster.webp` | Generated in-repo by `scripts/build_clinical_bay.py` | Bundle of Rays | Owned | No | 2026-08-30 |
-| `bay-night.avif` | Generated in-repo by `scripts/build_clinical_bay.py --night` | Bundle of Rays | Owned | No | 2026-08-30 |
-| `bay-night.webp` | Generated in-repo by `scripts/build_clinical_bay.py --night` | Bundle of Rays | Owned | No | 2026-08-30 |
-| `frontier-state1.avif` | Generated in-repo by `scripts/build_frontier_state1.py` | Bundle of Rays | Owned | No | 2026-08-30 |
-| `frontier-state1.webp` | Generated in-repo by `scripts/build_frontier_state1.py` | Bundle of Rays | Owned | No | 2026-08-30 |
+| `bay-night.avif` | Generated in-repo by `scripts/build_clinical_bay.py --night` — **retired Sept 2026, not shipped** | Bundle of Rays | Owned | No | 2026-08-30 |
+| `bay-night.webp` | Generated in-repo by `scripts/build_clinical_bay.py --night` — **retired Sept 2026, not shipped** | Bundle of Rays | Owned | No | 2026-08-30 |
+| `frontier-state1.avif` | Generated in-repo by `scripts/build_frontier_state1.py` — **retired Sept 2026, not shipped** | Bundle of Rays | Owned | No | 2026-08-30 |
+| `frontier-state1.webp` | Generated in-repo by `scripts/build_frontier_state1.py` — **retired Sept 2026, not shipped** | Bundle of Rays | Owned | No | 2026-08-30 |
 | `pillar-environment.avif` | `scripts/build_clinical_bay.py --view bedside` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `pillar-environment.webp` | `scripts/build_clinical_bay.py --view bedside` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `pillar-analytics.avif` | `scripts/build_clinical_bay.py --view monitor` | Bundle of Rays | Owned | No | 2026-08-30 |
@@ -41,7 +41,7 @@ Sketchfab" is not an answer you want to give a health department's legal team.
 | `assets/textures/vitals-screen.png` | `scripts/make_vitals_screen.py` — synthetic, not real patient data | Bundle of Rays | Owned | No | 2026-08-30 |
 | `team-learning-development.avif` | Drive "Marketing Images" — `VR training group.jpg` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `team-learning-development.webp` | Drive "Marketing Images" — `VR training group.jpg` | Bundle of Rays | Owned | No | 2026-08-30 |
-| `models/hero-bay.glb` | `scripts/build_clinical_bay.py` — procedurally generated, no third-party geometry | Bundle of Rays | Owned | No | 2026-08-30 |
+| `models/hero-bay.glb` | `scripts/build_clinical_bay.py` — procedurally generated, no third-party geometry — **retired Sept 2026, not shipped** | Bundle of Rays | Owned | No | 2026-08-30 |
 | `bay-doorway.avif` | `scripts/build_clinical_bay.py --view doorway --web` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `bay-doorway.webp` | `scripts/build_clinical_bay.py --view doorway --web` | Bundle of Rays | Owned | No | 2026-08-30 |
 | `video/scenario.webp` | Poster frame extracted from `VID_20250719_233639_579.mp4` (own capture) | Bundle of Rays | Owned | No | 2026-08-30 |

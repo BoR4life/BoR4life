@@ -93,7 +93,7 @@ export default function PlatformPage() {
             href="/contact"
             className="inline-block rounded-full bg-signal px-6 py-3 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
           >
-            Book a demo
+            Request a demo
           </Link>
         </div>
       </section>

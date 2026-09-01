@@ -1,54 +1,39 @@
 import Link from 'next/link';
-import { ScrollNarrative } from '@/components/site/ScrollNarrative';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { ScenarioVideo } from '@/components/site/ScenarioVideo';
-import { HeroCanvas } from '@/components/3d/HeroCanvas';
 import { VideoEmbed } from '@/components/site/VideoEmbed';
 
 /**
  * Home page.
  *
- * Section order follows docs/02-content-architecture.md. Two hard rules:
+ * Type-led, on purpose. The 3D narrative that used to open this page was
+ * removed after Brad looked at it and said it had not hit the spot — and my
+ * own review agreed: the frontier frame was the weakest image on the site,
+ * and the one every visitor saw first. The 3D pipeline is kept in the repo
+ * for later (docs/03, docs/05, scripts/) but nothing from it ships here.
  *
- *  - Sections 1 and 2 must both be reachable without scrolling on a
- *    1440x900 desktop. The cinematic hero cannot push the client list below
- *    the fold; that is what separates this from a portfolio site.
+ * What replaces it is the thing the site actually has that nobody else
+ * does: a clear argument, a real recorded scenario, a partner's real
+ * de-escalation footage, and a founder who is a nurse. No render, no
+ * stock photo, nothing that pretends. When the photo shoot happens
+ * (docs/06-photography-audit.md) real imagery slots into the founder
+ * section and the platform page without restructuring anything.
  *
- *  - NO fabricated numbers. Every figure below is one Brad has confirmed:
- *    founded 2018, five years with Queensland Health, six markets, four
- *    named institutions. There are deliberately no efficacy percentages,
- *    because none have been supplied with a citation and an unsourced
- *    outcome claim in this sector is a regulatory and reputational risk
- *    (docs/00-brand-brief.md, PROHIBITED list).
+ * Two rules carried over:
+ *  - The client list is inside the first viewport on a 1440x900 desktop.
+ *    The procurement reader must not have to hunt for it.
+ *  - NO fabricated numbers. Every figure is one Brad has confirmed: founded
+ *    2018, five years with Queensland Health, six markets, four named
+ *    institutions. No efficacy percentages, because none have been supplied
+ *    with a citation (docs/00-brand-brief.md, PROHIBITED list).
  */
 
 const CLIENTS = [
   { name: 'Queensland Health', detail: 'Five years, longest-running' },
-  { name: 'Ohio State University', detail: 'Brad Innovation Fellowship' },
+  { name: 'Ohio State University', detail: 'Innovation Fellow — two projects' },
   { name: 'Taegu Science University', detail: 'Repeat engagements' },
   { name: 'DY Patil, Pune', detail: 'Deployed' },
-];
-
-const PILLARS = [
-  {
-    title: 'Contextual environments',
-    body: 'Learners step into the space the scenario happens in — a ward, a resus bay, a patient’s home. Context is what makes recall transfer to the real setting.',
-    image: '/images/hero-bay-poster',
-    alt: 'A clinical resuscitation bay with a patient monitor showing live vital signs.',
-  },
-  {
-    title: 'AI-driven roleplay',
-    body: 'Simulated patients and colleagues respond to what the learner actually says, and adapt as the conversation develops. Communication is practised, not skipped.',
-    image: '/images/pillar-environment',
-    alt: 'Bedside view of the clinical bay, at the vantage a clinician works from.',
-  },
-  {
-    title: 'Learning analytics',
-    body: 'Every scenario produces data: which decisions were made and when, how escalation was handled, where procedure diverged from the expected pathway.',
-    image: '/images/pillar-analytics',
-    alt: 'A patient monitor displaying ECG, oxygen saturation and respiration traces.',
-  },
 ];
 
 const MEASURES = [
@@ -84,22 +69,49 @@ const MARKETS = [
 export default function Home() {
   return (
     <main id="main">
-      <h1 className="sr-only">
-        Bundle of Rays — clinically authored immersive training for healthcare
-      </h1>
-
-      {/* 1. Opening narrative. The frontier becomes the ward — one light
-          source carried from a dark ridge to the ceiling panels of a lit
-          bay. See docs/05-scroll-narrative.md. */}
-      <section aria-labelledby="hero-heading">
-        <h2 id="hero-heading" className="sr-only">
-          Practise the moment before it counts
-        </h2>
-        <ScrollNarrative />
+      {/* 1. Opening. A statement, not a picture. The h1 is visible now —
+          it used to be screen-reader-only behind an image, which meant the
+          page's actual thesis was the one thing a sighted visitor was
+          never shown. */}
+      <section
+        aria-labelledby="hero-heading"
+        className="border-b border-ink-700 px-6 pb-16 pt-20 md:px-16 md:pb-20 md:pt-28"
+      >
+        <div className="mx-auto max-w-content">
+          <p className="text-xs uppercase tracking-[0.12em] text-signal">
+            Immersive clinical training
+          </p>
+          <h1
+            id="hero-heading"
+            className="mt-5 max-w-5xl text-[clamp(2.5rem,7vw,5.75rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-paper-0"
+          >
+            Every practitioner meets a first time.
+          </h1>
+          <p className="mt-8 max-w-2xl text-[clamp(1.125rem,1.6vw,1.375rem)] leading-relaxed text-ink-300">
+            Rehearse the deteriorating patient, the difficult conversation and
+            the unfamiliar procedure before they are real — in the environment
+            where they will happen, with every decision recorded.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              href="/contact"
+              className="rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
+            >
+              Request a demo
+            </Link>
+            <Link
+              href="/evidence"
+              className="text-sm font-semibold text-paper-100 underline decoration-ink-500 underline-offset-4 transition-colors hover:decoration-paper-100"
+            >
+              What we measure, and why we do not publish percentages
+            </Link>
+          </div>
+        </div>
       </section>
 
-      {/* 2. Credibility. Immediately below the hero, by design — the
-          procurement reader must not have to hunt for this. */}
+      {/* 2. Credibility. Immediately below, by design, and above the fold on
+          a desktop. Names only, until there is a quote to put beside them —
+          which is the single most valuable thing this site is missing. */}
       <Section ground="ink" size="sm" labelledBy="clients-heading">
         <Eyebrow id="clients-heading">Trusted in practice</Eyebrow>
         <ul className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -142,9 +154,12 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* 4. Platform. Opens with real captured footage — after the problem
-          is stated is the moment a visitor wants to see the thing rather
-          than read another description of it. */}
+      {/* 4. Platform. Real footage, twice — our own recorded scenario, then
+          a partner's de-escalation roleplay. After the problem is stated is
+          the moment a visitor wants to see the thing rather than read
+          another description of it. The three illustrated pillar cards that
+          used to follow duplicated the platform page and were all renders;
+          gone. */}
       <Section ground="ink" size="lg" labelledBy="platform-heading">
         <Reveal>
           <Eyebrow id="platform-heading">The platform</Eyebrow>
@@ -155,8 +170,6 @@ export default function Home() {
 
         <div className="mt-14 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal>
-            {/* Held in a column, not full-bleed: the source is 720x405 and
-                would look soft stretched across a hero. */}
             <ScenarioVideo />
           </Reveal>
           <Reveal step={1}>
@@ -172,13 +185,6 @@ export default function Home() {
           </Reveal>
         </div>
 
-        {/* AI-driven roleplay, shown rather than described. De-escalation is
-            the clearest case for conversational practice: it is the skill
-            most obviously untrainable from a manual, and the one where a
-            wrong sentence has immediate consequences. The video is
-            Bodyswaps' own and is labelled as theirs — see
-            components/site/VideoEmbed.tsx for why it does not contact
-            YouTube until someone presses play. */}
         <div className="mt-16 grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
           <Reveal className="lg:col-span-3">
             <VideoEmbed
@@ -207,34 +213,6 @@ export default function Home() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid gap-12 md:grid-cols-3">
-          {PILLARS.map((pillar, i) => (
-            <Reveal key={pillar.title} step={i}>
-              <figure className="overflow-hidden rounded border border-ink-700">
-                <picture>
-                  <source srcSet={`${pillar.image}.avif`} type="image/avif" />
-                  <source srcSet={`${pillar.image}.webp`} type="image/webp" />
-                  <img
-                    src={`${pillar.image}.webp`}
-                    alt={pillar.alt}
-                    width={2400}
-                    height={1350}
-                    loading="lazy"
-                    decoding="async"
-                    className="aspect-[16/10] w-full object-cover"
-                  />
-                </picture>
-              </figure>
-              <h3 className="mt-6 text-xl font-semibold text-paper-0">
-                {pillar.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-300">
-                {pillar.body}
-              </p>
-            </Reveal>
-          ))}
-        </div>
-
         <Reveal>
           <Link
             href="/platform"
@@ -245,52 +223,7 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* 5. The live scene.
-          This is the one interactive WebGL surface on the site, and it sits
-          here rather than in the hero on purpose. In the hero it would be
-          decoration competing with the headline for the LCP; here it lands
-          immediately after the recorded scenario, so the beat reads watch
-          it, then touch it, then see what it measures — which is the actual
-          argument. It is also the only place on the site where the medium
-          demonstrates itself instead of describing itself.
-
-          Everything about the fallback path is deliberate: the pre-rendered
-          still is the LCP element and never leaves the DOM, and the canvas
-          only ever mounts over it on a device that passes the capability
-          gate. A locked-down hospital laptop gets the composition as a
-          fast image, which is the visitor who matters most. */}
-      <Section ground="ink" size="lg" labelledBy="live-heading">
-        <Reveal>
-          <Eyebrow id="live-heading">Look around</Eyebrow>
-          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
-            This is a real environment, running in your browser.
-          </p>
-        </Reveal>
-
-        <div className="mt-12 grid items-center gap-12 lg:grid-cols-5 lg:gap-16">
-          <Reveal className="lg:col-span-3">
-            <HeroCanvas alt="A resuscitation bay: bed with rails and a folded blanket, a wall-mounted patient monitor showing an ECG trace, a sharps bin, and a procedure trolley within arm's reach of the bedside." />
-          </Reveal>
-          <Reveal step={1} className="lg:col-span-2">
-            <h3 className="text-xl font-semibold text-paper-0">
-              Built to the layout, not to the render.
-            </h3>
-            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
-              A resuscitation bay, built to the layout learners actually work
-              in — bed, monitor, trolley, the reach distances that decide
-              whether a procedure flows or stalls. In the headset it is the
-              same geometry at full scale, with the scenario running.
-            </p>
-            <p className="mt-4 max-w-prose text-sm leading-relaxed text-ink-300">
-              If your device is set to reduce motion, or is conserving data,
-              you are seeing the still frame instead — deliberately, and it is
-              the same composition.
-            </p>
-          </Reveal>
-        </div>
-      </Section>
-
-      {/* 6. What we measure — the evidence framing, without inventing
+      {/* 5. What we measure — the evidence framing, without inventing
           outcome statistics we cannot cite. */}
       <Section ground="paper" size="lg" labelledBy="measure-heading">
         <Reveal>
@@ -376,7 +309,8 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* 7. Founder. The differentiator, and the reason to trust the rest. */}
+      {/* 7. Founder. The differentiator, and the reason to trust the rest.
+          The one real photograph on the site lives here. */}
       <Section ground="paper" size="lg" labelledBy="founder-heading">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
@@ -408,8 +342,8 @@ export default function Home() {
               Built by nurses, for nurses
             </Eyebrow>
             <p className="mt-6 text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em]">
-              Every competitor is a software company that hired a clinician.
-              We are the inverse.
+              Most of this industry is software companies that hired a
+              clinician. We are the inverse.
             </p>
             <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
               Bundle of Rays was founded in 2018 by Brad Chesham, a nurse who
@@ -446,7 +380,7 @@ export default function Home() {
               href="/contact"
               className="mt-10 inline-block rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
             >
-              Book a demo
+              Request a demo
             </Link>
           </div>
         </Reveal>

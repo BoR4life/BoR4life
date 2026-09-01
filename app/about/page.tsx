@@ -82,7 +82,7 @@ export default function AboutPage() {
               on retainer.
             </p>
             <p className="text-paper-100">
-              Every competitor in this space is a software company that hired
+              Most companies in this space are software companies that hired
               a clinical expert. Bundle of Rays is the inverse. That is the
               whole difference, and it shows up in every scenario.
             </p>

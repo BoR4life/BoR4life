@@ -149,19 +149,17 @@ strong and is far easier to walk back.
 
 - Submit the sitemap (`/sitemap.xml`) to Google Search Console.
 - Send a real enquiry through the form and confirm it arrives.
-- Check the live 3D section on a phone and on a locked-down desktop: the
-  "Drag to look around" chip appearing means WebGL ran; its absence means
-  the poster fallback served, which is a correct outcome on a restricted
-  device but should not be the outcome everywhere.
+- Open the homepage on a phone and confirm the scenario clip plays and the
+  Bodyswaps video loads only after you press play.
 - If analytics are wanted, set `NEXT_PUBLIC_POSTHOG_KEY` and
   `NEXT_PUBLIC_POSTHOG_HOST` together. Neither alone does anything, and the
   CSP widens to that one origin only when both are present (`lib/csp.ts`).
 
 ## Known, deliberately not done
 
-- **Static assets are not content-hashed.** `hero-bay.glb` and the images
-  ship under stable filenames, so aggressive `immutable` caching would serve
-  a stale model to returning visitors after an update. Vercel's revalidating
+- **Static assets are not content-hashed.** Images and video ship under
+  stable filenames, so aggressive `immutable` caching would serve a stale
+  file to returning visitors after an update. Vercel's revalidating
   default is correct until the filenames carry a content hash. Do not add
   `immutable` caching without doing that first.
 - **No independent accessibility audit.** `/accessibility` says so plainly

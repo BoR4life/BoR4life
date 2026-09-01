@@ -3,6 +3,11 @@
 import { headers } from 'next/headers';
 import { EnquirySchema, ROLE_LABELS } from '@/lib/enquiry';
 import { rateLimit } from '@/lib/rate-limit';
+import {
+  LEAD_SOURCE_FIELD,
+  parseLeadSource,
+  describeLeadSource,
+} from '@/lib/lead-source';
 
 /**
  * Enquiry submission.
@@ -73,6 +78,8 @@ async function deliver(enquiry: {
   organisation?: string;
   role: keyof typeof ROLE_LABELS;
   message: string;
+  /** Pre-formatted plain-text block. See lib/lead-source.ts. */
+  source: string;
 }): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.ENQUIRY_TO_EMAIL;
@@ -103,6 +110,9 @@ async function deliver(enquiry: {
           `Role:         ${ROLE_LABELS[enquiry.role]}`,
           '',
           enquiry.message,
+          '',
+          '— Where this lead came from —',
+          enquiry.source,
         ].join('\n'),
       }),
       signal: AbortSignal.timeout(10_000),
@@ -117,11 +127,15 @@ async function deliver(enquiry: {
   if (!endpoint) {
     // No PII in logs — just enough to confirm the path works and to alert
     // if enquiries are arriving with no delivery configured.
+    // The source block carries no PII — country, a referrer host, campaign
+    // tags, paths on this site — so it is safe to log, and logging it is
+    // what lets the test suite prove the capture works end to end.
     console.warn(
       `[enquiry] received (role=${enquiry.role}, org=${
         enquiry.organisation ? 'provided' : 'none'
       }) but no delivery is configured (set RESEND_API_KEY + ` +
-        `ENQUIRY_TO_EMAIL + ENQUIRY_FROM_EMAIL, or ENQUIRY_WEBHOOK_URL) — not delivered.`,
+        `ENQUIRY_TO_EMAIL + ENQUIRY_FROM_EMAIL, or ENQUIRY_WEBHOOK_URL) — not delivered.\n` +
+        enquiry.source.replace(/^/gm, '    '),
     );
     return;
   }
@@ -191,10 +205,18 @@ export async function submitEnquiry(
     return { status: 'success' };
   }
 
-  // 4. Deliver.
+  // 4. Deliver, with where the lead came from. The country comes from the
+  //    platform's edge header, never from the client; the rest is the
+  //    client's own report of its entry referrer and campaign tags, parsed
+  //    as untrusted text (lib/lead-source.ts).
   try {
     const { name, email, organisation, role, message } = parsed.data;
-    await deliver({ name, email, organisation, role, message });
+    const h = await headers();
+    const source = describeLeadSource(parseLeadSource(raw[LEAD_SOURCE_FIELD]), {
+      country: h.get('x-vercel-ip-country'),
+      region: h.get('x-vercel-ip-country-region'),
+    });
+    await deliver({ name, email, organisation, role, message, source });
     return { status: 'success' };
   } catch {
     // Never surface the underlying error to the client — it can leak

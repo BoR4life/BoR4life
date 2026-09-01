@@ -13,7 +13,7 @@ export default function ContactPage() {
       <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-2">
         <div>
           <h1 className="text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
-            Book a demo
+            Request a demo
           </h1>
           <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
             Tell us what you are trying to achieve and we will show you how it

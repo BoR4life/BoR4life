@@ -139,7 +139,7 @@ export default async function SolutionPage({
             href="/contact"
             className="mt-14 inline-block rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
           >
-            Book a demo
+            Request a demo
           </Link>
         </Reveal>
       </Section>
