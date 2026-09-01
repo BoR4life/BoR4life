@@ -33,7 +33,7 @@ const CLIENTS = [
   { name: 'Queensland Health', detail: 'Five years, longest-running' },
   { name: 'Ohio State University', detail: 'Innovation Fellow — two projects' },
   { name: 'Taegu Science University', detail: 'Repeat engagements' },
-  { name: 'DY Patil, Pune', detail: 'Deployed' },
+  { name: 'DY Patil, Pune', detail: 'Two years running' },
 ];
 
 const MEASURES = [

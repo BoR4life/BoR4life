@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { PARTNERS } from '@/lib/partners';
+
 export const metadata: Metadata = {
   title: 'Platform',
   description:
-    'Contextual 3D environments, AI-driven clinical roleplay, and learning analytics that capture decisions, communication and procedural accuracy.',
+    'Contextual environments, AI-driven clinical roleplay, learning analytics — and the four immersive-learning platforms Bundle of Rays distributes alongside its own content.',
 };
 
 const PILLARS = [
@@ -86,6 +88,58 @@ export default function PlatformPage() {
           </div>
         </section>
       ))}
+
+      {/* Platforms we distribute. The relationship is stated as exactly what
+          it is — Bundle of Rays sells and supports these products — because
+          "partner" means six things and a procurement reader will ask which.
+          No territories, no logos: a distribution agreement is usually
+          territory-limited and a logo needs its owner's sign-off. Names and a
+          plain line each. See lib/partners.ts for the rules. */}
+      <section
+        aria-labelledby="distributed-heading"
+        className="border-t border-ink-700 bg-paper-100 px-6 py-20 text-ink-900 md:px-16"
+      >
+        <div className="mx-auto max-w-content">
+          <p
+            id="distributed-heading"
+            className="text-xs uppercase tracking-[0.12em] text-ink-500"
+          >
+            Platforms we distribute
+          </p>
+          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em]">
+            Our own scenarios, and the best of what else exists.
+          </p>
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+            Some of what a program needs we author ourselves. Some of it
+            someone else has already built well. Bundle of Rays is a
+            distributor for four platforms we would choose for our own
+            learners — supplied, supported and, where it fits, combined
+            with our clinically authored content under one engagement.
+          </p>
+
+          <ul className="mt-12 grid gap-px overflow-hidden rounded-lg bg-ink-900/10 sm:grid-cols-2">
+            {PARTNERS.map((partner) => (
+              <li key={partner.name} className="bg-paper-100 p-8">
+                <h3 className="text-lg font-semibold text-ink-900">
+                  {partner.name}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-500">
+                  {partner.what}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-ink-900">
+                  {partner.fit}
+                </p>
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-8 max-w-prose text-sm leading-relaxed text-ink-500">
+            Product names are their owners&rsquo; trademarks. Ask us which
+            platforms are available in your market — distribution is
+            arranged by territory.
+          </p>
+        </div>
+      </section>
 
       <section className="border-t border-ink-700 px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">

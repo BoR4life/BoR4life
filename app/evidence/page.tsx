@@ -41,8 +41,8 @@ const DEPLOYMENTS = [
   },
   {
     client: 'DY Patil, Pune',
-    detail: 'Deployed in India.',
-    note: 'Expanding from institutional deployments toward state-level programs.',
+    detail: 'A customer two years in a row, India.',
+    note: 'A renewal is the reference that matters — the second year is the one that was chosen with full knowledge.',
   },
 ];
 
