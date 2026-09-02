@@ -30,7 +30,8 @@ function prohibitedTerms(): string[] {
   return [...raw.matchAll(/\*\*(.+?)\*\*/g)]
     .map((m) => m[1] ?? '')
     .flatMap((entry) => {
-      // "Australian Catholic University (ACU)." -> the long form and the acronym
+      // An entry of the form "Full Name (ACRONYM)." yields both the long
+      // form and the acronym, so either spelling is caught.
       const cleaned = entry.replace(/[.,]$/, '');
       const acronym = cleaned.match(/\(([A-Z]{2,})\)/)?.[1];
       const base = cleaned.replace(/\s*\([^)]*\)/, '');
