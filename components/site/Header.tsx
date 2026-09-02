@@ -66,7 +66,11 @@ export function Header() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className="text-sm text-paper-100 md:hidden"
+          // Negative margin cancels the padding visually, so the button
+          // stays where it was designed to sit while presenting a target a
+          // thumb can actually hit. Text alone is ~20px tall, under the 24px
+          // floor in WCAG 2.2 SC 2.5.8.
+          className="-m-2 p-2 text-sm text-paper-100 md:hidden"
         >
           {open ? 'Close' : 'Menu'}
         </button>

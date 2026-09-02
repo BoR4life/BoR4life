@@ -98,10 +98,11 @@ scripts/optimize-gltf.sh       Draco + KTX2 optimisation
 Two things need Brad:
 
 1. **Verify the `[VERIFY]` claims** in `docs/00-brand-brief.md` — client names,
-   Client facts are now **confirmed** (Queensland Health 5yrs, Ohio State via
-   the Brad Innovation Fellowship, TSU, DY Patil Pune). Note the **PROHIBITED**
-   list in that doc — ACU (critical NDA), Aspen Medical, growth percentages,
-   and any institution attached to Brad's PhD. Agents check copy against it.
+   Client facts are now **confirmed** (Queensland Health 5yrs, Ohio State
+   Innovation Fellow, TSU, DY Patil Pune). That doc also carries the
+   **PROHIBITED** list, which names no parties: the parties themselves live in
+   an untracked file, `docs/constraints.local.md`. Agents check copy against
+   both.
 2. **Point the pipeline at existing Unity/Unreal product scenes.** They are the
    best 3D source available — authentic, differentiated, zero licence risk —
    and better than anything that can be bought.

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { PARTNERS } from '@/lib/partners';
+import { Main } from '@/components/site/Main';
 
 export const metadata: Metadata = {
   title: 'Platform',
@@ -32,7 +33,7 @@ const PILLARS = [
 
 export default function PlatformPage() {
   return (
-    <main id="main">
+    <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
           <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
@@ -151,6 +152,6 @@ export default function PlatformPage() {
           </Link>
         </div>
       </section>
-    </main>
+    </Main>
   );
 }

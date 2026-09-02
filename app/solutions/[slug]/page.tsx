@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { SOLUTIONS, solutionBySlug } from '@/lib/solutions';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
+import { Main } from '@/components/site/Main';
 
 /**
  * One dynamic route rather than three near-identical page files. The three
@@ -42,7 +43,7 @@ export default async function SolutionPage({
   const others = SOLUTIONS.filter((s) => s.slug !== solution.slug);
 
   return (
-    <main id="main">
+    <Main>
       <Section ground="ink" size="lg" bordered={false} labelledBy="sol-heading">
         <Reveal>
           <Eyebrow id="sol-heading">{solution.audience}</Eyebrow>
@@ -143,6 +144,6 @@ export default async function SolutionPage({
           </Link>
         </Reveal>
       </Section>
-    </main>
+    </Main>
   );
 }

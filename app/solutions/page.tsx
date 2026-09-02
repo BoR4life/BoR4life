@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { SOLUTIONS } from '@/lib/solutions';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
+import { Main } from '@/components/site/Main';
 
 export const metadata: Metadata = {
   title: 'Solutions',
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function SolutionsPage() {
   return (
-    <main id="main">
+    <Main>
       <Section ground="ink" size="lg" bordered={false} labelledBy="sol-heading">
         <Reveal>
           <Eyebrow id="sol-heading">Solutions</Eyebrow>
@@ -114,6 +115,6 @@ export default function SolutionsPage() {
           </Link>
         </Reveal>
       </Section>
-    </main>
+    </Main>
   );
 }

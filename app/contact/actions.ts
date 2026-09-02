@@ -34,12 +34,74 @@ import {
  * spammer their submission was rejected just teaches them what to change.
  */
 
+/**
+ * What the visitor typed, echoed back so an error never costs them their
+ * words.
+ *
+ * React 19 resets an uncontrolled form once its action completes — every
+ * path, success or not. Without this the buyer who writes four considered
+ * sentences and mistypes their email gets the form back empty, and a
+ * meaningful share of them simply leave. Proven by
+ * tests/form-recovery.spec.ts, which failed before this existed.
+ *
+ * Only the five real fields come back. The honeypot, the timing token and
+ * the lead source are deliberately excluded: echoing a honeypot would tell
+ * a bot it was seen, and the other two are regenerated on the client.
+ */
+export type EnquiryValues = {
+  name: string;
+  email: string;
+  organisation: string;
+  role: string;
+  message: string;
+};
+
 export type EnquiryState =
   | { status: 'idle' }
   | { status: 'success' }
-  | { status: 'error'; message: string; fieldErrors?: Record<string, string> };
+  | {
+      status: 'error';
+      message: string;
+      fieldErrors?: Record<string, string>;
+      values?: EnquiryValues;
+    };
+
+/**
+ * Bounded, so a hostile submission cannot be reflected back at scale. The
+ * caps sit just above the schema's own limits: a value rejected for being
+ * too long still comes back long enough to see and edit down.
+ */
+function echo(raw: Record<string, unknown>): EnquiryValues {
+  const one = (key: string, max: number) => {
+    const v = raw[key];
+    return typeof v === 'string' ? v.slice(0, max) : '';
+  };
+  return {
+    name: one('name', 200),
+    email: one('email', 320),
+    organisation: one('organisation', 300),
+    role: one('role', 40),
+    message: one('message', 5000),
+  };
+}
 
 const MIN_FILL_MS = 2000;
+
+/**
+ * Two budgets, because a person fumbling a form is not an attacker.
+ *
+ * ENQUIRIES is the real limit and is charged only once a submission is
+ * well-formed. A buyer who mistypes their email three times used to spend
+ * three of five before ever sending anything, and the fourth mistake told
+ * them "too many enquiries from this connection" — on the one page whose
+ * job is to convert them.
+ *
+ * ATTEMPTS is the ceiling that keeps the loosened rule honest: every POST
+ * costs one, valid or not, so a flood of malformed submissions is still
+ * bounded. Bots submit complete-looking data, so they spend from both.
+ */
+const ENQUIRIES = { limit: 5, windowMs: 10 * 60 * 1000 };
+const ATTEMPTS = { limit: 30, windowMs: 10 * 60 * 1000 };
 
 async function clientKey(): Promise<string> {
   const h = await headers();
@@ -156,21 +218,28 @@ export async function submitEnquiry(
   _prev: EnquiryState,
   formData: FormData,
 ): Promise<EnquiryState> {
-  // 1. Rate limit first — cheapest possible rejection.
-  const limited = rateLimit(await clientKey(), {
-    limit: 5,
-    windowMs: 10 * 60 * 1000,
-  });
+  // Read the fields up front so every error path below can hand them back.
+  // Object.fromEntries on a form this size is far cheaper than the header
+  // lookup the rate limiter already does, so "reject floods cheaply" is
+  // unaffected.
+  const raw = Object.fromEntries(formData);
+
+  // 1. Rate limit first — cheapest possible rejection. The enquiry budget is
+  //    only checked here, not spent; it is charged after validation passes.
+  const key = await clientKey();
+  const flooding = rateLimit(`${key}:attempts`, ATTEMPTS);
+  const limited = flooding.ok
+    ? rateLimit(key, { ...ENQUIRIES, consume: false })
+    : flooding;
   if (!limited.ok) {
     return {
       status: 'error',
       message: `Too many enquiries from this connection. Please try again in about ${Math.ceil(
         limited.retryAfterSec / 60,
       )} minutes, or email us directly.`,
+      values: echo(raw),
     };
   }
-
-  const raw = Object.fromEntries(formData);
 
   // 2. Validate first, so a real person always gets real feedback.
   const parsed = EnquirySchema.safeParse(raw);
@@ -192,8 +261,13 @@ export async function submitEnquiry(
       status: 'error',
       message: 'Please check the highlighted fields.',
       fieldErrors,
+      values: echo(raw),
     };
   }
+
+  // Well-formed: now charge the enquiry budget. Everything above this line
+  //    was free, so a mistyped address costs the visitor nothing.
+  rateLimit(key, ENQUIRIES);
 
   // 3. Honeypot and timing, now that we know the submission is well-formed.
   //    Answer bots with success — never explain what gave them away.
@@ -225,6 +299,7 @@ export async function submitEnquiry(
       status: 'error',
       message:
         'Something went wrong sending your enquiry. Please email us directly and we will pick it up.',
+      values: echo(raw),
     };
   }
 }

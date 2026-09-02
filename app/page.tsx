@@ -3,6 +3,7 @@ import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 import { VideoEmbed } from '@/components/site/VideoEmbed';
+import { Main } from '@/components/site/Main';
 
 /**
  * Home page.
@@ -68,7 +69,7 @@ const MARKETS = [
 
 export default function Home() {
   return (
-    <main id="main">
+    <Main>
       {/* 1. Opening. A statement, not a picture. The h1 is visible now —
           it used to be screen-reader-only behind an image, which meant the
           page's actual thesis was the one thing a sighted visitor was
@@ -385,6 +386,6 @@ export default function Home() {
           </div>
         </Reveal>
       </Section>
-    </main>
+    </Main>
   );
 }

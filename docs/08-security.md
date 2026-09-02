@@ -200,10 +200,17 @@ removes the CSRF surface a hand-rolled `/api` endpoint would have.
 
 Controls, in execution order:
 
-1. **Rate limit** — 5 submissions per IP per 10 minutes. See the scope
-   caveat in `lib/rate-limit.ts`: state is per-process, so it does not
-   hold across serverless instances. Adequate here alongside the other
-   controls; swap for Upstash/Redis before the form ever becomes a login.
+1. **Rate limit** — two budgets per IP per 10 minutes: 5 *enquiries*, and
+   30 *attempts*. The enquiry budget is charged only once a submission
+   passes validation, so a visitor who mistypes their email does not spend
+   it; the attempts budget is charged on every request, so a flood of
+   malformed submissions is still bounded. Before this split, four typos
+   met "too many enquiries from this connection" on the one page whose job
+   is to convert a buyer. Bots send complete-looking data and so spend from
+   both. See the scope caveat in `lib/rate-limit.ts`: state is per-process,
+   so it does not hold across serverless instances. Adequate here alongside
+   the other controls; swap for Upstash/Redis before the form ever becomes
+   a login.
 2. **Schema validation** (zod), server-side. Client validation is a
    convenience, never the boundary.
 3. **Honeypot + timing** — a visually-hidden (not `type="hidden"`) field

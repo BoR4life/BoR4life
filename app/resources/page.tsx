@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { Section, Eyebrow } from '@/components/site/Section';
+import { Main } from '@/components/site/Main';
 
 export const metadata: Metadata = {
   title: 'Resources',
@@ -95,7 +96,7 @@ const ON_REQUEST = [
 
 export default function ResourcesPage() {
   return (
-    <main id="main">
+    <Main>
       <Section ground="ink" size="lg" bordered={false}>
         <Eyebrow>Resources</Eyebrow>
         <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
@@ -188,6 +189,6 @@ export default function ResourcesPage() {
           Ask us a procurement question
         </Link>
       </Section>
-    </main>
+    </Main>
   );
 }

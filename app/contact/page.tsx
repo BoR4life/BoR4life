@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { EnquiryForm } from './EnquiryForm';
+import { Main } from '@/components/site/Main';
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main id="main" className="px-6 py-20 md:px-16">
+    <Main className="px-6 py-20 md:px-16">
       <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-2">
         <div>
           <h1 className="text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
@@ -56,6 +57,6 @@ export default function ContactPage() {
           <EnquiryForm />
         </div>
       </div>
-    </main>
+    </Main>
   );
 }

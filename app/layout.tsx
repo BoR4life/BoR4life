@@ -76,8 +76,10 @@ export default async function RootLayout({
       addressRegion: 'QLD',
       addressCountry: 'AU',
     },
-    // Deliberately no `founder.alumniOf` — naming the PhD institution
-    // would breach the ACU NDA. See docs/00-brand-brief.md.
+    // Deliberately no `founder.alumniOf`. The founder's PhD institution is
+    // not named anywhere on this site; see docs/00-brand-brief.md. Structured
+    // data is the easiest place to leak it by reflex, so the omission is
+    // recorded here rather than left looking like an oversight.
     founder: { '@type': 'Person', name: 'Brad Chesham' },
     sameAs: SOCIAL_LINKS.map((s) => s.href),
   };

@@ -1,9 +1,9 @@
 /**
  * The three offers, from docs/00-brand-brief.md.
  *
- * Accredited BLS with Aspen Medical is deliberately absent. It is on the
- * PROHIBITED list — Brad's instruction is that Aspen is not mentioned
- * anywhere, and no offering is described as "nationally accredited".
+ * One further offering is deliberately absent, on Brad's instruction. Do
+ * not restore it, or any accreditation wording, from old marketing material
+ * — see the prohibitions in docs/00-brand-brief.md.
  *
  * Every `proof` line below is a capability the platform genuinely has or a
  * relationship already confirmed. None is an outcome claim, because none

@@ -136,6 +136,14 @@ const SECTIONS: PolicySection[] = [
             images that carry meaning.
           </li>
           <li>
+            <strong>The skip link actually moves focus.</strong> Not just the
+            scroll position — pressing it and then Tab lands you inside the
+            content, not back at the top of the navigation. We check this by
+            hand and in an automated test, because for a period this site
+            got it wrong: the link scrolled the page and left focus behind,
+            which looks correct to everyone except the people who need it.
+          </li>
+          <li>
             <strong>Zoom and reflow.</strong> Readable at 200% zoom and at 320
             pixels wide, without horizontal scrolling.
           </li>

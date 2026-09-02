@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Main } from '@/components/site/Main';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -10,16 +11,16 @@ export const metadata: Metadata = {
 /**
  * Founder story.
  *
- * HARD CONSTRAINT: Brad's PhD institution must never appear here. ACU is
- * under a critical NDA, and "PhD research-backed" invites the completion
+ * HARD CONSTRAINT: Brad's PhD institution must never appear here, and the
+ * reason is not ours to write down. "PhD research-backed" invites the completion
  * "...at [university]" in a bio, a schema.org alumniOf field, or a
  * conference blurb. Describe the research, never the institution.
- * See docs/00-brand-brief.md, "The ACU trap".
+ * See docs/00-brand-brief.md, "The PhD trap".
  */
 
 export default function AboutPage() {
   return (
-    <main id="main">
+    <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
           <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
@@ -107,6 +108,6 @@ export default function AboutPage() {
           </Link>
         </div>
       </section>
-    </main>
+    </Main>
   );
 }

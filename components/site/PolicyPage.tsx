@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
+import { Main } from '@/components/site/Main';
 
 /**
  * Shell for the long-form documents a procurement reader actually reads:
@@ -42,7 +43,7 @@ export function PolicyPage({
   footer?: ReactNode;
 }) {
   return (
-    <main id="main" className="bg-paper-100 text-ink-900">
+    <Main className="bg-paper-100 text-ink-900">
       <div className="mx-auto max-w-content px-6 py-20 md:px-16">
         <p className="text-xs uppercase tracking-[0.12em] text-ink-500">
           {eyebrow}
@@ -121,6 +122,6 @@ export function PolicyPage({
           </Link>
         </p>
       </div>
-    </main>
+    </Main>
   );
 }

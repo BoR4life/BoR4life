@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Main } from '@/components/site/Main';
 
 export const metadata: Metadata = {
   title: 'Evidence',
@@ -63,7 +64,7 @@ const MEASURES = [
 
 export default function EvidencePage() {
   return (
-    <main id="main">
+    <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
           <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
@@ -159,6 +160,6 @@ export default function EvidencePage() {
           </Link>
         </div>
       </section>
-    </main>
+    </Main>
   );
 }

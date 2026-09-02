@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { Section, Eyebrow } from '@/components/site/Section';
+import { Main } from '@/components/site/Main';
 
 export const metadata: Metadata = {
   title: 'For customers',
@@ -48,7 +49,7 @@ const SUPPORT_STEPS = [
 
 export default function CustomersPage() {
   return (
-    <main id="main">
+    <Main>
       <Section ground="ink" size="lg" bordered={false}>
         <Eyebrow>For customers</Eyebrow>
         <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
@@ -140,6 +141,6 @@ export default function CustomersPage() {
           Get in touch
         </Link>
       </Section>
-    </main>
+    </Main>
   );
 }
