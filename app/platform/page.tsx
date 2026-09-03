@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { PARTNERS } from '@/lib/partners';
 import { Main } from '@/components/site/Main';
+import { PlatformClip } from '@/components/site/PlatformClip';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Platform',
@@ -158,6 +159,48 @@ export default function PlatformPage() {
             platforms are available in your market — distribution is
             arranged by territory.
           </p>
+        </div>
+      </section>
+
+      {/* One of the four, actually running.
+          It sits on the dark ground rather than inside the light
+          platforms section above because the software's own interface is
+          dark — a near-black 2:1 band dropped onto paper-100 reads as a
+          hole in the page, while on ink-900 it reads as a screen. The
+          clip is cropped to its content: the source recording had the
+          application window inset in a desktop, and those dead bands
+          were the same value as this site's background anyway. */}
+      <section
+        aria-labelledby="in-use-heading"
+        className="border-t border-ink-700 px-6 py-20 md:px-16"
+      >
+        <div className="mx-auto max-w-content">
+          <p
+            id="in-use-heading"
+            className="text-xs uppercase tracking-[0.12em] text-ink-300"
+          >
+            One of them, running
+          </p>
+          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+            Anatomy in several views at once.
+          </p>
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+            A cadaver lab gives a cohort one specimen and one angle. Here a
+            learner holds the skeleton, the organs and the tissue at
+            microscopic scale side by side, and every structure is named
+            when they touch it.
+          </p>
+
+          <div className="mt-12 max-w-4xl">
+            <PlatformClip
+              stem="organon"
+              width={1280}
+              height={606}
+              source="3D Organon"
+              label="The 3D Organon interface running several anatomy views at once: a skeleton with abdominal organs in one window, a magnified tissue block in another, with structures labelled as they are selected."
+              caption="Multiple synchronised views — skeletal, organ and microscopic — in one session."
+            />
+          </div>
         </div>
       </section>
 
