@@ -6,6 +6,7 @@ import { SOLUTIONS, solutionBySlug } from '@/lib/solutions';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { Main } from '@/components/site/Main';
+import { Cta } from '@/components/site/Cta';
 
 /**
  * One dynamic route rather than three near-identical page files. The three
@@ -138,12 +139,7 @@ export default async function SolutionPage({
         </Reveal>
 
         <Reveal>
-          <Link
-            href="/contact"
-            className="mt-14 inline-block rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
-          >
-            Request a demo
-          </Link>
+          <Cta className="mt-14" />
         </Reveal>
       </Section>
     </Main>

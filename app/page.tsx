@@ -4,6 +4,7 @@ import { Reveal } from '@/components/site/Reveal';
 import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 import { VideoEmbed } from '@/components/site/VideoEmbed';
 import { Main } from '@/components/site/Main';
+import { Cta } from '@/components/site/Cta';
 import { PARTNERS } from '@/lib/partners';
 import type { Metadata } from 'next';
 
@@ -125,12 +126,7 @@ export default function Home() {
               recorded.
             </p>
             <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <Link
-                href="/contact"
-                className="rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
-              >
-                Request a demo
-              </Link>
+              <Cta />
               <Link
                 href="/evidence"
                 className="text-sm font-medium text-ink-300 underline decoration-ink-500 decoration-1 underline-offset-[6px] transition-colors hover:text-paper-0 hover:decoration-signal"
@@ -515,12 +511,7 @@ export default function Home() {
               it works in practice — including the outcomes data your
               procurement process is going to ask for.
             </p>
-            <Link
-              href="/contact"
-              className="mt-10 inline-block rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
-            >
-              Request a demo
-            </Link>
+            <Cta className="mt-10" />
           </div>
         </Reveal>
       </Section>

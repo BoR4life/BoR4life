@@ -9,19 +9,22 @@ const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      // `rgb(var(--token) / <alpha-value>)` rather than `var(--token)`, so
+      // Tailwind can compose `/80` into a real colour. With a bare var() it
+      // cannot, and fails silently — see the note in app/globals.css.
       colors: {
         ink: {
-          900: 'var(--ink-900)',
-          700: 'var(--ink-700)',
-          500: 'var(--ink-500)',
-          300: 'var(--ink-300)',
+          900: 'rgb(var(--ink-900) / <alpha-value>)',
+          700: 'rgb(var(--ink-700) / <alpha-value>)',
+          500: 'rgb(var(--ink-500) / <alpha-value>)',
+          300: 'rgb(var(--ink-300) / <alpha-value>)',
         },
         paper: {
-          100: 'var(--paper-100)',
-          0: 'var(--paper-000)',
+          100: 'rgb(var(--paper-100) / <alpha-value>)',
+          0: 'rgb(var(--paper-000) / <alpha-value>)',
         },
-        signal: 'var(--signal)',
-        critical: 'var(--critical)',
+        signal: 'rgb(var(--signal) / <alpha-value>)',
+        critical: 'rgb(var(--critical) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['var(--font-sans)'],

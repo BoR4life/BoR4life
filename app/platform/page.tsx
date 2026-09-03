@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
-import Link from 'next/link';
 
 import { PARTNERS } from '@/lib/partners';
 import { Main } from '@/components/site/Main';
+import { Cta } from '@/components/site/Cta';
 import { PlatformClip } from '@/components/site/PlatformClip';
 
 export const metadata: Metadata = pageMetadata({
@@ -206,12 +206,7 @@ export default function PlatformPage() {
 
       <section className="border-t border-ink-700 px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
-          <Link
-            href="/contact"
-            className="inline-block rounded-full bg-signal px-6 py-3 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
-          >
-            Request a demo
-          </Link>
+          <Cta />
         </div>
       </section>
     </Main>

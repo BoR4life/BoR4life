@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
-import Link from 'next/link';
 import { Main } from '@/components/site/Main';
+import { Cta } from '@/components/site/Cta';
 
 export const metadata: Metadata = pageMetadata({
   title: 'About',
@@ -102,12 +102,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <Link
-            href="/contact"
-            className="mt-12 inline-block rounded-full bg-signal px-6 py-3 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
-          >
-            Talk to us
-          </Link>
+          <Cta className="mt-12">Talk to us</Cta>
         </div>
       </section>
     </Main>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
-import Link from 'next/link';
 import { Main } from '@/components/site/Main';
+import { Cta } from '@/components/site/Cta';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Evidence',
@@ -203,12 +203,7 @@ export default function EvidencePage() {
             The platform is clinician-led and grounded in the founder’s
             doctoral research into immersive learning.
           </p>
-          <Link
-            href="/contact"
-            className="mt-10 inline-block rounded-full bg-signal px-6 py-3 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
-          >
-            Request the evidence pack
-          </Link>
+          <Cta className="mt-10">Request the evidence pack</Cta>
         </div>
       </section>
     </Main>

@@ -5,6 +5,7 @@ import { SOLUTIONS } from '@/lib/solutions';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { Main } from '@/components/site/Main';
+import { Cta } from '@/components/site/Cta';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Solutions',
@@ -109,12 +110,7 @@ export default function SolutionsPage() {
             product. Tell us both and we will tell you honestly whether this
             helps.
           </p>
-          <Link
-            href="/contact"
-            className="mt-10 inline-block rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
-          >
-            Request a demo
-          </Link>
+          <Cta className="mt-10" />
         </Reveal>
       </Section>
     </Main>

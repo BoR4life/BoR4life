@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "validate:assets": "node scripts/validate-assets.mjs",
+    "test": "playwright test",
     "optimize:gltf": "./scripts/optimize-gltf.sh",
     "audit": "npm audit --omit=dev --audit-level=high",
     "verify": "npm run typecheck && npm run lint && npm run validate:assets && npm run build",

@@ -7,6 +7,21 @@
   docs/01-art-direction.md. Never hardcode a hex value in a component;
   extend this file and tailwind.config.ts instead.
 
+  WHY THESE ARE CHANNEL TRIPLETS AND NOT HEX
+
+  Tailwind composes an alpha modifier (`bg-ink-900/80`) by substituting the
+  alpha into the colour it was given. It cannot do that to an opaque
+  `var(--ink-900)` holding `#0a0c0f`, and it does not warn — it silently
+  emits something the browser discards. Every `/opacity` use on a token was
+  therefore broken, in two different ways at once: backgrounds resolved to
+  rgba(0,0,0,0) and disappeared, while borders fell back to Tailwind's own
+  default grey, rgb(229,231,235), which is not in this palette at all. The
+  hairlines on /evidence and /platform were drawing in that grey.
+
+  Channels plus `rgb(var(--token) / <alpha-value>)` in tailwind.config.ts is
+  the composable form. The hex each triplet corresponds to is in the comment
+  beside it, because that is what a designer reads.
+
   This site commits to a single dark palette rather than offering both
   themes. That is a deliberate choice, not an unfinished one: the imagery
   is clinical footage shot in dark rooms, and a light variant would need a
@@ -15,17 +30,17 @@
   so its own widgets do not arrive white.
 */
 :root {
-  --ink-900: #0a0c0f;
-  --ink-700: #16191f;
+  --ink-900: 10 12 15;   /* #0a0c0f */
+  --ink-700: 22 25 31;   /* #16191f */
   /* ink-500 is a BORDER/RULE token only. At 1.9:1 on ink-900 it fails WCAG
      AA for text on any dark ground — it is only legible as text on
      paper-100 (9.4:1). tests/contrast.spec.ts enforces this. */
-  --ink-500: #3a414d;
-  --ink-300: #8b939f;
-  --paper-100: #f4f5f7;
-  --paper-000: #ffffff;
-  --signal: #00e0b8;
-  --critical: #ff5a4e;
+  --ink-500: 58 65 77;   /* #3a414d */
+  --ink-300: 139 147 159;   /* #8b939f */
+  --paper-100: 244 245 247;   /* #f4f5f7 */
+  --paper-000: 255 255 255;   /* #ffffff */
+  --signal: 0 224 184;   /* #00e0b8 */
+  --critical: 255 90 78;   /* #ff5a4e */
 
   /*
     --font-display is set by next/font/local in app/fonts/index.ts and already
@@ -128,17 +143,17 @@ html {
 }
 
 body {
-  background: var(--ink-900);
-  color: var(--paper-100);
+  background: rgb(var(--ink-900));
+  color: rgb(var(--paper-100));
 }
 
 ::selection {
-  background: var(--signal);
-  color: var(--ink-900);
+  background: rgb(var(--signal));
+  color: rgb(var(--ink-900));
 }
 
 :focus-visible {
-  outline: 2px solid var(--signal);
+  outline: 2px solid rgb(var(--signal));
   outline-offset: 2px;
 }
 
@@ -165,17 +180,17 @@ body {
 }
 
 .policy-body a {
-  color: var(--ink-900);
+  color: rgb(var(--ink-900));
   text-decoration: underline;
   text-underline-offset: 4px;
-  text-decoration-color: color-mix(in srgb, var(--ink-900) 30%, transparent);
+  text-decoration-color: color-mix(in srgb, rgb(var(--ink-900)) 30%, transparent);
 }
 
 .policy-body a:hover {
-  text-decoration-color: var(--ink-900);
+  text-decoration-color: rgb(var(--ink-900));
 }
 
 .policy-body strong {
-  color: var(--ink-900);
+  color: rgb(var(--ink-900));
   font-weight: 600;
 }
