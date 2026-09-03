@@ -369,6 +369,19 @@ export default function Home() {
                 </figcaption>
               </figure>
             </div>
+
+            {/*
+              Credited here and not only above the themes. The attribution
+              two hundred pixels up the page is true but easy to scroll
+              past, and a reader who lands on these frames should not be
+              able to mistake another company's interface for ours. Same
+              reasoning as the trademark line on /platform.
+            */}
+            <p className="mt-6 max-w-prose text-xs leading-relaxed text-ink-300">
+              Both screens are Bodyswaps&rsquo; software. Bundle of Rays
+              distributes and supports it; the product and its interface are
+              Bodyswaps&rsquo; own.
+            </p>
           </div>
         </Reveal>
 

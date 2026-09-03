@@ -13,7 +13,7 @@ import { test, expect } from '@playwright/test';
 const CHOICES = [
   'A university or nursing school',
   'A hospital or health service',
-  'Government, or a large private provider',
+  'A government department or large provider',
 ];
 
 test('the control works with JavaScript disabled', async ({ browser }) => {
@@ -59,10 +59,10 @@ test('the choice reaches the enquiry as a self-declared qualifier', async ({ pag
 
 test('a remembered choice is marked, and not by colour alone', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: /Government, or a large private provider/i }).click();
+  await page.getByRole('link', { name: /A government department or large provider/i }).click();
   await page.goto('/');
 
-  const chosen = page.getByRole('link', { name: /Government, or a large private provider/i });
+  const chosen = page.getByRole('link', { name: /A government department or large provider/i });
   await expect(chosen).toHaveAttribute('aria-current', 'true');
   await expect(chosen.getByText('Your selection.')).toBeAttached();
 
@@ -90,6 +90,50 @@ test('marking a choice cannot shift the page', async ({ page }) => {
   expect(after).not.toBeNull();
   expect(after!.x).toBeCloseTo(before!.x, 0);
   expect(after!.width).toBeCloseTo(before!.width, 0);
+});
+
+test('every choice meets the WCAG 2.2 minimum target size', async ({ page }) => {
+  // 2.5.8 Target Size (Minimum), AA: 24 by 24 CSS pixels. These are large
+  // cards so this passes with room to spare, which is exactly why it is
+  // worth pinning — a later redesign into a compact chip row is where this
+  // silently regresses, and axe does not check it.
+  await page.goto('/');
+  for (const label of CHOICES) {
+    const box = await page.getByRole('link', { name: new RegExp(label, 'i') }).boundingBox();
+    expect(box, `${label} has no box`).not.toBeNull();
+    expect(box!.width, `${label} width`).toBeGreaterThanOrEqual(24);
+    expect(box!.height, `${label} height`).toBeGreaterThanOrEqual(24);
+  }
+});
+
+test('the selected-state border passes non-text contrast', async ({ page }) => {
+  // 1.4.11 Non-text Contrast, AA: 3:1. The border is a state indicator, so
+  // it has to be distinguishable, and it is computed here rather than
+  // eyeballed — this repo has already shipped a colour that looked fine to
+  // everyone who looked at it and failed by calculation.
+  await page.goto('/');
+  await page.getByRole('link', { name: /A hospital or health service/i }).click();
+  await page.goto('/');
+
+  const chosen = page.getByRole('link', { name: /A hospital or health service/i });
+  await expect(chosen).toHaveAttribute('aria-current', 'true');
+
+  const ratio = await chosen.evaluate((el) => {
+    const parse = (c: string) => (c.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
+    const lum = (rgb: number[]) => {
+      const [r, g, b] = rgb.map((v) => {
+        const s = v / 255;
+        return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+    const cs = getComputedStyle(el);
+    const a = lum(parse(cs.borderTopColor));
+    const b = lum(parse(cs.backgroundColor));
+    return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+  });
+
+  expect(ratio).toBeGreaterThanOrEqual(3);
 });
 
 test('a forged audience value is ignored rather than displayed', async ({ page }) => {

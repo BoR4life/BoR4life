@@ -29,6 +29,20 @@
  *     service" at the top of every enquiry. That one line is worth more
  *     than any amount of inferred segmentation, and it costs no cookie.
  *
+ * On the wording of the three labels. They are parallel in construction —
+ * each begins "A" and names an institution the reader belongs to, not a
+ * market segment they fall into — because a self-select control is read as
+ * a list and a reader compares its items to each other before comparing any
+ * of them to themselves. "Government, or a large private provider" broke
+ * that pattern and was fixed.
+ *
+ * They are also checked for idiom, because this site sells into Australia,
+ * the United States, Korea and India. "Health service" is Australian and
+ * British where the United States would say "health system"; it is kept
+ * because it is understood in both, because Australia is the home market,
+ * and because it is the phrase lib/solutions.ts already uses for that
+ * audience. Divergence between the two would be worse than either choice.
+ *
  * The description under each choice is deliberately NOT written here. It is
  * the `summary` already on the matching entry in lib/solutions.ts. Copy
  * that makes a claim lives in exactly one place, so this file cannot drift
@@ -53,7 +67,7 @@ export type Audience = {
 export const AUDIENCES: readonly Audience[] = [
   { id: 'university', label: 'A university or nursing school', slug: 'nursing' },
   { id: 'health-service', label: 'A hospital or health service', slug: 'patient' },
-  { id: 'government', label: 'Government, or a large private provider', slug: 'custom' },
+  { id: 'government', label: 'A government department or large provider', slug: 'custom' },
 ] as const;
 
 export function isAudienceId(value: unknown): value is AudienceId {
