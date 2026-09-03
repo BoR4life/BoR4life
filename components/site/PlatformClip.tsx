@@ -96,7 +96,16 @@ export function PlatformClip({
       </div>
       <figcaption className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-ink-700 px-4 py-3 text-xs leading-relaxed text-ink-300">
         <span>{caption}</span>
-        <span className="text-ink-500">{source}</span>
+        {/*
+          ink-300, NOT ink-500. ink-500 is a border token: at 1.9:1 on
+          ink-900 it fails AA for text, which is the exact defect this
+          repository already shipped once (see CLAUDE.md rule 4). The
+          attribution is distinguished from the caption by position and
+          uppercase tracking instead of by colour.
+        */}
+        <span className="text-[0.6875rem] uppercase tracking-[0.08em] text-ink-300">
+          {source}
+        </span>
       </figcaption>
     </figure>
   );
