@@ -1,7 +1,7 @@
 'use server';
 
 import { headers } from 'next/headers';
-import { EnquirySchema, ROLE_LABELS } from '@/lib/enquiry';
+import { EnquirySchema, ROLE_LABELS, headerSafe } from '@/lib/enquiry';
 import { rateLimit } from '@/lib/rate-limit';
 import {
   LEAD_SOURCE_FIELD,
@@ -160,9 +160,11 @@ async function deliver(enquiry: {
         // Replying goes straight back to the enquirer rather than to the
         // sending domain — the single detail that makes this usable daily.
         reply_to: enquiry.email,
-        subject: `Enquiry — ${enquiry.name}${
-          enquiry.organisation ? ` (${enquiry.organisation})` : ''
-        }`,
+        subject: headerSafe(
+          `Enquiry — ${enquiry.name}${
+            enquiry.organisation ? ` (${enquiry.organisation})` : ''
+          }`,
+        ),
         // Plain text only. No HTML means no injection surface in the mail
         // client, and the content is attacker-supplied by definition.
         text: [

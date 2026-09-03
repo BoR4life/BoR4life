@@ -98,7 +98,14 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           nonce={nonce}
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+          // `<` is escaped so the payload can never close this script tag.
+          // Every value above is a static constant today, so this changes
+          // nothing now — it is here because the first person to put a
+          // dynamic value into the schema should not also have to discover
+          // that a closing script tag inside JSON ends the block.
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(orgSchema).replace(/</g, '\\u003c'),
+          }}
         />
         <LeadSourceCapture />
         <PostHogProvider>
