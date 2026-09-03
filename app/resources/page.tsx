@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Main } from '@/components/site/Main';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Resources',
   description:
     'What a procurement or ethics reviewer needs from us: what is published here, and what we will answer directly on request.',
-};
+  path: '/resources',
+});
 
 /**
  * The procurement page.

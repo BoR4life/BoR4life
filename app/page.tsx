@@ -5,6 +5,17 @@ import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 import { VideoEmbed } from '@/components/site/VideoEmbed';
 import { Main } from '@/components/site/Main';
 import { PARTNERS } from '@/lib/partners';
+import type { Metadata } from 'next';
+
+/**
+ * The homepage deliberately keeps the root layout's title and description —
+ * they were written for it — but it still needs its own canonical. Without
+ * one, the apex, www and the preview domain all serve this page with nothing
+ * saying which address is the real one.
+ */
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 /**
  * Home page.
@@ -272,6 +283,66 @@ export default function Home() {
                 </div>
               ))}
             </dl>
+
+            {/*
+              Two stills from the platform. Held at a deliberately modest
+              width: the sources are 686px and 745px wide, so anything
+              wider than about a third of the grid is upscaling, and an
+              upscaled screenshot of a product looks worse than no
+              screenshot at all. Same reasoning as the scenario clip —
+              see components/site/ScenarioVideo.tsx.
+
+              The second one is the more useful of the pair. It shows the
+              behaviours being named — raised pitch, eye contact — which is
+              the site's claim that communication is assessed rather than
+              observed, in a single frame.
+            */}
+            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:max-w-3xl">
+              <figure>
+                <picture>
+                  <source
+                    srcSet="/images/deescalation-roleplay.avif"
+                    type="image/avif"
+                  />
+                  <img
+                    src="/images/deescalation-roleplay.webp"
+                    alt="Two people talking across a café counter, both mid-gesture — a de-escalation roleplay seen from the learner's position."
+                    width={686}
+                    height={386}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full rounded border border-ink-700 bg-ink-700"
+                  />
+                </picture>
+                <figcaption className="mt-3 text-xs leading-relaxed text-ink-300">
+                  The exchange itself. The other person responds to what the
+                  learner says, and does not reset politely when it goes
+                  badly.
+                </figcaption>
+              </figure>
+              <figure>
+                <picture>
+                  <source
+                    srcSet="/images/deescalation-feedback.avif"
+                    type="image/avif"
+                  />
+                  <img
+                    src="/images/deescalation-feedback.webp"
+                    alt="A debrief in a clinical room with behaviours labelled on screen: raised pitch or shouting, and excessive eye contact."
+                    width={745}
+                    height={287}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full rounded border border-ink-700 bg-ink-700"
+                  />
+                </picture>
+                <figcaption className="mt-3 text-xs leading-relaxed text-ink-300">
+                  And the debrief. Specific behaviours are named — raised
+                  pitch, eye contact — rather than a score with no reason
+                  attached to it.
+                </figcaption>
+              </figure>
+            </div>
           </div>
         </Reveal>
 

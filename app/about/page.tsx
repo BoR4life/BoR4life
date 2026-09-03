@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { Main } from '@/components/site/Main';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'About',
   description:
     'Bundle of Rays was founded in 2018 by a nurse who saw that conventional training does not prepare people for high-consequence moments.',
-};
+  path: '/about',
+});
 
 /**
  * Founder story.

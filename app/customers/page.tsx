@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   // address goes in onboarding emails and the footer — so it is neither
   // buried nor advertised.
   robots: { index: false, follow: true },
+  alternates: { canonical: '/customers' },
 };
 
 /**

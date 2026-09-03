@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 
 import { PARTNERS } from '@/lib/partners';
 import { Main } from '@/components/site/Main';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Platform',
   description:
     'Contextual environments, AI-driven clinical roleplay, learning analytics — and the four immersive-learning platforms Bundle of Rays distributes alongside its own content.',
-};
+  path: '/platform',
+});
 
 const PILLARS = [
   {

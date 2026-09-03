@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { SOLUTIONS } from '@/lib/solutions';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { Main } from '@/components/site/Main';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Solutions',
   description:
     'Immersive clinical training for nursing education, patient education, and custom content built to your own protocols.',
-};
+  path: '/solutions',
+});
 
 export default function SolutionsPage() {
   return (

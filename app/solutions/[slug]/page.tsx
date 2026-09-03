@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { SOLUTIONS, solutionBySlug } from '@/lib/solutions';
@@ -25,10 +26,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const solution = solutionBySlug(slug);
   if (!solution) return {};
-  return {
+  return pageMetadata({
     title: solution.name,
     description: solution.summary,
-  };
+    path: `/solutions/${solution.slug}`,
+  });
 }
 
 export default async function SolutionPage({

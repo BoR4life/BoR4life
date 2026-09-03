@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 
 import { PolicyPage, type PolicySection } from '@/components/site/PolicyPage';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Privacy',
   description:
     'What this website collects, what it does not, and how to have your enquiry deleted. Written from the code, not from a template.',
-};
+  path: '/privacy',
+});
 
 /**
  * Privacy notice.

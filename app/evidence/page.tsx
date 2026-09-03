@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { Main } from '@/components/site/Main';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Evidence',
   description:
     'How Bundle of Rays measures learning: clinical decisions, communication and procedural accuracy, captured during the scenario rather than after it.',
-};
+  path: '/evidence',
+});
 
 /**
  * The tender-winner page.

@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import { EnquiryForm } from './EnquiryForm';
 import { Main } from '@/components/site/Main';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Contact',
   description:
     'Talk to Bundle of Rays about immersive clinical training for your health service, university or national program.',
-};
+  path: '/contact',
+});
 
 export default function ContactPage() {
   return (

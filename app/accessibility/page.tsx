@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 
 import { PolicyPage, type PolicySection } from '@/components/site/PolicyPage';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Accessibility',
   description:
     'Our WCAG 2.2 AA conformance statement for this website: what is tested automatically, what is checked by hand, and what we have not yet done.',
-};
+  path: '/accessibility',
+});
 
 /**
  * Accessibility statement.

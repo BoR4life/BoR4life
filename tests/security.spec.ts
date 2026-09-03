@@ -68,3 +68,27 @@ test('a mail header cannot be forged through the enquiry subject', () => {
   // Bounded, so a 200-character subject cannot be used to push content out.
   expect(headerSafe('x'.repeat(500)).length).toBe(200);
 });
+
+test('every indexable page declares its own canonical and share card', async ({
+  request,
+}) => {
+  // Both of these were absent before lib/seo.ts existed: no page had a
+  // canonical at all, and og:title fell back to the homepage everywhere.
+  const routes = [
+    ['/', 'Immersive learning for healthcare'],
+    ['/evidence', 'Evidence — Bundle of Rays'],
+    ['/platform', 'Platform — Bundle of Rays'],
+    ['/solutions/nursing', 'Nursing education — Bundle of Rays'],
+  ] as const;
+
+  for (const [route, expectedOg] of routes) {
+    const html = await (await request.get(route)).text();
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+    expect(canonical, `${route} has no canonical`).toBeTruthy();
+    expect(canonical, `${route} canonical must be absolute`).toMatch(/^https:\/\//);
+    expect(canonical!.endsWith(route === '/' ? '.com' : route)).toBe(true);
+
+    const og = html.match(/<meta property="og:title" content="([^"]+)"/)?.[1];
+    expect(og, `${route} og:title`).toContain(expectedOg);
+  }
+});
