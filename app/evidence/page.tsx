@@ -22,6 +22,15 @@ export const metadata: Metadata = {
  * been supplied with a citation — and in this sector an unsourced outcome
  * claim is a regulatory and reputational risk, not just weak copy
  * (docs/00-brand-brief.md, PROHIBITED list).
+ *
+ * The one third-party statement on this page is quoted from a public
+ * document and carries its citation inline. Deliberately NOT used: a
+ * separate quote from a named staff member in the same article. She was
+ * describing her own service's reasons for adopting VR and did not mention
+ * Bundle of Rays at all — running it beside our name would let a reader
+ * infer an endorsement she never gave, which is exactly the claim a
+ * procurement reader checks. If a real endorsement is wanted, ask her for
+ * one.
  */
 
 const DEPLOYMENTS = [
@@ -128,6 +137,41 @@ export default function EvidencePage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="published-heading"
+        className="border-t border-ink-700 px-6 py-20 md:px-16"
+      >
+        <div className="mx-auto max-w-content">
+          <h2
+            id="published-heading"
+            className="text-xs uppercase tracking-[0.12em] text-ink-300"
+          >
+            Said about us, in public, by a health service
+          </h2>
+          <figure className="mt-10 max-w-prose">
+            <blockquote className="border-l-2 border-signal pl-6 text-[1.375rem] leading-snug tracking-[-0.01em] text-paper-0">
+              <p>
+                &ldquo;Working in partnership with immersive technology experts
+                in the field of Nursing, Bundle of Rays, our Learning and
+                Development team is also taking their VR understanding to the
+                next level&hellip;&rdquo;
+              </p>
+            </blockquote>
+            <figcaption className="mt-5 text-sm leading-relaxed text-ink-300">
+              South West Hospital and Health Service,{' '}
+              <cite className="not-italic">Pulse</cite>, June/July 2021
+              edition.
+            </figcaption>
+          </figure>
+          <p className="mt-8 max-w-prose text-sm leading-relaxed text-ink-300">
+            This is not a testimonial we asked for. It is a Queensland health
+            service describing the partnership in its own staff publication,
+            which is why we cite the issue rather than paraphrase it — you can
+            ask them.
+          </p>
         </div>
       </section>
 

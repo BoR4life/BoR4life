@@ -167,3 +167,11 @@ strong and is far easier to walk back.
 - **Model releases for `team-learning-development.*` are unsighted.** Six
   identifiable adults. Confirm consent before this reaches a production
   domain — see `docs/asset-licences.md`.
+- **South West HHS have not been told we quote their newsletter.** The
+  sentence on `/evidence` comes from a public document and is cited to the
+  issue, which is defensible on its own. But a government health service
+  generally expects to be asked before a supplier quotes its publication in
+  marketing, the ask costs one short email, and being caught not asking costs
+  a great deal more with that kind of client. Send it before the cutover, and
+  it is a natural opening to request a current quote — the article is five
+  years old.

@@ -16,6 +16,32 @@ derived fact is tagged `[VERIFY]` in `docs/00-brand-brief.md`.
 - LinkedIn — https://au.linkedin.com/company/bundle-of-rays
 - Techboard — https://techboard.com.au/company-profile/bundle-of-rays/
 
+## Quoted on the site
+
+One source is quoted directly rather than used as background, so it is
+recorded here in full.
+
+- **South West Hospital and Health Service, _Pulse_, June/July 2021 edition**,
+  page 21, "Virtual training for the South West takes off!". Supplied by Brad
+  as a PDF. The sentence quoted on `/evidence` is the newsletter's own
+  editorial text, not an interview quote:
+
+  > Working in partnership with immersive technology experts in the field of
+  > Nursing, Bundle of Rays, our Learning and Development team is also taking
+  > their VR understanding to the next level, ensuring the team are fully
+  > trained and aware of all information and support required to ensure staff
+  > can confidently progress required layers of practice skills-based
+  > training.
+
+  The same article carries a quote from the service's Nursing Director,
+  Education. It is **not** used, and should not be added later without asking
+  her: she is describing her own service's reasons for adopting VR and does
+  not mention Bundle of Rays, so placing it beside our name would imply an
+  endorsement that was never given.
+
+  Outstanding courtesy: South West HHS communications have not been asked
+  about the quotation. See `docs/09-go-live.md`.
+
 ## Design reference
 
 - Matthias Winckelmann — https://www.mwinckelmann.com/ (also `/about`, `/samsungs24`)
