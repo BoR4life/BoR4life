@@ -51,19 +51,17 @@ const CLIENTS = [
   { name: 'DY Patil, Pune', detail: 'Two years running' },
 ];
 
+/*
+  Titles only. Each of these carried a body that was a shorter paraphrase of
+  the same three measures on /evidence — a page this very section links to —
+  so the detail was read twice or not at all. The bodies are removed rather
+  than left unrendered, because unused data outlives the reason it stopped
+  being used.
+*/
 const MEASURES = [
-  {
-    title: 'Clinical decisions',
-    body: 'Which action was taken, at which point in a deteriorating scenario, and what was not done.',
-  },
-  {
-    title: 'Communication',
-    body: 'What was said, to whom, and when — including whether and how the learner escalated.',
-  },
-  {
-    title: 'Procedural accuracy',
-    body: 'Sequence, technique and omissions against the expected pathway, recorded per attempt.',
-  },
+  { title: 'Clinical decisions' },
+  { title: 'Communication' },
+  { title: 'Procedural accuracy' },
 ];
 
 const FACTS = [
@@ -207,19 +205,13 @@ export default function Home() {
             Knowing what to do and doing it under pressure are different
             skills. Only one of them gets taught.
           </p>
-          <div className="mt-10 grid gap-8 md:grid-cols-2 md:gap-16">
-            <p className="max-w-prose text-[1.0625rem] leading-relaxed text-muted">
-              A deteriorating patient does not wait for recall. The moment
-              arrives with noise, time pressure, incomplete information and
-              someone watching — and conventional training leaves that moment
-              almost entirely untested.
-            </p>
-            <p className="max-w-prose text-[1.0625rem] leading-relaxed text-muted">
-              Practitioners can pass every written assessment and still meet
-              their first real emergency without ever having rehearsed one.
-              That gap is not a knowledge problem. It is a practice problem.
-            </p>
-          </div>
+          <p className="mt-10 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
+            A deteriorating patient does not wait for recall. The moment
+            arrives with noise, time pressure, incomplete information and
+            someone watching — and conventional training leaves it almost
+            entirely untested. That is not a knowledge problem. It is a
+            practice problem.
+          </p>
         </Reveal>
       </Section>
 
@@ -272,12 +264,6 @@ export default function Home() {
               needs a person in front of you who reacts to your tone, your
               distance and your timing — and who does not reset politely when
               you get it wrong.
-            </p>
-            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
-              Simulated patients and colleagues respond to what the learner
-              actually says and adapt as the exchange develops, so
-              communication is practised and assessed rather than scripted
-              and skipped.
             </p>
           </Reveal>
         </div>
@@ -341,9 +327,7 @@ export default function Home() {
                   />
                 </picture>
                 <figcaption className="mt-3 text-xs leading-relaxed text-muted">
-                  The exchange itself. The other person responds to what the
-                  learner says, and does not reset politely when it goes
-                  badly.
+                  The exchange itself.
                 </figcaption>
               </figure>
               <figure>
@@ -363,9 +347,8 @@ export default function Home() {
                   />
                 </picture>
                 <figcaption className="mt-3 text-xs leading-relaxed text-muted">
-                  And the debrief. Specific behaviours are named — raised
-                  pitch, eye contact — rather than a score with no reason
-                  attached to it.
+                  And the debrief: behaviours named, not a score with no
+                  reason attached.
                 </figcaption>
               </figure>
             </div>
@@ -407,16 +390,19 @@ export default function Home() {
           </p>
         </Reveal>
 
-        <dl className="mt-14 grid gap-10 md:grid-cols-3">
+        {/*
+          Titles only. Each body here was a shorter paraphrase of the same
+          three measures on /evidence, which this section links to directly
+          — so the detail was being read twice or not at all. The titles
+          still carry the scan.
+        */}
+        <ul className="mt-14 grid gap-10 md:grid-cols-3">
           {MEASURES.map((m, i) => (
-            <Reveal key={m.title} step={i}>
-              <dt className="text-lg font-semibold">{m.title}</dt>
-              <dd className="mt-3 text-sm leading-relaxed text-muted">
-                {m.body}
-              </dd>
-            </Reveal>
+            <li key={m.title} className="border-t border-rule pt-4 text-lg font-semibold">
+              <Reveal step={i}>{m.title}</Reveal>
+            </li>
           ))}
-        </dl>
+        </ul>
 
         <Reveal>
           <div className="mt-16 border-t border-rule pt-10">
