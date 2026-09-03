@@ -24,6 +24,10 @@
  *     style-src is untouched (rule 3).
  *   - `viewBox` plus w-full and h-auto, so it scales without a media query
  *     and without a second asset for mobile.
+ *   - Labels carry `font-sans` explicitly. The base rule in globals.css
+ *     puts the display face on headings and interface elements, but an SVG
+ *     <text> is neither, so it inherits the body serif and a diagram's
+ *     labels come out set like prose. Caught by looking at it.
  *   - role="img" with a label, because the marks carry meaning that the
  *     three headings above do not: the headings say WHAT is measured, this
  *     says it happens continuously during the run. The figcaption states
@@ -70,10 +74,10 @@ export function RunTimeline() {
           className="stroke-rule"
           strokeWidth={1}
         />
-        <text x={TRACK_START} y={42} className="fill-muted text-[11px]">
+        <text x={TRACK_START} y={42} className="fill-muted font-sans text-[11px]">
           Scenario begins
         </text>
-        <text x={TRACK_END} y={42} textAnchor="end" className="fill-muted text-[11px]">
+        <text x={TRACK_END} y={42} textAnchor="end" className="fill-muted font-sans text-[11px]">
           Debrief
         </text>
 
@@ -81,7 +85,7 @@ export function RunTimeline() {
           const y = LANE_Y[i] ?? 0;
           return (
             <g key={lane.label}>
-              <text x={0} y={y + 4} className="fill-ink text-[13px]">
+              <text x={0} y={y + 4} className="fill-ink font-sans text-[13px]">
                 {lane.label}
               </text>
               <line

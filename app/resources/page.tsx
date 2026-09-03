@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Main } from '@/components/site/Main';
+import { Cover } from '@/components/site/Cover';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Resources',
@@ -126,6 +127,13 @@ export default function ResourcesPage() {
                 href={item.href}
                 className="group block h-full p-8 transition-colors hover:bg-surface"
               >
+                {/*
+                  Generated from the title, so this page gains artwork
+                  without anyone choosing a picture and without an asset to
+                  maintain. Deterministic: the same title resolves to the
+                  same cover permanently. See lib/cover.ts.
+                */}
+                <Cover name={item.title} className="mb-7 rounded border border-rule" />
                 <h3 className="text-lg font-semibold text-ink">
                   {item.title}
                   <span

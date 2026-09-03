@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
 import { Main } from '@/components/site/Main';
+import { RunTimeline } from '@/components/site/RunTimeline';
 import { Cta } from '@/components/site/Cta';
 
 export const metadata: Metadata = pageMetadata({
@@ -116,6 +117,8 @@ export default function EvidencePage() {
               </div>
             ))}
           </div>
+
+          <RunTimeline />
         </div>
       </section>
 

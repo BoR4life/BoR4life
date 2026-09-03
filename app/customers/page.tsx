@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Main } from '@/components/site/Main';
+import { Cover } from '@/components/site/Cover';
 
 export const metadata: Metadata = {
   title: 'For customers',
@@ -72,6 +73,7 @@ export default function CustomersPage() {
         </h2>
         <div className="mt-8 grid gap-10 md:grid-cols-2">
           <div>
+            <Cover name="Something is wrong right now" className="mb-6 rounded border border-rule" />
             <h3 className="text-xl font-semibold text-ink">
               Something is wrong right now
             </h3>
@@ -84,6 +86,7 @@ export default function CustomersPage() {
             </p>
           </div>
           <div>
+            <Cover name="A question, a change, a new cohort" className="mb-6 rounded border border-rule" />
             <h3 className="text-xl font-semibold text-ink">
               A question, a change, a new cohort
             </h3>
