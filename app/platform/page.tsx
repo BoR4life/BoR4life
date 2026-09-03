@@ -130,6 +130,23 @@ export default function PlatformPage() {
                 <p className="mt-3 text-sm leading-relaxed text-ink-900">
                   {partner.fit}
                 </p>
+                {partner.themes && (
+                  <div className="mt-5 border-t border-ink-900/10 pt-5">
+                    <p className="text-xs uppercase tracking-[0.12em] text-ink-500">
+                      Situations covered
+                    </p>
+                    <ul className="mt-3 space-y-1.5">
+                      {partner.themes.map((theme) => (
+                        <li
+                          key={theme.name}
+                          className="text-sm leading-relaxed text-ink-900"
+                        >
+                          {theme.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </li>
             ))}
           </ul>

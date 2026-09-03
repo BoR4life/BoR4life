@@ -4,6 +4,7 @@ import { Reveal } from '@/components/site/Reveal';
 import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 import { VideoEmbed } from '@/components/site/VideoEmbed';
 import { Main } from '@/components/site/Main';
+import { PARTNERS } from '@/lib/partners';
 
 /**
  * Home page.
@@ -66,6 +67,11 @@ const MARKETS = [
   'South Korea',
   'India',
 ];
+
+// The de-escalation themes come from the Bodyswaps entry rather than being
+// retyped here, so the homepage and /platform can never drift apart on what
+// we say is deployable. See lib/partners.ts for why the list is short.
+const DEESCALATION = PARTNERS.find((p) => p.name === 'Bodyswaps')?.themes ?? [];
 
 export default function Home() {
   return (
@@ -213,6 +219,36 @@ export default function Home() {
             </p>
           </Reveal>
         </div>
+
+        {/* Name the situations. A clinical educator with an occupational
+            violence budget needs to see their own problem on the page, not
+            a general claim about "communication skills" — and the honest
+            framing is that this is Bodyswaps' content, which we distribute
+            and support. lib/partners.ts holds the list. */}
+        <Reveal>
+          <div className="mt-16 border-t border-ink-700 pt-10">
+            <h3 className="text-xl font-semibold text-paper-0">
+              The situations it covers
+            </h3>
+            <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink-300">
+              Delivered through Bodyswaps, which Bundle of Rays distributes
+              and supports. If the situation your staff face is not here, ask
+              — that is a better conversation than a catalogue.
+            </p>
+            <dl className="mt-10 grid gap-10 md:grid-cols-3">
+              {DEESCALATION.map((theme) => (
+                <div key={theme.name}>
+                  <dt className="text-base font-semibold text-paper-0">
+                    {theme.name}
+                  </dt>
+                  <dd className="mt-3 text-sm leading-relaxed text-ink-300">
+                    {theme.body}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </Reveal>
 
         <Reveal>
           <Link
