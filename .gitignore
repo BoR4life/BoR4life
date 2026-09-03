@@ -35,3 +35,6 @@ renders/
 # Confidential publishing constraints — named third parties under agreement.
 # Never commit. See docs/00-brand-brief.md for the rules stated abstractly.
 *.local.md
+
+# Reference-reader output (scripts/taste.mjs). Local instrument, not an artefact.
+.taste/

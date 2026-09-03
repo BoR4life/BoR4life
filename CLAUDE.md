@@ -66,6 +66,30 @@ five pages and looked fine to everyone who looked at it.
 The site is dark-only, deliberately. See the comment at the top of
 `app/globals.css`.
 
+Tokens carry **channel triplets**, not hex, and the config wraps them as
+`rgb(var(--token) / <alpha-value>)`. Tailwind cannot compose an alpha
+modifier into an opaque `var()` and does not warn about it: every
+`bg-ink-900/80` on this site silently computed to `rgba(0,0,0,0)`, and
+every `border-ink-900/10` fell back to Tailwind's own default grey, for as
+long as the tokens held hex. If you add a token, add it in channel form.
+
+## 4a. Describing a reference is not reading one
+
+`npm run taste -- <url>` measures a page instead of describing it: ground
+colour and luminance, every ink against the ground actually behind it,
+type scale weighted by glyphs laid down, spacing rhythm, radii, borders.
+Run it on a reference before building to it, and on our own pages to
+compare.
+
+It exists because eyes report a feeling and the feeling survives contact
+with the pixels. Given three screenshots of a studio whose work we
+admired, the look was read here as "dark, dramatic, saturated" and built
+that way for a day; the references were light, soft, matte and
+warm-neutral. A hex value cannot be misremembered as its opposite.
+
+The instrument stops at measurement — no scores, no generated palettes.
+Turning a measurement into a design decision needs Brad.
+
 ## 5. Accessibility is a gate, not a review step
 
 `npm run test` runs axe against every route and the build fails on a single
