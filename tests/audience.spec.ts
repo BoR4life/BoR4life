@@ -120,13 +120,14 @@ test('the selected-state border passes non-text contrast', async ({ page }) => {
 
   const ratio = await chosen.evaluate((el) => {
     const parse = (c: string) => (c.match(/[\d.]+/g) ?? []).slice(0, 3).map(Number);
-    const lum = (rgb: number[]) => {
-      const [r, g, b] = rgb.map((v) => {
-        const s = v / 255;
-        return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-      });
-      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    // Indexed explicitly rather than destructured: noUncheckedIndexedAccess
+    // is on, so `const [r, g, b] = arr` types each as possibly undefined.
+    const channel = (v: number) => {
+      const s = v / 255;
+      return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
     };
+    const lum = (rgb: number[]) =>
+      0.2126 * channel(rgb[0] ?? 0) + 0.7152 * channel(rgb[1] ?? 0) + 0.0722 * channel(rgb[2] ?? 0);
     const cs = getComputedStyle(el);
     const a = lum(parse(cs.borderTopColor));
     const b = lum(parse(cs.backgroundColor));
