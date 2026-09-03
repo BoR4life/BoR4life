@@ -76,64 +76,89 @@ const DEESCALATION = PARTNERS.find((p) => p.name === 'Bodyswaps')?.themes ?? [];
 export default function Home() {
   return (
     <Main>
-      {/* 1. Opening. A statement, not a picture. The h1 is visible now —
-          it used to be screen-reader-only behind an image, which meant the
-          page's actual thesis was the one thing a sighted visitor was
-          never shown. */}
+      {/* 1. Opening — a claim and its proof, in one composition.
+          Two changes from the version this replaces, both structural rather
+          than decorative.
+          The hero used to occupy the left half of a 1440px canvas with the
+          right half empty. Unbalanced whitespace does not read as confidence,
+          it reads as a layout that did not finish loading, and it was the
+          first thing anyone saw.
+          The client names used to sit in their own band underneath. Putting
+          them in the right column instead means the claim and the evidence
+          for it are in the same glance, which is the whole argument of this
+          site compressed into one screen — and it removes a section rather
+          than adding one. */}
       <section
         aria-labelledby="hero-heading"
-        className="border-b border-ink-700 px-6 pb-16 pt-20 md:px-16 md:pb-20 md:pt-28"
+        className="border-b border-ink-700 px-6 pb-20 pt-20 md:px-16 md:pb-28 md:pt-32"
       >
-        <div className="mx-auto max-w-content">
-          <p className="text-xs uppercase tracking-[0.12em] text-signal">
-            Immersive clinical training
-          </p>
-          <h1
-            id="hero-heading"
-            className="mt-5 max-w-5xl text-[clamp(2.5rem,7vw,5.75rem)] font-semibold leading-[0.98] tracking-[-0.03em] text-paper-0"
-          >
-            Every practitioner meets a first time.
-          </h1>
-          <p className="mt-8 max-w-2xl text-[clamp(1.125rem,1.6vw,1.375rem)] leading-relaxed text-ink-300">
-            Rehearse the deteriorating patient, the difficult conversation and
-            the unfamiliar procedure before they are real — in the environment
-            where they will happen, with every decision recorded.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <Link
-              href="/contact"
-              className="rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
+        <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-7">
+            <p className="text-xs uppercase tracking-[0.14em] text-signal">
+              Immersive clinical training
+            </p>
+            {/* Tighter than the old -0.03em and a step larger. At this size
+                the tracking is doing real work: Inter Tight's narrow
+                sidebearings hold at -0.04em, where the previous native stack
+                would have collided. */}
+            <h1
+              id="hero-heading"
+              className="mt-6 text-[clamp(2.75rem,6.2vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.04em] text-paper-0"
             >
-              Request a demo
-            </Link>
-            <Link
-              href="/evidence"
-              className="text-sm font-semibold text-paper-100 underline decoration-ink-500 underline-offset-4 transition-colors hover:decoration-paper-100"
+              Every practitioner meets a first time.
+            </h1>
+            <p className="mt-9 max-w-[44ch] text-[clamp(1.125rem,1.5vw,1.3125rem)] leading-[1.55] text-ink-300">
+              Rehearse the deteriorating patient, the difficult conversation
+              and the unfamiliar procedure before they are real — in the
+              environment where they will happen, with every decision
+              recorded.
+            </p>
+            <div className="mt-11 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Link
+                href="/contact"
+                className="rounded-full bg-signal px-7 py-3.5 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
+              >
+                Request a demo
+              </Link>
+              <Link
+                href="/evidence"
+                className="text-sm font-medium text-ink-300 underline decoration-ink-500 decoration-1 underline-offset-[6px] transition-colors hover:text-paper-0 hover:decoration-signal"
+              >
+                What we measure, and why we do not publish percentages
+              </Link>
+            </div>
+          </div>
+
+          {/* Proof, beside the claim. Hairline-separated rather than boxed:
+              a list of institutions needs no container to read as a list, and
+              a border would make it look like a widget rather than a fact. */}
+          <div className="lg:col-span-4 lg:col-start-9">
+            <h2
+              id="clients-heading"
+              className="text-xs uppercase tracking-[0.14em] text-ink-300"
             >
-              What we measure, and why we do not publish percentages
-            </Link>
+              Trusted in practice
+            </h2>
+            <ul className="mt-7">
+              {CLIENTS.map((client, i) => (
+                <li
+                  key={client.name}
+                  className="border-t border-ink-700 py-4 first:border-t-0 first:pt-0"
+                >
+                  <Reveal step={i}>
+                    <p className="text-[0.9375rem] font-semibold leading-snug text-paper-0">
+                      {client.name}
+                    </p>
+                    <p className="tabular mt-1 text-[0.8125rem] leading-snug text-ink-300">
+                      {client.detail}
+                    </p>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
-
-      {/* 2. Credibility. Immediately below, by design, and above the fold on
-          a desktop. Names only, until there is a quote to put beside them —
-          which is the single most valuable thing this site is missing. */}
-      <Section ground="ink" size="sm" labelledBy="clients-heading">
-        <Eyebrow id="clients-heading">Trusted in practice</Eyebrow>
-        <ul className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {CLIENTS.map((client, i) => (
-            <li key={client.name}>
-              <Reveal step={i}>
-                <p className="text-lg font-semibold text-paper-0">
-                  {client.name}
-                </p>
-                <p className="mt-1 text-sm text-ink-300">{client.detail}</p>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
-      </Section>
 
       {/* 3. The problem */}
       <Section ground="paper" size="lg" labelledBy="problem-heading">
@@ -332,10 +357,16 @@ export default function Home() {
                 <div key={fact.label}>
                   <dt className="sr-only">{fact.label}</dt>
                   <dd>
-                    <span className="block text-[clamp(1.5rem,3vw,2.25rem)] font-semibold tracking-[-0.02em] text-signal">
+                    {/* Bigger, tighter and tabular. These three figures are
+                        what a buyer repeats to a colleague, so they are set
+                        as display type rather than as large body text —
+                        and tabular-nums keeps the digits on a common width
+                        so the three read as a set instead of three
+                        unrelated strings. */}
+                    <span className="tabular block text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-none tracking-[-0.035em] text-signal">
                       {fact.value}
                     </span>
-                    <span className="mt-1 block text-xs text-ink-300">
+                    <span className="mt-3 block max-w-[18ch] text-[0.8125rem] leading-snug text-ink-300">
                       {fact.label}
                     </span>
                   </dd>

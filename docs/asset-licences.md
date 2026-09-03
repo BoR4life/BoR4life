@@ -62,3 +62,27 @@ Sketchfab" is not an answer you want to give a health department's legal team.
 - CC-BY requires visible attribution — add it to `/about` or a colophon.
 - AI-generated assets: record the model and prompt. **Never for clinical
   equipment** (see `docs/03-3d-production-spec.md`).
+
+
+## Typeface
+
+**Inter Tight** — `app/fonts/InterTight-{400,500,600}.woff2`
+
+| | |
+|---|---|
+| Designer | Rasmus Andersson |
+| Licence | SIL Open Font License 1.1 |
+| Source | Google Fonts (latin subset only, 44KB per weight) |
+| Permits | Web embedding, self-hosting, commercial use, unlimited page views |
+| Requires | The OFL text must accompany any *redistribution of the font files
+themselves*. Serving them as part of a website is use, not redistribution, so
+no attribution is required on the site. |
+
+Self-hosted rather than linked from Google's CDN, for two reasons that both
+matter here: `font-src 'self'` in `lib/csp.ts` stays closed, so no third party
+is contacted on a visitor's behalf and `/privacy` remains accurate; and there
+is no extra DNS lookup and TLS handshake on the critical path to first text.
+
+Only the latin subset is vendored. If the site ever needs Cyrillic, Greek or
+Vietnamese, fetch those subsets rather than the full face — the unicode-range
+split is what keeps this to 132KB total.

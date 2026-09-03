@@ -27,8 +27,14 @@
   --signal: #00e0b8;
   --critical: #ff5a4e;
 
-  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  /*
+    --font-display is set by next/font/local in app/fonts/index.ts and already
+    carries the fallback stack. Referencing it through --font-sans keeps the
+    single indirection the rest of the system was built against, so nothing
+    downstream had to change when a real face arrived.
+  */
+  --font-sans: var(--font-display), ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   /*
      The site is dark. Declaring `light` here told the browser to paint its
@@ -40,14 +46,59 @@
 }
 
 /*
-  No brand typeface is licensed yet (see docs/01-art-direction.md). Rather
-  than reach for a Google Font as a placeholder — a webfont network
-  round-trip is one of the top causes of LCP failure, and it is exactly the
-  kind of "temporary" choice that quietly ships to production — this uses a
-  curated native stack until a real display face is chosen. Swap
-  --font-sans for a next/font/local face when one is licensed; nothing
-  else in the system needs to change.
+  Typographic detail. Small things, and collectively the difference between
+  type that is merely set and type that looks drawn on purpose.
 */
+
+body {
+  /* Kerning and contextual alternates on; the face ships real pair data and
+     the browser will not use it unless asked. */
+  font-kerning: normal;
+  font-feature-settings: 'kern' 1, 'calt' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+  Display sizes need tighter tracking and tighter leading than body text —
+  the same letterspacing that reads as comfortable at 17px reads as loose and
+  weak at 80px. These are applied per-element in the components; this is the
+  floor.
+*/
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  font-synthesis-weight: none;
+}
+
+p {
+  /* Stops a single word stranding on the last line of a paragraph. */
+  text-wrap: pretty;
+}
+
+/*
+  Figures in tabular contexts — client lists, dates, measurements — line up
+  in columns only if the face is told to use tabular numerals. Proportional
+  figures in a vertical list look like a typesetting mistake.
+*/
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/*
+  Hanging punctuation. An opening quote mark set inline pushes the first line
+  of a pull quote visibly right of the block's left edge, so the quote looks
+  misaligned with everything above and below it. Supported in Safari, and a
+  no-op elsewhere, which is the correct kind of progressive enhancement:
+  where it works the alignment is optically true, where it does not the
+  fallback is what we already had.
+*/
+.hanging-quote {
+  hanging-punctuation: first;
+}
 
 html {
   scroll-behavior: smooth;

@@ -152,7 +152,12 @@ export default function EvidencePage() {
             Said about us, in public, by a health service
           </h2>
           <figure className="mt-10 max-w-prose">
-            <blockquote className="border-l-2 border-signal pl-6 text-[1.375rem] leading-snug tracking-[-0.01em] text-paper-0">
+            {/* hanging-quote pulls the opening quote mark into the margin.
+                Set inline it pushes the first line visibly right of the
+                block's left edge, so the quote reads as misaligned with
+                everything above it — the kind of detail nobody names and
+                everybody notices. See app/globals.css. */}
+            <blockquote className="hanging-quote border-l-2 border-signal pl-7 text-[clamp(1.375rem,2.1vw,1.75rem)] leading-[1.3] tracking-[-0.02em] text-paper-0">
               <p>
                 &ldquo;Working in partnership with immersive technology experts
                 in the field of Nursing, Bundle of Rays, our Learning and

@@ -7,6 +7,7 @@ import { Footer } from '@/components/site/Footer';
 import { SOCIAL_LINKS } from '@/lib/social';
 import { siteUrl } from '@/lib/site';
 import './globals.css';
+import { interTight } from './fonts';
 
 /**
  * Site-wide metadata. `metadataBase` is required for correct absolute
@@ -85,7 +86,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={`h-full ${interTight.variable}`}>
       <body className="min-h-full font-sans antialiased" data-nonce={nonce}>
         {/* Skip link: first focusable element on the page, per WCAG 2.4.1 */}
         <a
