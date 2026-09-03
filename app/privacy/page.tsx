@@ -120,7 +120,10 @@ const SECTIONS: PolicySection[] = [
           Your enquiry reaches us as an email, together with where your visit
           began — the site that linked you here (its address only, never the
           page), any campaign tag on the link, which of our pages you read
-          first, and the country your connection came from. That is how we
+          first, the country your connection came from, and, if you answered
+          the question on our home page, which of the three descriptions you
+          picked for yourself. We never guess that last one: if you did not
+          answer, the email says so. That is how we
           learn whether a conference, a post or a referral actually leads to
           conversations. It is stored nowhere except inside that email. We
           keep it for as long as we are in conversation with you and afterwards in our business

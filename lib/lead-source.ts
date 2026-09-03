@@ -21,6 +21,8 @@
  * itself. /privacy describes it in the enquiry section.
  */
 
+import { audienceById, isAudienceId, type AudienceId } from './audience';
+
 export const LEAD_SOURCE_FIELD = 'leadSource';
 const STORAGE_KEY = 'bor:entry';
 
@@ -35,6 +37,11 @@ export type LeadSource = {
   utm?: Partial<Record<(typeof UTM_KEYS)[number], string>>;
   /** Paths visited before submitting, in order, de-duplicated. */
   path?: string[];
+  /**
+   * What the visitor said they were, if they answered the question on the
+   * homepage. Self-declared, never inferred — see lib/audience.ts.
+   */
+  audience?: AudienceId;
 };
 
 /**
@@ -83,6 +90,40 @@ export function captureLeadSource(): void {
   }
 }
 
+/**
+ * Record what the visitor said they were.
+ *
+ * Written into the same blob as everything else rather than a key of its
+ * own: one storage key means one thing to describe in /privacy, one thing
+ * to clear, and one lifetime — this dies with the tab like the rest. It
+ * also means the enquiry form needs no change at all to carry it, because
+ * the form already reads this blob into its hidden field.
+ */
+export function recordAudience(id: AudienceId): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const existing = window.sessionStorage.getItem(STORAGE_KEY);
+    const current: LeadSource = existing ? (JSON.parse(existing) as LeadSource) : {};
+    current.audience = id;
+    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(current));
+  } catch {
+    /* storage blocked: the link still navigates, which is the important part */
+  }
+}
+
+/** What the visitor said they were, if they said. */
+export function readAudience(): AudienceId | undefined {
+  if (typeof window === 'undefined') return undefined;
+  try {
+    const raw = window.sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return undefined;
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    return isAudienceId(parsed.audience) ? parsed.audience : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 /** The stored source, serialised for the hidden form field. */
 export function readLeadSource(): string {
   if (typeof window === 'undefined') return '';
@@ -118,6 +159,11 @@ export function parseLeadSource(raw: unknown): LeadSource {
       if (Object.keys(utm).length) out.utm = utm;
     }
 
+    // Whitelisted against the known ids rather than length-capped: this
+    // value is printed in an email Brad reads, so an attacker must not be
+    // able to write arbitrary text into it.
+    if (isAudienceId(obj.audience)) out.audience = obj.audience;
+
     if (Array.isArray(obj.path)) {
       out.path = obj.path
         .filter((p): p is string => typeof p === 'string')
@@ -140,6 +186,10 @@ export function describeLeadSource(
   headers: { country?: string | null; region?: string | null },
 ): string {
   const lines: string[] = [];
+
+  // First, because it is the only line here the visitor chose to tell us.
+  const said = source.audience ? audienceById(source.audience) : undefined;
+  lines.push(`Says they are: ${said ? said.label : 'did not say'}`);
 
   const where = [headers.region, headers.country].filter(Boolean).join(', ');
   lines.push(`Location:     ${where || 'unknown'}`);

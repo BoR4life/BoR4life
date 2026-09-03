@@ -5,6 +5,7 @@ import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 import { VideoEmbed } from '@/components/site/VideoEmbed';
 import { Main } from '@/components/site/Main';
 import { Cta } from '@/components/site/Cta';
+import { AudienceSelect } from '@/components/site/AudienceSelect';
 import { PARTNERS } from '@/lib/partners';
 import type { Metadata } from 'next';
 
@@ -168,6 +169,35 @@ export default function Home() {
       </section>
 
       {/* 3. The problem */}
+      {/*
+        Self-select, placed directly under the hero.
+
+        A visitor arrives with one of three quite different first questions,
+        and until now the homepage answered them in a fixed order that
+        suited none of them in particular. Asking is more honest than
+        inferring from a referrer, and cheaper: no cookie, no vendor, and
+        the answer is better than anything inference would have produced.
+
+        Deliberately a quiet band and not a modal. An interstitial that
+        blocks the page would cost the very readers it means to help — a
+        procurement reader who wanted the evidence page, and every crawler.
+      */}
+      <Section ground="ink" size="sm" labelledBy="audience-heading">
+        <Reveal>
+          <Eyebrow id="audience-heading">Start where you are</Eyebrow>
+          <h2 className="mt-4 max-w-2xl text-[clamp(1.375rem,2.1vw,1.75rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+            Three readers, three different first questions.
+          </h2>
+          <p className="mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+            Say which you are and we will point you at the part that answers
+            yours first. Nothing is hidden either way.
+          </p>
+        </Reveal>
+        <Reveal step={1}>
+          <AudienceSelect />
+        </Reveal>
+      </Section>
+
       <Section ground="paper" size="lg" labelledBy="problem-heading">
         <Reveal>
           <Eyebrow ground="paper" id="problem-heading">
