@@ -39,14 +39,14 @@ export default function PlatformPage() {
     <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
-          <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
+          <p className="text-xs uppercase tracking-[0.12em] font-label text-muted">
             Platform
           </p>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-ink">
             Extended reality, clinical roleplay and the data to prove it
             worked.
           </h1>
-          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
             Built by nurses rather than by a studio with a clinical adviser
             attached. That difference shows up in what the scenarios get
             right — and in what they refuse to simplify.
@@ -58,7 +58,7 @@ export default function PlatformPage() {
         <section
           key={pillar.title}
           aria-labelledby={`pillar-${i}`}
-          className="border-t border-ink-700 px-6 py-16 md:px-16"
+          className="border-t border-rule px-6 py-16 md:px-16"
         >
           <div
             className={`mx-auto grid max-w-content items-center gap-12 lg:grid-cols-2 ${
@@ -68,15 +68,15 @@ export default function PlatformPage() {
             <div>
               <h2
                 id={`pillar-${i}`}
-                className="text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0"
+                className="text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-ink"
               >
                 {pillar.title}
               </h2>
-              <p className="mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+              <p className="mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
                 {pillar.body}
               </p>
             </div>
-            <figure className="overflow-hidden rounded border border-ink-700">
+            <figure className="overflow-hidden rounded border border-rule">
               <picture>
                 <source srcSet={`${pillar.image}.avif`} type="image/avif" />
                 <source srcSet={`${pillar.image}.webp`} type="image/webp" />
@@ -101,19 +101,19 @@ export default function PlatformPage() {
           plain line each. See lib/partners.ts for the rules. */}
       <section
         aria-labelledby="distributed-heading"
-        className="border-t border-ink-700 bg-paper-100 px-6 py-20 text-ink-900 md:px-16"
+        className="border-t border-rule bg-surface px-6 py-20 text-ink md:px-16"
       >
         <div className="mx-auto max-w-content">
           <p
             id="distributed-heading"
-            className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
+            className="text-xs uppercase tracking-[0.12em] font-label text-muted"
           >
             Platforms we distribute
           </p>
           <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em]">
             Our own scenarios, and the best of what else exists.
           </p>
-          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
             Some of what a program needs we author ourselves. Some of it
             someone else has already built well. Bundle of Rays is a
             distributor for four platforms we would choose for our own
@@ -121,28 +121,28 @@ export default function PlatformPage() {
             with our clinically authored content under one engagement.
           </p>
 
-          <ul className="mt-12 grid gap-px overflow-hidden rounded-lg bg-ink-900/10 sm:grid-cols-2">
+          <ul className="mt-12 grid gap-px overflow-hidden rounded-lg bg-paper/10 sm:grid-cols-2">
             {PARTNERS.map((partner) => (
-              <li key={partner.name} className="bg-paper-100 p-8">
-                <h3 className="text-lg font-semibold text-ink-900">
+              <li key={partner.name} className="bg-surface p-8">
+                <h3 className="text-lg font-semibold text-ink">
                   {partner.name}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-500">
+                <p className="mt-3 text-sm leading-relaxed text-muted">
                   {partner.what}
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-ink-900">
+                <p className="mt-3 text-sm leading-relaxed text-ink">
                   {partner.fit}
                 </p>
                 {partner.themes && (
-                  <div className="mt-5 border-t border-ink-900/10 pt-5">
-                    <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-500">
+                  <div className="mt-5 border-t border-rule pt-5">
+                    <p className="text-xs uppercase tracking-[0.12em] font-label text-muted">
                       Situations covered
                     </p>
                     <ul className="mt-3 space-y-1.5">
                       {partner.themes.map((theme) => (
                         <li
                           key={theme.name}
-                          className="text-sm leading-relaxed text-ink-900"
+                          className="text-sm leading-relaxed text-ink"
                         >
                           {theme.name}
                         </li>
@@ -154,7 +154,7 @@ export default function PlatformPage() {
             ))}
           </ul>
 
-          <p className="mt-8 max-w-prose text-sm leading-relaxed text-ink-500">
+          <p className="mt-8 max-w-prose text-sm leading-relaxed text-muted">
             Product names are their owners&rsquo; trademarks. Ask us which
             platforms are available in your market — distribution is
             arranged by territory.
@@ -172,19 +172,19 @@ export default function PlatformPage() {
           were the same value as this site's background anyway. */}
       <section
         aria-labelledby="in-use-heading"
-        className="border-t border-ink-700 px-6 py-20 md:px-16"
+        className="border-t border-rule px-6 py-20 md:px-16"
       >
         <div className="mx-auto max-w-content">
           <p
             id="in-use-heading"
-            className="text-xs uppercase tracking-[0.12em] font-label text-ink-300"
+            className="text-xs uppercase tracking-[0.12em] font-label text-muted"
           >
             One of them, running
           </p>
-          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-ink">
             Anatomy in several views at once.
           </p>
-          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
             A cadaver lab gives a cohort one specimen and one angle. Here a
             learner holds the skeleton, the organs and the tissue at
             microscopic scale side by side, and every structure is named
@@ -204,7 +204,7 @@ export default function PlatformPage() {
         </div>
       </section>
 
-      <section className="border-t border-ink-700 px-6 py-20 md:px-16">
+      <section className="border-t border-rule px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
           <Cta />
         </div>

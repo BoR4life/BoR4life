@@ -62,7 +62,7 @@ export function PlatformClip({
   };
 
   return (
-    <figure className="overflow-hidden rounded border border-ink-700">
+    <figure className="overflow-hidden rounded border border-rule">
       <div className="relative">
         <video
           ref={videoRef}
@@ -75,7 +75,7 @@ export function PlatformClip({
           width={width}
           height={height}
           aria-label={label}
-          className="w-full bg-ink-700"
+          className="w-full bg-surface"
         >
           <source
             src={`/video/${stem}-av1.mp4`}
@@ -88,13 +88,13 @@ export function PlatformClip({
           <button
             type="button"
             onClick={toggle}
-            className="absolute bottom-3 right-3 rounded-full bg-ink-900/90 px-4 py-2 text-xs font-semibold text-paper-100"
+            className="absolute bottom-3 right-3 rounded-full bg-paper/90 px-4 py-2 text-xs font-semibold text-ink"
           >
             {playing ? 'Pause clip' : 'Play clip'}
           </button>
         )}
       </div>
-      <figcaption className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-ink-700 px-4 py-3 text-xs leading-relaxed text-ink-300">
+      <figcaption className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-rule px-4 py-3 text-xs leading-relaxed text-muted">
         <span>{caption}</span>
         {/*
           ink-300, NOT ink-500. ink-500 is a border token: at 1.9:1 on
@@ -103,7 +103,7 @@ export function PlatformClip({
           attribution is distinguished from the caption by position and
           uppercase tracking instead of by colour.
         */}
-        <span className="text-[0.6875rem] uppercase tracking-[0.08em] text-ink-300">
+        <span className="text-[0.6875rem] uppercase tracking-[0.08em] text-muted">
           {source}
         </span>
       </figcaption>

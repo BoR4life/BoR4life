@@ -64,25 +64,51 @@ Sketchfab" is not an answer you want to give a health department's legal team.
   equipment** (see `docs/03-3d-production-spec.md`).
 
 
-## Typeface
+## Typefaces
 
-**Inter Tight** — `app/fonts/InterTight-{400,500,600}.woff2`
+Both specified by the brand kit. Archivo carries display and interface,
+Source Serif 4 carries body and long-form — an inversion of the usual
+serif-display-over-sans-body, chosen because a serif body reads as a
+document rather than a marketing page to a reader who assesses documents
+for a living.
+
+**Archivo** — `app/fonts/Archivo.var.woff2`
 
 | | |
 |---|---|
-| Designer | Rasmus Andersson |
+| Designer | Omnibus-Type |
 | Licence | SIL Open Font License 1.1 |
-| Source | Google Fonts (latin subset only, 44KB per weight) |
-| Permits | Web embedding, self-hosting, commercial use, unlimited page views |
-| Requires | The OFL text must accompany any *redistribution of the font files
-themselves*. Serving them as part of a website is use, not redistribution, so
-no attribution is required on the site. |
+| Source | Google Fonts, latin subset, variable (`wght` 100–900) |
+| Size | 35KB |
+
+**Source Serif 4** — `app/fonts/SourceSerif4.var.woff2`
+
+| | |
+|---|---|
+| Designer | Frank Grießhammer, Adobe |
+| Licence | SIL Open Font License 1.1 |
+| Source | Google Fonts, latin subset, variable (`wght` 200–900, `opsz` 8–60) |
+| Size | 122KB |
+
+Both licences permit web embedding, self-hosting, commercial use and
+unlimited page views. The OFL text must accompany any *redistribution of the
+font files themselves*; serving them as part of a website is use, not
+redistribution, so no attribution is required on the site.
+
+157KB of type in total, against the 44KB the single previous face cost.
+That is the real price of the brand kit and it was paid deliberately: the
+serif is the larger half, and it is larger because it carries a genuine
+optical-size axis, which is the thing a body serif most wants.
+
+These replace **Inter Tight** (Rasmus Andersson, also OFL), which was
+chosen here before the brand kit existed and had no authority behind it
+beyond being a good screen face. Its files are removed.
 
 Self-hosted rather than linked from Google's CDN, for two reasons that both
 matter here: `font-src 'self'` in `lib/csp.ts` stays closed, so no third party
 is contacted on a visitor's behalf and `/privacy` remains accurate; and there
 is no extra DNS lookup and TLS handshake on the critical path to first text.
 
-Only the latin subset is vendored. If the site ever needs Cyrillic, Greek or
-Vietnamese, fetch those subsets rather than the full face — the unicode-range
-split is what keeps this to 132KB total.
+Only the latin subsets are vendored. If the site ever needs Cyrillic, Greek
+or Vietnamese, fetch those subsets rather than the full faces — the
+unicode-range split is what keeps this to 157KB.

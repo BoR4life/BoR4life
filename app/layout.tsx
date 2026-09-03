@@ -7,7 +7,7 @@ import { Footer } from '@/components/site/Footer';
 import { SOCIAL_LINKS } from '@/lib/social';
 import { siteUrl } from '@/lib/site';
 import './globals.css';
-import { interTight } from './fonts';
+import { archivo, sourceSerif } from './fonts';
 
 /**
  * Site-wide metadata. `metadataBase` is required for correct absolute
@@ -86,12 +86,12 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" className={`h-full ${interTight.variable}`}>
-      <body className="min-h-full font-sans antialiased" data-nonce={nonce}>
+    <html lang="en" className={`h-full ${archivo.variable} ${sourceSerif.variable}`}>
+      <body className="min-h-full font-body antialiased" data-nonce={nonce}>
         {/* Skip link: first focusable element on the page, per WCAG 2.4.1 */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-signal focus:px-4 focus:py-2 focus:text-ink-900"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-ink"
         >
           Skip to content
         </a>

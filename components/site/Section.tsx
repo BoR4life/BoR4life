@@ -9,12 +9,25 @@ import type { ReactNode } from 'react';
  * separates a considered layout from a competent one.
  */
 
-type Ground = 'ink' | 'paper';
+type Ground = 'paper' | 'surface';
 type Size = 'sm' | 'md' | 'lg';
 
+/*
+  Both grounds are light now. The brand is ink on paper and its governing
+  document defines no dark ground at all, so the site's old alternation
+  between a dark section and a light one is gone: `paper` is the page, and
+  `surface` is the raised white band used to separate one argument from the
+  next.
+
+  The kit does keep a dark device — the ink field — but it is explicitly
+  for "anything whose job is recognition rather than information", carries
+  "the wordmark or a headline, never both plus body copy", and says that if
+  a layout needs body copy it is the wrong layout. Every section on this
+  site carries body copy, so none of them qualifies, including the hero.
+*/
 const GROUND: Record<Ground, string> = {
-  ink: 'bg-ink-900 text-paper-100',
-  paper: 'bg-paper-100 text-ink-900',
+  paper: 'bg-paper text-ink',
+  surface: 'bg-surface text-ink',
 };
 
 const PAD: Record<Size, string> = {
@@ -25,7 +38,7 @@ const PAD: Record<Size, string> = {
 
 export function Section({
   children,
-  ground = 'ink',
+  ground = 'paper',
   size = 'md',
   bordered = true,
   labelledBy,
@@ -44,7 +57,7 @@ export function Section({
       className={[
         GROUND[ground],
         PAD[size],
-        bordered ? 'border-t border-ink-700' : '',
+        bordered ? 'border-t border-rule' : '',
         'px-6 md:px-16',
         className,
       ]
@@ -56,14 +69,19 @@ export function Section({
   );
 }
 
-/** Small tracked label above a heading. Used consistently site-wide. */
+/**
+ * Small tracked label above a heading. Used consistently site-wide.
+ *
+ * It used to take a `ground` prop to pick a legible muted tone, because the
+ * site alternated a dark ground with a light one. With both grounds light
+ * the same muted token is correct on either, so the prop is gone rather
+ * than kept as a parameter that changes nothing.
+ */
 export function Eyebrow({
   children,
-  ground = 'ink',
   id,
 }: {
   children: ReactNode;
-  ground?: Ground;
   id?: string;
 }) {
   return (
@@ -71,7 +89,6 @@ export function Eyebrow({
       id={id}
       className={[
         'text-xs uppercase tracking-[0.12em] font-label',
-        ground === 'ink' ? 'text-ink-300' : 'text-ink-500',
       ].join(' ')}
     >
       {children}

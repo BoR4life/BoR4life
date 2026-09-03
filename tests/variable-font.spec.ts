@@ -16,7 +16,7 @@ import { test, expect } from '@playwright/test';
  * same string at 560 come out a different width to the same string at 600.
  */
 
-test('the whole weight axis is served by one file', async ({ page }) => {
+test('each family is one variable file declaring a whole axis', async ({ page }) => {
   const woff2: string[] = [];
   page.on('response', (r) => {
     if (r.url().endsWith('.woff2')) woff2.push(r.url());
@@ -25,19 +25,45 @@ test('the whole weight axis is served by one file', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
 
-  // One file for every weight on the page. Three byte-identical copies were
-  // deduped by the build, but the declaration is what makes the axis
-  // reachable, and a second file appearing here means someone has added a
-  // static cut back.
-  expect(woff2, `expected a single font file, got:\n${woff2.join('\n')}`).toHaveLength(1);
+  // Two families — Archivo for display and interface, Source Serif 4 for
+  // body — and exactly one file each. A third request means someone has
+  // added a static cut back, which is how the previous face spent weeks
+  // declared three times with its axis unreachable.
+  expect(woff2, `expected one file per family, got:\n${woff2.join('\n')}`).toHaveLength(2);
 
   const declared = await page.evaluate(() =>
     [...document.fonts]
-      .filter((f) => f.family.includes('interTight') && !f.family.includes('Fallback'))
-      .map((f) => f.weight),
+      .filter((f) => !f.family.includes('Fallback'))
+      .map((f) => `${f.family} ${f.weight}`)
+      .sort(),
   );
-  // A range, not a point. '100 900' is the descriptor that opens the axis.
-  expect(declared).toEqual(['100 900']);
+  // Ranges, not points. A single value here closes the axis.
+  expect(declared).toEqual(['archivo 100 900', 'sourceSerif 200 900']);
+});
+
+test('the body face keeps its optical size axis', async ({ page }) => {
+  // Source Serif 4 carries opsz 8-60. It is the reason this face is worth
+  // 122KB, and instantiating it away to save weight would be a silent loss
+  // — the type would still render, just without the optical correction a
+  // body serif exists for.
+  await page.goto('/');
+  const widths = await page.evaluate(async () => {
+    await document.fonts.ready;
+    const el = document.createElement('span');
+    el.style.cssText =
+      'position:absolute;left:-9999px;white-space:nowrap;font-size:100px;font-family:var(--font-serif)';
+    el.textContent = 'Handgloves 280';
+    document.body.appendChild(el);
+    const at = (o: number) => {
+      el.style.fontVariationSettings = `"opsz" ${o}`;
+      return el.getBoundingClientRect().width;
+    };
+    const out = { small: at(8), large: at(60) };
+    el.remove();
+    return out;
+  });
+  // Optical sizes differ in width: caption cuts are wider than display cuts.
+  expect(widths.small).not.toBeCloseTo(widths.large, 1);
 });
 
 test('an intermediate weight renders, rather than snapping to a static cut', async ({ page }) => {
@@ -48,7 +74,7 @@ test('an intermediate weight renders, rather than snapping to a static cut', asy
     await document.fonts.ready;
     const el = document.createElement('span');
     el.style.cssText =
-      'position:absolute;left:-9999px;white-space:nowrap;font-size:100px;font-family:var(--font-display)';
+      'position:absolute;left:-9999px;white-space:nowrap;font-size:100px;font-family:var(--font-sans)';
     el.textContent = 'Handgloves 280';
     document.body.appendChild(el);
     const at = (w: string) => {

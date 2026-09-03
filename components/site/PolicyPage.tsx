@@ -43,18 +43,18 @@ export function PolicyPage({
   footer?: ReactNode;
 }) {
   return (
-    <Main className="bg-paper-100 text-ink-900">
+    <Main className="bg-surface text-ink">
       <div className="mx-auto max-w-content px-6 py-20 md:px-16">
-        <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-500">
+        <p className="text-xs uppercase tracking-[0.12em] font-label text-muted">
           {eyebrow}
         </p>
         <h1 className="mt-4 max-w-3xl text-[clamp(2rem,4vw,3rem)] font-hero leading-tight tracking-[-0.02em]">
           {title}
         </h1>
-        <div className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+        <div className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
           {intro}
         </div>
-        <p className="mt-6 text-sm text-ink-500">
+        <p className="mt-6 text-sm text-muted">
           Last updated{' '}
           <time dateTime={updated}>
             {new Date(`${updated}T00:00:00Z`).toLocaleDateString('en-AU', {
@@ -68,11 +68,11 @@ export function PolicyPage({
 
         <nav
           aria-labelledby="contents-heading"
-          className="mt-12 border-y border-ink-900/10 py-6"
+          className="mt-12 border-y border-rule py-6"
         >
           <h2
             id="contents-heading"
-            className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
+            className="text-xs uppercase tracking-[0.12em] font-label text-muted"
           >
             Contents
           </h2>
@@ -81,9 +81,9 @@ export function PolicyPage({
               <li key={s.id} className="text-sm">
                 <a
                   href={`#${s.id}`}
-                  className="text-ink-900 underline decoration-ink-900/30 underline-offset-4 transition-colors hover:decoration-ink-900"
+                  className="text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-ink"
                 >
-                  <span className="text-ink-500">{i + 1}.</span> {s.heading}
+                  <span className="text-muted">{i + 1}.</span> {s.heading}
                 </a>
               </li>
             ))}
@@ -99,10 +99,10 @@ export function PolicyPage({
                 // when arriving from an anchor link.
                 className="scroll-mt-24 text-xl font-semibold tracking-[-0.01em]"
               >
-                <span className="text-ink-500">{i + 1}. </span>
+                <span className="text-muted">{i + 1}. </span>
                 {s.heading}
               </h2>
-              <div className="policy-body mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+              <div className="policy-body mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
                 {s.body}
               </div>
             </section>
@@ -110,13 +110,13 @@ export function PolicyPage({
         </div>
 
         {footer ? (
-          <div className="mt-16 border-t border-ink-900/10 pt-10">{footer}</div>
+          <div className="mt-16 border-t border-rule pt-10">{footer}</div>
         ) : null}
 
         <p className="mt-16 text-sm">
           <Link
             href="/contact"
-            className="text-ink-900 underline decoration-ink-900/30 underline-offset-4 transition-colors hover:decoration-ink-900"
+            className="text-ink underline decoration-ink/30 underline-offset-4 transition-colors hover:decoration-ink"
           >
             Ask us about anything on this page
           </Link>

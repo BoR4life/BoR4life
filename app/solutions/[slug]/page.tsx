@@ -47,19 +47,19 @@ export default async function SolutionPage({
 
   return (
     <Main>
-      <Section ground="ink" size="lg" bordered={false} labelledBy="sol-heading">
+      <Section ground="paper" size="lg" bordered={false} labelledBy="sol-heading">
         <Reveal>
           <Eyebrow id="sol-heading">{solution.audience}</Eyebrow>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-ink">
             {solution.name}
           </h1>
-          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
             {solution.lede}
           </p>
         </Reveal>
 
         <Reveal step={1}>
-          <figure className="mt-12 overflow-hidden rounded border border-ink-700">
+          <figure className="mt-12 overflow-hidden rounded border border-rule">
             <picture>
               <source srcSet={`${solution.image}.avif`} type="image/avif" />
               <source srcSet={`${solution.image}.webp`} type="image/webp" />
@@ -77,19 +77,19 @@ export default async function SolutionPage({
         </Reveal>
       </Section>
 
-      <Section ground="paper" size="lg" labelledBy="sol-what">
+      <Section ground="surface" size="lg" labelledBy="sol-what">
         <Reveal>
-          <Eyebrow ground="paper" id="sol-what">
+          <Eyebrow id="sol-what">
             What it changes
           </Eyebrow>
         </Reveal>
         <div className="mt-12 grid gap-10 md:grid-cols-3">
           {solution.points.map((point, i) => (
             <Reveal key={point.title} step={i}>
-              <h2 className="text-lg font-semibold text-ink-900">
+              <h2 className="text-lg font-semibold text-ink">
                 {point.title}
               </h2>
-              <p className="mt-3 text-sm leading-relaxed text-ink-500">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 {point.body}
               </p>
             </Reveal>
@@ -97,15 +97,15 @@ export default async function SolutionPage({
         </div>
 
         <Reveal>
-          <div className="mt-16 border-t border-ink-900/10 pt-10">
-            <p className="max-w-prose text-[1.0625rem] leading-relaxed text-ink-900">
+          <div className="mt-16 border-t border-rule pt-10">
+            <p className="max-w-prose text-[1.0625rem] leading-relaxed text-ink">
               We do not publish efficacy percentages we cannot cite. Where a
               deployment produces outcome data, we share the study design, the
               cohort size and the measure alongside the result.
             </p>
             <Link
               href="/evidence"
-              className="mt-6 inline-block text-sm font-semibold text-ink-900 underline underline-offset-4"
+              className="mt-6 inline-block text-sm font-semibold text-ink underline underline-offset-4"
             >
               Our approach to evidence →
             </Link>
@@ -113,7 +113,7 @@ export default async function SolutionPage({
         </Reveal>
       </Section>
 
-      <Section ground="ink" size="lg" labelledBy="sol-other">
+      <Section ground="paper" size="lg" labelledBy="sol-other">
         <Reveal>
           <Eyebrow id="sol-other">Also available</Eyebrow>
           <ul className="mt-10 grid gap-8 md:grid-cols-2">
@@ -121,15 +121,15 @@ export default async function SolutionPage({
               <li key={other.slug}>
                 <Link
                   href={`/solutions/${other.slug}`}
-                  className="group block border-t border-ink-700 pt-6"
+                  className="group block border-t border-rule pt-6"
                 >
-                  <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
+                  <p className="text-xs uppercase tracking-[0.12em] font-label text-muted">
                     {other.audience}
                   </p>
-                  <p className="mt-2 text-xl font-semibold text-paper-0 group-hover:text-signal">
+                  <p className="mt-2 text-xl font-semibold text-ink group-hover:text-accent">
                     {other.name} →
                   </p>
-                  <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink-300">
+                  <p className="mt-2 max-w-prose text-sm leading-relaxed text-muted">
                     {other.summary}
                   </p>
                 </Link>

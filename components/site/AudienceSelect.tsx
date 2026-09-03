@@ -49,16 +49,16 @@ export function AudienceSelect() {
               aria-current={isChosen ? 'true' : undefined}
               className={`group flex h-full flex-col rounded border p-5 transition-colors ${
                 isChosen
-                  ? 'border-signal bg-ink-700'
-                  : 'border-ink-700 hover:border-ink-500 hover:bg-ink-700/40'
+                  ? 'border-accent bg-surface'
+                  : 'border-rule hover:border-rule hover:bg-surface/40'
               }`}
             >
               <span className="flex items-start justify-between gap-3">
-                <span className="text-[0.9375rem] font-semibold text-paper-0">
+                <span className="text-[0.9375rem] font-semibold text-ink">
                   {audience.label}
                 </span>
                 <span
-                  className={`shrink-0 text-signal ${isChosen ? '' : 'invisible'}`}
+                  className={`shrink-0 text-accent ${isChosen ? '' : 'invisible'}`}
                   aria-hidden="true"
                 >
                   ✓
@@ -66,11 +66,11 @@ export function AudienceSelect() {
               </span>
               {isChosen ? <span className="sr-only">Your selection.</span> : null}
 
-              <span className="mt-3 text-sm leading-relaxed text-ink-300">
+              <span className="mt-3 text-sm leading-relaxed text-muted">
                 {audienceSummary(audience)}
               </span>
 
-              <span className="mt-4 text-sm font-semibold text-signal">
+              <span className="mt-4 text-sm font-semibold text-accent">
                 Read this first
                 <span
                   className="ml-1 inline-block transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1"

@@ -103,11 +103,11 @@ export default function Home() {
           than adding one. */}
       <section
         aria-labelledby="hero-heading"
-        className="border-b border-ink-700 px-6 pb-20 pt-20 md:px-16 md:pb-28 md:pt-32"
+        className="border-b border-rule px-6 pb-20 pt-20 md:px-16 md:pb-28 md:pt-32"
       >
         <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
-            <p className="text-xs uppercase tracking-[0.14em] font-label text-signal">
+            <p className="text-xs uppercase tracking-[0.14em] font-label text-accent">
               Immersive clinical training
             </p>
             {/* Tighter than the old -0.03em and a step larger. At this size
@@ -116,11 +116,11 @@ export default function Home() {
                 would have collided. */}
             <h1
               id="hero-heading"
-              className="mt-6 text-[clamp(2.75rem,6.2vw,5.25rem)] font-hero leading-[0.94] tracking-[-0.04em] text-paper-0"
+              className="mt-6 text-[clamp(2.75rem,6.2vw,5.25rem)] font-hero leading-[0.94] tracking-[-0.04em] text-ink"
             >
               Every practitioner meets a first time.
             </h1>
-            <p className="mt-9 max-w-[44ch] text-[clamp(1.125rem,1.5vw,1.3125rem)] leading-[1.55] text-ink-300">
+            <p className="mt-9 max-w-[44ch] text-[clamp(1.125rem,1.5vw,1.3125rem)] leading-[1.55] text-muted">
               Rehearse the deteriorating patient, the difficult conversation
               and the unfamiliar procedure before they are real — in the
               environment where they will happen, with every decision
@@ -130,7 +130,7 @@ export default function Home() {
               <Cta />
               <Link
                 href="/evidence"
-                className="text-sm font-medium text-ink-300 underline decoration-ink-500 decoration-1 underline-offset-[6px] transition-colors hover:text-paper-0 hover:decoration-signal"
+                className="text-sm font-medium text-muted underline decoration-rule decoration-1 underline-offset-[6px] transition-colors hover:text-ink hover:decoration-accent"
               >
                 What we measure, and why we do not publish percentages
               </Link>
@@ -143,7 +143,7 @@ export default function Home() {
           <div className="lg:col-span-4 lg:col-start-9">
             <h2
               id="clients-heading"
-              className="text-xs uppercase tracking-[0.14em] font-label text-ink-300"
+              className="text-xs uppercase tracking-[0.14em] font-label text-muted"
             >
               Trusted in practice
             </h2>
@@ -151,13 +151,13 @@ export default function Home() {
               {CLIENTS.map((client, i) => (
                 <li
                   key={client.name}
-                  className="border-t border-ink-700 py-4 first:border-t-0 first:pt-0"
+                  className="border-t border-rule py-4 first:border-t-0 first:pt-0"
                 >
                   <Reveal step={i}>
-                    <p className="text-[0.9375rem] font-semibold leading-snug text-paper-0">
+                    <p className="text-[0.9375rem] font-semibold leading-snug text-ink">
                       {client.name}
                     </p>
-                    <p className="tabular mt-1 text-[0.8125rem] leading-snug text-ink-300">
+                    <p className="tabular mt-1 text-[0.8125rem] leading-snug text-muted">
                       {client.detail}
                     </p>
                   </Reveal>
@@ -182,13 +182,13 @@ export default function Home() {
         blocks the page would cost the very readers it means to help — a
         procurement reader who wanted the evidence page, and every crawler.
       */}
-      <Section ground="ink" size="sm" labelledBy="audience-heading">
+      <Section ground="paper" size="sm" labelledBy="audience-heading">
         <Reveal>
           <Eyebrow id="audience-heading">Start where you are</Eyebrow>
-          <h2 className="mt-4 max-w-2xl text-[clamp(1.375rem,2.1vw,1.75rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <h2 className="mt-4 max-w-2xl text-[clamp(1.375rem,2.1vw,1.75rem)] font-semibold leading-tight tracking-[-0.02em] text-ink">
             Three readers, three different first questions.
           </h2>
-          <p className="mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+          <p className="mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
             Say which you are and we will point you at the part that answers
             yours first. Nothing is hidden either way.
           </p>
@@ -198,9 +198,9 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      <Section ground="paper" size="lg" labelledBy="problem-heading">
+      <Section ground="surface" size="lg" labelledBy="problem-heading">
         <Reveal>
-          <Eyebrow ground="paper" id="problem-heading">
+          <Eyebrow id="problem-heading">
             The problem
           </Eyebrow>
           <p className="mt-6 max-w-4xl text-[clamp(1.75rem,4vw,3.25rem)] font-hero leading-[1.1] tracking-[-0.02em]">
@@ -208,13 +208,13 @@ export default function Home() {
             skills. Only one of them gets taught.
           </p>
           <div className="mt-10 grid gap-8 md:grid-cols-2 md:gap-16">
-            <p className="max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+            <p className="max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               A deteriorating patient does not wait for recall. The moment
               arrives with noise, time pressure, incomplete information and
               someone watching — and conventional training leaves that moment
               almost entirely untested.
             </p>
-            <p className="max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+            <p className="max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               Practitioners can pass every written assessment and still meet
               their first real emergency without ever having rehearsed one.
               That gap is not a knowledge problem. It is a practice problem.
@@ -229,10 +229,10 @@ export default function Home() {
           another description of it. The three illustrated pillar cards that
           used to follow duplicated the platform page and were all renders;
           gone. */}
-      <Section ground="ink" size="lg" labelledBy="platform-heading">
+      <Section ground="paper" size="lg" labelledBy="platform-heading">
         <Reveal>
           <Eyebrow id="platform-heading">The platform</Eyebrow>
-          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-ink">
             Rehearse the moment. Capture what happened. Show the change.
           </p>
         </Reveal>
@@ -242,10 +242,10 @@ export default function Home() {
             <ScenarioVideo />
           </Reveal>
           <Reveal step={1}>
-            <h3 className="text-xl font-semibold text-paper-0">
+            <h3 className="text-xl font-semibold text-ink">
               This is a scenario, not a showreel.
             </h3>
-            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               Sterile field, ultrasound guidance, a colleague who responds to
               what you say. The learner works the procedure in sequence and
               the system records every decision along the way — including the
@@ -264,16 +264,16 @@ export default function Home() {
             />
           </Reveal>
           <Reveal step={1} className="lg:col-span-2">
-            <h3 className="text-xl font-semibold text-paper-0">
+            <h3 className="text-xl font-semibold text-ink">
               The conversation is the skill.
             </h3>
-            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               De-escalation cannot be learned from a policy document. It
               needs a person in front of you who reacts to your tone, your
               distance and your timing — and who does not reset politely when
               you get it wrong.
             </p>
-            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               Simulated patients and colleagues respond to what the learner
               actually says and adapt as the exchange develops, so
               communication is practised and assessed rather than scripted
@@ -288,11 +288,11 @@ export default function Home() {
             framing is that this is Bodyswaps' content, which we distribute
             and support. lib/partners.ts holds the list. */}
         <Reveal>
-          <div className="mt-16 border-t border-ink-700 pt-10">
-            <h3 className="text-xl font-semibold text-paper-0">
+          <div className="mt-16 border-t border-rule pt-10">
+            <h3 className="text-xl font-semibold text-ink">
               The situations it covers
             </h3>
-            <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink-300">
+            <p className="mt-3 max-w-prose text-sm leading-relaxed text-muted">
               Delivered through Bodyswaps, which Bundle of Rays distributes
               and supports. If the situation your staff face is not here, ask
               — that is a better conversation than a catalogue.
@@ -300,10 +300,10 @@ export default function Home() {
             <dl className="mt-10 grid gap-10 md:grid-cols-3">
               {DEESCALATION.map((theme) => (
                 <div key={theme.name}>
-                  <dt className="text-base font-semibold text-paper-0">
+                  <dt className="text-base font-semibold text-ink">
                     {theme.name}
                   </dt>
-                  <dd className="mt-3 text-sm leading-relaxed text-ink-300">
+                  <dd className="mt-3 text-sm leading-relaxed text-muted">
                     {theme.body}
                   </dd>
                 </div>
@@ -337,10 +337,10 @@ export default function Home() {
                     height={386}
                     loading="lazy"
                     decoding="async"
-                    className="w-full rounded border border-ink-700 bg-ink-700"
+                    className="w-full rounded border border-rule bg-surface"
                   />
                 </picture>
-                <figcaption className="mt-3 text-xs leading-relaxed text-ink-300">
+                <figcaption className="mt-3 text-xs leading-relaxed text-muted">
                   The exchange itself. The other person responds to what the
                   learner says, and does not reset politely when it goes
                   badly.
@@ -359,10 +359,10 @@ export default function Home() {
                     height={287}
                     loading="lazy"
                     decoding="async"
-                    className="w-full rounded border border-ink-700 bg-ink-700"
+                    className="w-full rounded border border-rule bg-surface"
                   />
                 </picture>
-                <figcaption className="mt-3 text-xs leading-relaxed text-ink-300">
+                <figcaption className="mt-3 text-xs leading-relaxed text-muted">
                   And the debrief. Specific behaviours are named — raised
                   pitch, eye contact — rather than a score with no reason
                   attached to it.
@@ -377,7 +377,7 @@ export default function Home() {
               able to mistake another company's interface for ours. Same
               reasoning as the trademark line on /platform.
             */}
-            <p className="mt-6 max-w-prose text-xs leading-relaxed text-ink-300">
+            <p className="mt-6 max-w-prose text-xs leading-relaxed text-muted">
               Both screens are Bodyswaps&rsquo; software. Bundle of Rays
               distributes and supports it; the product and its interface are
               Bodyswaps&rsquo; own.
@@ -388,7 +388,7 @@ export default function Home() {
         <Reveal>
           <Link
             href="/platform"
-            className="mt-14 inline-block text-sm font-semibold text-signal underline-offset-4 hover:underline"
+            className="mt-14 inline-block text-sm font-semibold text-accent underline-offset-4 hover:underline"
           >
             See how the platform works →
           </Link>
@@ -397,9 +397,9 @@ export default function Home() {
 
       {/* 5. What we measure — the evidence framing, without inventing
           outcome statistics we cannot cite. */}
-      <Section ground="paper" size="lg" labelledBy="measure-heading">
+      <Section ground="surface" size="lg" labelledBy="measure-heading">
         <Reveal>
-          <Eyebrow ground="paper" id="measure-heading">
+          <Eyebrow id="measure-heading">
             What we measure
           </Eyebrow>
           <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em]">
@@ -411,7 +411,7 @@ export default function Home() {
           {MEASURES.map((m, i) => (
             <Reveal key={m.title} step={i}>
               <dt className="text-lg font-semibold">{m.title}</dt>
-              <dd className="mt-3 text-sm leading-relaxed text-ink-500">
+              <dd className="mt-3 text-sm leading-relaxed text-muted">
                 {m.body}
               </dd>
             </Reveal>
@@ -419,7 +419,7 @@ export default function Home() {
         </dl>
 
         <Reveal>
-          <div className="mt-16 border-t border-ink-900/10 pt-10">
+          <div className="mt-16 border-t border-rule pt-10">
             <p className="max-w-prose text-[1.0625rem] leading-relaxed">
               We do not publish efficacy percentages we cannot cite. Where a
               deployment produces outcome data, we share the study design,
@@ -427,7 +427,7 @@ export default function Home() {
             </p>
             <Link
               href="/evidence"
-              className="mt-6 inline-block text-sm font-semibold text-ink-900 underline underline-offset-4"
+              className="mt-6 inline-block text-sm font-semibold text-ink underline underline-offset-4"
             >
               Read our approach to evidence →
             </Link>
@@ -436,14 +436,14 @@ export default function Home() {
       </Section>
 
       {/* 6. Deployments */}
-      <Section ground="ink" size="lg" labelledBy="markets-heading">
+      <Section ground="paper" size="lg" labelledBy="markets-heading">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-24">
           <Reveal>
             <Eyebrow id="markets-heading">Where we work</Eyebrow>
-            <p className="mt-6 text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+            <p className="mt-6 text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-ink">
               From a single ward to a state-level program.
             </p>
-            <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+            <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               Bundle of Rays runs in teaching hospitals, universities and
               national nursing programs across six markets — expanding from
               institutional deployments toward state-level delivery.
@@ -455,7 +455,7 @@ export default function Home() {
               {MARKETS.map((market) => (
                 <li
                   key={market}
-                  className="border-b border-ink-700 pb-3 text-paper-100"
+                  className="border-b border-rule pb-3 text-ink"
                 >
                   {market}
                 </li>
@@ -473,10 +473,10 @@ export default function Home() {
                         and tabular-nums keeps the digits on a common width
                         so the three read as a set instead of three
                         unrelated strings. */}
-                    <span className="tabular block text-[clamp(2rem,4vw,3.25rem)] font-hero leading-none tracking-[-0.035em] text-signal">
+                    <span className="tabular block text-[clamp(2rem,4vw,3.25rem)] font-hero leading-none tracking-[-0.035em] text-accent">
                       {fact.value}
                     </span>
-                    <span className="mt-3 block max-w-[18ch] text-[0.8125rem] leading-snug text-ink-300">
+                    <span className="mt-3 block max-w-[18ch] text-[0.8125rem] leading-snug text-muted">
                       {fact.label}
                     </span>
                   </dd>
@@ -489,10 +489,10 @@ export default function Home() {
 
       {/* 7. Founder. The differentiator, and the reason to trust the rest.
           The one real photograph on the site lives here. */}
-      <Section ground="paper" size="lg" labelledBy="founder-heading">
+      <Section ground="surface" size="lg" labelledBy="founder-heading">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
-            <figure className="overflow-hidden rounded border border-ink-900/10">
+            <figure className="overflow-hidden rounded border border-rule">
               <picture>
                 <source
                   srcSet="/images/team-learning-development.avif"
@@ -516,14 +516,14 @@ export default function Home() {
           </Reveal>
 
           <Reveal step={1}>
-            <Eyebrow ground="paper" id="founder-heading">
+            <Eyebrow id="founder-heading">
               Built by nurses, for nurses
             </Eyebrow>
             <p className="mt-6 text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em]">
               Most of this industry is software companies that hired a
               clinician. We are the inverse.
             </p>
-            <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+            <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               Bundle of Rays was founded in 2018 by Brad Chesham, a nurse who
               worked across Australia, the United Kingdom, Afghanistan and
               Iraq. The scenarios are written by clinicians and grounded in
@@ -531,7 +531,7 @@ export default function Home() {
             </p>
             <Link
               href="/about"
-              className="mt-8 inline-block text-sm font-semibold text-ink-900 underline underline-offset-4"
+              className="mt-8 inline-block text-sm font-semibold text-ink underline underline-offset-4"
             >
               Read the founder story →
             </Link>
@@ -540,16 +540,16 @@ export default function Home() {
       </Section>
 
       {/* 8. CTA */}
-      <Section ground="ink" size="lg" labelledBy="cta-heading">
+      <Section ground="paper" size="lg" labelledBy="cta-heading">
         <Reveal>
           <div className="max-w-3xl">
             <h2
               id="cta-heading"
-              className="text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0"
+              className="text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-ink"
             >
               See it with your own cohort in mind.
             </h2>
-            <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+            <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               Tell us what you are trying to achieve and we will show you how
               it works in practice — including the outcomes data your
               procurement process is going to ask for.

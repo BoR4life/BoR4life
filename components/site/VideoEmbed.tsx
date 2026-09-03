@@ -47,7 +47,7 @@ export function VideoEmbed({
 
   return (
     <figure className="m-0">
-      <div className="relative aspect-video w-full overflow-hidden rounded border border-ink-700 bg-ink-900">
+      <div className="relative aspect-video w-full overflow-hidden rounded border border-rule bg-paper">
         {playing ? (
           <iframe
             // autoplay=1 because the visitor has already pressed play once;
@@ -63,11 +63,11 @@ export function VideoEmbed({
           <button
             type="button"
             onClick={() => setPlaying(true)}
-            className="group absolute inset-0 flex flex-col items-start justify-end gap-3 p-6 text-left transition-colors hover:bg-ink-700/40 md:p-8"
+            className="group absolute inset-0 flex flex-col items-start justify-end gap-3 p-6 text-left transition-colors hover:bg-surface/40 md:p-8"
           >
             <span
               aria-hidden="true"
-              className="flex h-14 w-14 items-center justify-center rounded-full bg-signal text-ink-900 transition-transform group-hover:scale-105"
+              className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-ink transition-transform group-hover:scale-105"
             >
               {/* Play glyph as SVG rather than a character: ▶ renders as an
                   emoji on some platforms and as a box on others. */}
@@ -76,22 +76,22 @@ export function VideoEmbed({
               </svg>
             </span>
             <span className="block">
-              <span className="block text-xs uppercase tracking-[0.12em] font-label text-ink-300">
+              <span className="block text-xs uppercase tracking-[0.12em] font-label text-muted">
                 {source}
               </span>
-              <span className="mt-1 block max-w-2xl text-xl font-semibold leading-tight text-paper-0">
+              <span className="mt-1 block max-w-2xl text-xl font-semibold leading-tight text-ink">
                 {title}
               </span>
-              <span className="mt-2 block text-sm text-ink-300">
+              <span className="mt-2 block text-sm text-muted">
                 Play video — loads from YouTube
               </span>
             </span>
           </button>
         )}
       </div>
-      <figcaption className="mt-3 text-sm leading-relaxed text-ink-300">
+      <figcaption className="mt-3 text-sm leading-relaxed text-muted">
         {summary}{' '}
-        <span className="text-ink-300">
+        <span className="text-muted">
           Nothing is requested from YouTube until you press play.
         </span>
       </figcaption>

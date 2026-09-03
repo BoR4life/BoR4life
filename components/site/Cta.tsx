@@ -27,22 +27,22 @@ import Link from 'next/link';
 export function Cta({
   href = '/contact',
   children = 'Request a demo',
-  tone = 'signal',
+  tone = 'accent',
   className = '',
 }: {
   href?: string;
   children?: React.ReactNode;
-  /** `signal` is the filled primary. `quiet` is the text-and-arrow variant. */
-  tone?: 'signal' | 'quiet';
+  /** `accent` is the filled primary. `quiet` is the text-and-arrow variant. */
+  tone?: 'accent' | 'quiet';
   className?: string;
 }) {
   const base =
     'group inline-flex items-center gap-2 text-sm font-semibold transition-[transform,opacity,color] duration-200 active:scale-[0.98]';
 
   const tones = {
-    signal: 'rounded-full bg-signal px-7 py-3.5 text-ink-900 hover:opacity-90',
+    accent: 'rounded-full bg-accent px-7 py-3.5 text-accent-ink hover:opacity-90',
     quiet:
-      'text-signal underline-offset-4 hover:underline focus-visible:underline',
+      'text-accent underline-offset-4 hover:underline focus-visible:underline',
   } as const;
 
   return (

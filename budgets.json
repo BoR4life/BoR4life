@@ -86,7 +86,8 @@
   "accessibility": {
     "$comment": "Non-negotiable. A healthcare-education company shipping an inaccessible site is a credibility failure, not just a compliance one.",
     "wcagLevel": "AA",
-    "contrastNormalText_min": 4.5,
+    "contrastNormalText_min": 7,
+    "contrastNormalText_min$comment": "7:1 is AAA and stricter than the AA this site conforms to. It is the brand kit's own body-text floor, and the kit's amended token values meet it, so the gate records the higher standard actually being held rather than the lower one that would also pass. tests/contrast.spec.ts parses the tokens straight out of app/globals.css and proves every pairing.",
     "contrastLargeText_min": 3.0,
     "axeViolations": 0,
     "respectsPrefersReducedMotion": true,

@@ -72,11 +72,11 @@ export function Header() {
     const active = pathname === href;
     return [
       'relative text-sm transition-colors',
-      'after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:bg-signal',
+      'after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:bg-accent',
       'after:origin-left after:transition-transform after:duration-300 after:ease-reveal',
       active
-        ? 'text-paper-0 after:scale-x-100'
-        : 'text-ink-300 after:scale-x-0 hover:text-paper-100 hover:after:scale-x-100 focus-visible:text-paper-100 focus-visible:after:scale-x-100',
+        ? 'text-ink after:scale-x-100'
+        : 'text-muted after:scale-x-0 hover:text-ink hover:after:scale-x-100 focus-visible:text-ink focus-visible:after:scale-x-100',
     ].join(' ');
   };
 
@@ -92,8 +92,8 @@ export function Header() {
         // as a muddy band. Nearly opaque when condensed, which is when it
         // actually has something behind it.
         condensed
-          ? 'border-ink-700 bg-ink-900/95 py-1'
-          : 'border-ink-700/60 bg-ink-900/80 py-0',
+          ? 'border-rule bg-paper/95 py-1'
+          : 'border-rule/60 bg-paper/80 py-0',
       ].join(' ')}
     >
       <div
@@ -105,7 +105,7 @@ export function Header() {
       >
         <Link
           href="/"
-          className="text-sm font-semibold tracking-[-0.01em] text-paper-0"
+          className="text-sm font-semibold tracking-[-0.01em] text-ink"
           aria-label="Bundle of Rays — home"
         >
           Bundle of Rays
@@ -132,7 +132,7 @@ export function Header() {
             href={CTA.href}
             // group/active:scale gives a real press. A button that does not
             // acknowledge the click leaves people tapping it twice.
-            className="group rounded-full bg-signal px-4 py-2 text-sm font-semibold text-ink-900 transition-[transform,opacity] duration-200 hover:opacity-90 active:scale-[0.97]"
+            className="group rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-[transform,opacity] duration-200 hover:opacity-90 active:scale-[0.97]"
           >
             {CTA.label}
           </Link>
@@ -147,7 +147,7 @@ export function Header() {
           // stays where it was designed to sit while presenting a target a
           // thumb can actually hit. Text alone is ~20px tall, under the 24px
           // floor in WCAG 2.2 SC 2.5.8.
-          className="-m-2 p-2 text-sm text-paper-100 transition-opacity active:opacity-70 md:hidden"
+          className="-m-2 p-2 text-sm text-ink transition-opacity active:opacity-70 md:hidden"
         >
           {open ? 'Close' : 'Menu'}
         </button>
@@ -157,7 +157,7 @@ export function Header() {
         <nav
           id="mobile-nav"
           aria-label="Main"
-          className="border-t border-ink-700/60 px-6 py-4 md:hidden"
+          className="border-t border-rule/60 px-6 py-4 md:hidden"
         >
           <ul className="flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
@@ -176,7 +176,7 @@ export function Header() {
               <Link
                 href={CTA.href}
                 onClick={() => setOpen(false)}
-                className="inline-block rounded-full bg-signal px-4 py-2 text-sm font-semibold text-ink-900 transition-transform active:scale-[0.97]"
+                className="inline-block rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform active:scale-[0.97]"
               >
                 {CTA.label}
               </Link>

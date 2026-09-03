@@ -116,7 +116,17 @@ here as high-risk and run that spec.
 ## 7. Prove it before pushing
 
 `npm run verify` (typecheck, lint, asset budgets), `npm audit`, then
-`npm run test`. CI runs the same two jobs and nothing merges red. A test
+`npm run test`.
+
+Check the **exit code**, not the output. A `npm run verify` piped through a
+grep narrow enough to match nothing reports nothing on failure, and silence
+reads exactly like success — that shipped a red build to CI once already.
+
+Restart the server between full local runs. The rate limiter in
+`lib/rate-limit.ts` is in-memory and per process, so a second or third run
+against the same `npm run start` exhausts the enquiry budget and
+`form-recovery` and `lead-source` fail for a reason that has nothing to do
+with the change under test. CI is unaffected — it starts clean. CI runs the same two jobs and nothing merges red. A test
 that passes without asserting anything is worse than no test — this repo
 has shipped one (a screenshot of a transparent canvas), so assert on
 something that can only be true if the feature works.

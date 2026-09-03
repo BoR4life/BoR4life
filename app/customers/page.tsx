@@ -51,31 +51,31 @@ const SUPPORT_STEPS = [
 export default function CustomersPage() {
   return (
     <Main>
-      <Section ground="ink" size="lg" bordered={false}>
+      <Section ground="paper" size="lg" bordered={false}>
         <Eyebrow>For customers</Eyebrow>
-        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
+        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-ink">
           Already working with us? Start here.
         </h1>
-        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
           One page for the moments you need us quickly — a fault mid-session,
           a question before a cohort starts, a change you want made. No
           login, no ticket system, a person on the other end.
         </p>
       </Section>
 
-      <Section ground="paper" size="md" labelledBy="reach-heading">
+      <Section ground="surface" size="md" labelledBy="reach-heading">
         <h2
           id="reach-heading"
-          className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
+          className="text-xs uppercase tracking-[0.12em] font-label text-muted"
         >
           How to reach us
         </h2>
         <div className="mt-8 grid gap-10 md:grid-cols-2">
           <div>
-            <h3 className="text-xl font-semibold text-ink-900">
+            <h3 className="text-xl font-semibold text-ink">
               Something is wrong right now
             </h3>
-            <p className="mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+            <p className="mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               Use the direct contact in your deployment agreement — it
               reaches a phone, not an inbox. If you do not have it to hand,
               the <Link href="/contact" className="underline underline-offset-4">contact form</Link>{' '}
@@ -84,10 +84,10 @@ export default function CustomersPage() {
             </p>
           </div>
           <div>
-            <h3 className="text-xl font-semibold text-ink-900">
+            <h3 className="text-xl font-semibold text-ink">
               A question, a change, a new cohort
             </h3>
-            <p className="mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+            <p className="mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
               Reply to any email you have from us, or use the contact form and
               choose your role. Every message gets a personal reply, usually
               within two business days — the same commitment we make to
@@ -98,22 +98,22 @@ export default function CustomersPage() {
         </div>
       </Section>
 
-      <Section ground="ink" size="md" labelledBy="report-heading">
+      <Section ground="paper" size="md" labelledBy="report-heading">
         <Eyebrow id="report-heading">What to send when reporting a fault</Eyebrow>
-        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-paper-100">
+        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
           Three things make a fault report fast to act on. None of them takes
           more than a minute.
         </p>
         <ol className="mt-10 grid gap-8 md:grid-cols-3">
           {SUPPORT_STEPS.map((step, i) => (
             <li key={step.title}>
-              <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
+              <p className="text-xs uppercase tracking-[0.12em] font-label text-muted">
                 {i + 1}
               </p>
-              <h3 className="mt-2 text-lg font-semibold text-paper-0">
+              <h3 className="mt-2 text-lg font-semibold text-ink">
                 {step.title}
               </h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink-300">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 {step.body}
               </p>
             </li>
@@ -121,14 +121,14 @@ export default function CustomersPage() {
         </ol>
       </Section>
 
-      <Section ground="paper" size="md" labelledBy="coming-heading">
+      <Section ground="surface" size="md" labelledBy="coming-heading">
         <h2
           id="coming-heading"
-          className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
+          className="text-xs uppercase tracking-[0.12em] font-label text-muted"
         >
           What this page will become
         </h2>
-        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-900">
+        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
           A place to see what changed in the last release, download the
           material for your deployment, and raise a request that you can
           track. That needs a login, and it is worth doing properly rather
@@ -137,7 +137,7 @@ export default function CustomersPage() {
         </p>
         <Link
           href="/contact"
-          className="mt-10 inline-block rounded-full bg-ink-900 px-6 py-3 text-sm font-semibold text-paper-0 transition-opacity hover:opacity-90"
+          className="mt-10 inline-block rounded-full bg-paper px-6 py-3 text-sm font-semibold text-ink transition-opacity hover:opacity-90"
         >
           Get in touch
         </Link>

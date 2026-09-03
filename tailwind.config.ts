@@ -13,21 +13,41 @@ const config: Config = {
       // Tailwind can compose `/80` into a real colour. With a bare var() it
       // cannot, and fails silently — see the note in app/globals.css.
       colors: {
-        ink: {
-          900: 'rgb(var(--ink-900) / <alpha-value>)',
-          700: 'rgb(var(--ink-700) / <alpha-value>)',
-          500: 'rgb(var(--ink-500) / <alpha-value>)',
-          300: 'rgb(var(--ink-300) / <alpha-value>)',
+        /*
+          Brand kit v1.0. Every value is `rgb(var(--token) / <alpha-value>)`
+          so an alpha modifier composes — an opaque `var(--token)` here
+          silently yields rgba(0,0,0,0) and Tailwind does not warn. The
+          tokens themselves, and which of them are the amended text values,
+          are in app/globals.css.
+
+          The old scale (ink-900/700/500/300, paper-100/0, signal) is gone
+          rather than aliased. Aliasing would have kept every existing class
+          compiling while inverting what it meant — `bg-paper` was the dark
+          page ground and the ground is now paper — and a build that compiles
+          into a light-on-light page is worse than one that fails.
+        */
+        ink: 'rgb(var(--ink) / <alpha-value>)',
+        paper: 'rgb(var(--paper) / <alpha-value>)',
+        surface: 'rgb(var(--surface) / <alpha-value>)',
+        rule: 'rgb(var(--rule) / <alpha-value>)',
+        muted: {
+          DEFAULT: 'rgb(var(--muted) / <alpha-value>)',
+          weak: 'rgb(var(--muted-weak) / <alpha-value>)',
         },
-        paper: {
-          100: 'rgb(var(--paper-100) / <alpha-value>)',
-          0: 'rgb(var(--paper-000) / <alpha-value>)',
+        accent: {
+          DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
+          ink: 'rgb(var(--accent-ink) / <alpha-value>)',
         },
-        signal: 'rgb(var(--signal) / <alpha-value>)',
         critical: 'rgb(var(--critical) / <alpha-value>)',
+        caution: 'rgb(var(--caution) / <alpha-value>)',
+        stable: 'rgb(var(--stable) / <alpha-value>)',
       },
       fontFamily: {
+        // Archivo for display and interface, Source Serif 4 for body. The
+        // pairing is the kit's and the inversion is deliberate — see
+        // app/fonts/index.ts.
         sans: ['var(--font-sans)'],
+        body: ['var(--font-serif)'],
       },
       /*
         Optical weight compensation.

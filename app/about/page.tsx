@@ -25,18 +25,18 @@ export default function AboutPage() {
     <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
-          <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
+          <p className="text-xs uppercase tracking-[0.12em] font-label text-muted">
             About
           </p>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-ink">
             Built by nurses, for nurses.
           </h1>
         </div>
       </section>
 
-      <section className="border-t border-ink-700 px-6 py-16 md:px-16">
+      <section className="border-t border-rule px-6 py-16 md:px-16">
         <div className="mx-auto max-w-content">
-          <figure className="mb-16 overflow-hidden rounded border border-ink-700">
+          <figure className="mb-16 overflow-hidden rounded border border-rule">
             <picture>
               <source
                 srcSet="/images/team-learning-development.avif"
@@ -56,13 +56,13 @@ export default function AboutPage() {
                 className="w-full object-cover"
               />
             </picture>
-            <figcaption className="border-t border-ink-700 px-4 py-3 text-xs text-ink-300">
+            <figcaption className="border-t border-rule px-4 py-3 text-xs text-muted">
               A hospital learning and development team during a Bundle of Rays
               session.
             </figcaption>
           </figure>
 
-          <div className="max-w-prose space-y-6 text-[1.0625rem] leading-relaxed text-ink-300">
+          <div className="max-w-prose space-y-6 text-[1.0625rem] leading-relaxed text-muted">
             <p>
               Bundle of Rays was founded in 2018 by Brad Chesham, a nurse who
               worked across Australia, the United Kingdom, Afghanistan and
@@ -84,18 +84,18 @@ export default function AboutPage() {
               by clinicians rather than by a software team with an adviser
               on retainer.
             </p>
-            <p className="text-paper-100">
+            <p className="text-ink">
               Most companies in this space are software companies that hired
               a clinical expert. Bundle of Rays is the inverse. That is the
               whole difference, and it shows up in every scenario.
             </p>
           </div>
 
-          <div className="mt-16 border-t border-ink-700 pt-10">
-            <h2 className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
+          <div className="mt-16 border-t border-rule pt-10">
+            <h2 className="text-xs uppercase tracking-[0.12em] font-label text-muted">
               Where we work
             </h2>
-            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-paper-100">
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
               Australia, the United Kingdom, the United States, Sri Lanka,
               South Korea and India — from single institutions through to
               programs operating at state scale.

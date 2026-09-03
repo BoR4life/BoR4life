@@ -99,12 +99,12 @@ const ON_REQUEST = [
 export default function ResourcesPage() {
   return (
     <Main>
-      <Section ground="ink" size="lg" bordered={false}>
+      <Section ground="paper" size="lg" bordered={false}>
         <Eyebrow>Resources</Eyebrow>
-        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
+        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-ink">
           Everything a review committee asks for, in one place.
         </h1>
-        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
+        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
           If you are assessing us for a tender, an ethics submission or an IT
           security review, this is the page to start from. Some of it is
           published below. The rest is a short email away, and comes back as a
@@ -112,21 +112,21 @@ export default function ResourcesPage() {
         </p>
       </Section>
 
-      <Section ground="paper" size="md" labelledBy="published-heading">
+      <Section ground="surface" size="md" labelledBy="published-heading">
         <h2
           id="published-heading"
-          className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
+          className="text-xs uppercase tracking-[0.12em] font-label text-muted"
         >
           Published here
         </h2>
-        <ul className="mt-10 grid gap-px overflow-hidden rounded-lg bg-ink-900/10 sm:grid-cols-2">
+        <ul className="mt-10 grid gap-px overflow-hidden rounded-lg bg-paper/10 sm:grid-cols-2">
           {PUBLISHED.map((item) => (
-            <li key={item.href} className="bg-paper-100">
+            <li key={item.href} className="bg-surface">
               <Link
                 href={item.href}
-                className="group block h-full p-8 transition-colors hover:bg-paper-0"
+                className="group block h-full p-8 transition-colors hover:bg-surface"
               >
-                <h3 className="text-lg font-semibold text-ink-900">
+                <h3 className="text-lg font-semibold text-ink">
                   {item.title}
                   <span
                     aria-hidden="true"
@@ -135,7 +135,7 @@ export default function ResourcesPage() {
                     →
                   </span>
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-500">
+                <p className="mt-3 text-sm leading-relaxed text-muted">
                   {item.body}
                 </p>
               </Link>
@@ -144,21 +144,21 @@ export default function ResourcesPage() {
         </ul>
       </Section>
 
-      <Section ground="ink" size="md" labelledBy="request-heading">
+      <Section ground="paper" size="md" labelledBy="request-heading">
         <Eyebrow id="request-heading">Answered on request</Eyebrow>
-        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-paper-100">
+        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
           These answers depend on which product you are deploying, into which
           institution, under which jurisdiction — so a generic PDF would be
           wrong for almost everyone who downloaded it. Ask, and you will get the
           specifics for your deployment.
         </p>
-        <dl className="mt-12 divide-y divide-ink-700 border-y border-ink-700">
+        <dl className="mt-12 divide-y divide-rule border-y border-rule">
           {ON_REQUEST.map((item) => (
             <div key={item.question} className="grid gap-3 py-7 md:grid-cols-5">
-              <dt className="font-semibold text-paper-0 md:col-span-2">
+              <dt className="font-semibold text-ink md:col-span-2">
                 {item.question}
               </dt>
-              <dd className="text-sm leading-relaxed text-ink-300 md:col-span-3">
+              <dd className="text-sm leading-relaxed text-muted md:col-span-3">
                 {item.answer}
               </dd>
             </div>
@@ -166,27 +166,27 @@ export default function ResourcesPage() {
         </dl>
       </Section>
 
-      <Section ground="paper" size="md" labelledBy="claims-heading">
+      <Section ground="surface" size="md" labelledBy="claims-heading">
         <h2
           id="claims-heading"
-          className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
+          className="text-xs uppercase tracking-[0.12em] font-label text-muted"
         >
           What you will not find here
         </h2>
-        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-900">
+        <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
           A wall of certification badges. We publish the standards we have
           actually been assessed against, and nothing else — if a logo is not on
           this site, we do not hold it. Ask us where we stand on any specific
           framework your organisation requires and you will get a straight
           answer, including where that answer is &ldquo;not yet&rdquo;.
         </p>
-        <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
+        <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
           The same rule governs outcome data. We do not publish efficacy
           percentages we cannot cite.
         </p>
         <Link
           href="/contact"
-          className="mt-10 inline-block rounded-full bg-ink-900 px-6 py-3 text-sm font-semibold text-paper-0 transition-opacity hover:opacity-90"
+          className="mt-10 inline-block rounded-full bg-paper px-6 py-3 text-sm font-semibold text-ink transition-opacity hover:opacity-90"
         >
           Ask us a procurement question
         </Link>

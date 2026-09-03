@@ -37,7 +37,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-full bg-signal px-6 py-3 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90 disabled:opacity-60"
+      className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink transition-opacity hover:opacity-90 disabled:opacity-60"
     >
       {pending ? 'Sending…' : 'Send enquiry'}
     </button>
@@ -45,8 +45,8 @@ function SubmitButton() {
 }
 
 const field =
-  'w-full rounded border border-ink-500 bg-ink-700 px-4 py-3 text-paper-100 placeholder:text-ink-300 focus:border-signal';
-const labelCls = 'block text-sm font-medium text-paper-100';
+  'w-full rounded border border-rule bg-surface px-4 py-3 text-ink placeholder:text-muted focus:border-accent';
+const labelCls = 'block text-sm font-medium text-ink';
 const errCls = 'mt-1 text-sm text-critical';
 
 export function EnquiryForm() {
@@ -112,17 +112,17 @@ export function EnquiryForm() {
   if (state.status === 'success') {
     return (
       <div
-        className="rounded border border-signal/40 bg-ink-700 p-8"
+        className="rounded border border-accent/40 bg-surface p-8"
         role="status"
       >
         <p
           ref={headingRef}
           tabIndex={-1}
-          className="text-lg font-semibold text-paper-0"
+          className="text-lg font-semibold text-ink"
         >
           Thank you — your enquiry is with us.
         </p>
-        <p className="mt-3 text-sm leading-relaxed text-ink-300">
+        <p className="mt-3 text-sm leading-relaxed text-muted">
           We reply to every enquiry personally, usually within two business
           days.
         </p>
@@ -137,7 +137,7 @@ export function EnquiryForm() {
       </div>
 
       {state.status === 'error' && !err && (
-        <p className="rounded border border-critical/40 bg-ink-700 p-4 text-sm text-critical">
+        <p className="rounded border border-critical/40 bg-surface p-4 text-sm text-critical">
           {state.message}
         </p>
       )}
@@ -189,7 +189,7 @@ export function EnquiryForm() {
 
       <div>
         <label htmlFor="organisation" className={labelCls}>
-          Organisation <span className="text-ink-300">(optional)</span>
+          Organisation <span className="text-muted">(optional)</span>
         </label>
         <input
           key={`organisation-${attempt}`}
@@ -271,7 +271,7 @@ export function EnquiryForm() {
 
       <SubmitButton />
 
-      <p className="text-xs leading-relaxed text-ink-300">
+      <p className="text-xs leading-relaxed text-muted">
         We use your details only to reply to this enquiry. We do not sell or
         share them.
       </p>
