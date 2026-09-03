@@ -76,7 +76,7 @@ export function VideoEmbed({
               </svg>
             </span>
             <span className="block">
-              <span className="block text-xs uppercase tracking-[0.12em] text-ink-300">
+              <span className="block text-xs uppercase tracking-[0.12em] font-label text-ink-300">
                 {source}
               </span>
               <span className="mt-1 block max-w-2xl text-xl font-semibold leading-tight text-paper-0">

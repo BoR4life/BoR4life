@@ -70,7 +70,7 @@ export function Eyebrow({
     <p
       id={id}
       className={[
-        'text-xs uppercase tracking-[0.12em]',
+        'text-xs uppercase tracking-[0.12em] font-label',
         ground === 'ink' ? 'text-ink-300' : 'text-ink-500',
       ].join(' ')}
     >

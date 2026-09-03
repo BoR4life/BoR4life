@@ -39,10 +39,10 @@ export default function PlatformPage() {
     <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
-          <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
+          <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
             Platform
           </p>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
             Extended reality, clinical roleplay and the data to prove it
             worked.
           </h1>
@@ -106,7 +106,7 @@ export default function PlatformPage() {
         <div className="mx-auto max-w-content">
           <p
             id="distributed-heading"
-            className="text-xs uppercase tracking-[0.12em] text-ink-500"
+            className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
           >
             Platforms we distribute
           </p>
@@ -135,7 +135,7 @@ export default function PlatformPage() {
                 </p>
                 {partner.themes && (
                   <div className="mt-5 border-t border-ink-900/10 pt-5">
-                    <p className="text-xs uppercase tracking-[0.12em] text-ink-500">
+                    <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-500">
                       Situations covered
                     </p>
                     <ul className="mt-3 space-y-1.5">
@@ -177,7 +177,7 @@ export default function PlatformPage() {
         <div className="mx-auto max-w-content">
           <p
             id="in-use-heading"
-            className="text-xs uppercase tracking-[0.12em] text-ink-300"
+            className="text-xs uppercase tracking-[0.12em] font-label text-ink-300"
           >
             One of them, running
           </p>

@@ -32,11 +32,33 @@ import localFont from 'next/font/local';
  * and self-hosting. See docs/asset-licences.md.
  */
 export const interTight = localFont({
-  src: [
-    { path: './InterTight-400.woff2', weight: '400', style: 'normal' },
-    { path: './InterTight-500.woff2', weight: '500', style: 'normal' },
-    { path: './InterTight-600.woff2', weight: '600', style: 'normal' },
-  ],
+  // ONE file, declaring the whole axis.
+  //
+  // This is a variable font — wght 100-900, nine named instances — and it
+  // was previously listed three times as static 400, 500 and 600. Three
+  // things about that are worth recording, because two of the obvious
+  // conclusions are wrong and cost time to check:
+  //
+  //   - it was NOT faking bold. Chromium clamps a variable axis to the
+  //     font-weight a face declares, so the three entries did render three
+  //     genuinely different weights (measured: 703, 721 and 739px advance
+  //     on the same string at 100px).
+  //   - it was NOT shipping three times. next/font content-addresses the
+  //     output, so three byte-identical sources deduped to a single 44KB
+  //     request. The repo carried 90KB of redundant history; the browser
+  //     never did.
+  //   - what it DID cost is the rest of the axis, and worse than clamping.
+  //     Restoring the three-cut declaration for one build to check
+  //     (tests/variable-font.spec.ts fails three ways against it) showed
+  //     `font-weight: 520` rendering byte-identically to 400, and a
+  //     heading asking for 560 coming back as 700 — synthesised, not
+  //     clamped. So the 500 steps between 100 and 900 that this file
+  //     already contains were not merely unreachable at no saving; asking
+  //     for one got you a fake.
+  //
+  // A range descriptor unlocks all of them for the same 44KB, which is what
+  // the intermediate weights in tailwind.config.ts are for.
+  src: [{ path: './InterTight.var.woff2', weight: '100 900', style: 'normal' }],
   display: 'swap',
   variable: '--font-display',
   // Tuned so the fallback occupies close to the same space as the real face,

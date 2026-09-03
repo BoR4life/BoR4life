@@ -20,7 +20,7 @@ export default function SolutionsPage() {
       <Section ground="ink" size="lg" bordered={false} labelledBy="sol-heading">
         <Reveal>
           <Eyebrow id="sol-heading">Solutions</Eyebrow>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
             Three ways the same platform gets used.
           </h1>
           <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
@@ -101,7 +101,7 @@ export default function SolutionsPage() {
         <Reveal>
           <h2
             id="sol-cta"
-            className="max-w-3xl text-[clamp(1.75rem,4vw,3rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0"
+            className="max-w-3xl text-[clamp(1.75rem,4vw,3rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0"
           >
             Not sure which fits?
           </h2>

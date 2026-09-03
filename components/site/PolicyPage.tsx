@@ -45,10 +45,10 @@ export function PolicyPage({
   return (
     <Main className="bg-paper-100 text-ink-900">
       <div className="mx-auto max-w-content px-6 py-20 md:px-16">
-        <p className="text-xs uppercase tracking-[0.12em] text-ink-500">
+        <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-500">
           {eyebrow}
         </p>
-        <h1 className="mt-4 max-w-3xl text-[clamp(2rem,4vw,3rem)] font-semibold leading-tight tracking-[-0.02em]">
+        <h1 className="mt-4 max-w-3xl text-[clamp(2rem,4vw,3rem)] font-hero leading-tight tracking-[-0.02em]">
           {title}
         </h1>
         <div className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-500">
@@ -72,7 +72,7 @@ export function PolicyPage({
         >
           <h2
             id="contents-heading"
-            className="text-xs uppercase tracking-[0.12em] text-ink-500"
+            className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
           >
             Contents
           </h2>

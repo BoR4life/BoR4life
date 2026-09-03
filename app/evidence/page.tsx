@@ -78,10 +78,10 @@ export default function EvidencePage() {
     <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
-          <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
+          <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
             Evidence
           </p>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
             Training you can put in front of a review committee.
           </h1>
           <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
@@ -100,7 +100,7 @@ export default function EvidencePage() {
         <div className="mx-auto max-w-content">
           <h2
             id="measures-heading"
-            className="text-xs uppercase tracking-[0.12em] text-ink-300"
+            className="text-xs uppercase tracking-[0.12em] font-label text-ink-300"
           >
             What is measured
           </h2>
@@ -126,7 +126,7 @@ export default function EvidencePage() {
         <div className="mx-auto max-w-content">
           <h2
             id="deployments-heading"
-            className="text-xs uppercase tracking-[0.12em] text-ink-500"
+            className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
           >
             Where it is deployed
           </h2>
@@ -149,7 +149,7 @@ export default function EvidencePage() {
         <div className="mx-auto max-w-content">
           <h2
             id="published-heading"
-            className="text-xs uppercase tracking-[0.12em] text-ink-300"
+            className="text-xs uppercase tracking-[0.12em] font-label text-ink-300"
           >
             Said about us, in public, by a health service
           </h2>
@@ -189,7 +189,7 @@ export default function EvidencePage() {
         <div className="mx-auto max-w-content">
           <h2
             id="approach-heading"
-            className="text-xs uppercase tracking-[0.12em] text-ink-300"
+            className="text-xs uppercase tracking-[0.12em] font-label text-ink-300"
           >
             Our approach to claims
           </h2>

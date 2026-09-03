@@ -25,10 +25,10 @@ export default function AboutPage() {
     <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
-          <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
+          <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
             About
           </p>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
             Built by nurses, for nurses.
           </h1>
         </div>
@@ -92,7 +92,7 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-16 border-t border-ink-700 pt-10">
-            <h2 className="text-xs uppercase tracking-[0.12em] text-ink-300">
+            <h2 className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
               Where we work
             </h2>
             <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-paper-100">

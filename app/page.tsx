@@ -106,7 +106,7 @@ export default function Home() {
       >
         <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
-            <p className="text-xs uppercase tracking-[0.14em] text-signal">
+            <p className="text-xs uppercase tracking-[0.14em] font-label text-signal">
               Immersive clinical training
             </p>
             {/* Tighter than the old -0.03em and a step larger. At this size
@@ -115,7 +115,7 @@ export default function Home() {
                 would have collided. */}
             <h1
               id="hero-heading"
-              className="mt-6 text-[clamp(2.75rem,6.2vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.04em] text-paper-0"
+              className="mt-6 text-[clamp(2.75rem,6.2vw,5.25rem)] font-hero leading-[0.94] tracking-[-0.04em] text-paper-0"
             >
               Every practitioner meets a first time.
             </h1>
@@ -142,7 +142,7 @@ export default function Home() {
           <div className="lg:col-span-4 lg:col-start-9">
             <h2
               id="clients-heading"
-              className="text-xs uppercase tracking-[0.14em] text-ink-300"
+              className="text-xs uppercase tracking-[0.14em] font-label text-ink-300"
             >
               Trusted in practice
             </h2>
@@ -173,7 +173,7 @@ export default function Home() {
           <Eyebrow ground="paper" id="problem-heading">
             The problem
           </Eyebrow>
-          <p className="mt-6 max-w-4xl text-[clamp(1.75rem,4vw,3.25rem)] font-semibold leading-[1.1] tracking-[-0.02em]">
+          <p className="mt-6 max-w-4xl text-[clamp(1.75rem,4vw,3.25rem)] font-hero leading-[1.1] tracking-[-0.02em]">
             Knowing what to do and doing it under pressure are different
             skills. Only one of them gets taught.
           </p>
@@ -430,7 +430,7 @@ export default function Home() {
                         and tabular-nums keeps the digits on a common width
                         so the three read as a set instead of three
                         unrelated strings. */}
-                    <span className="tabular block text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-none tracking-[-0.035em] text-signal">
+                    <span className="tabular block text-[clamp(2rem,4vw,3.25rem)] font-hero leading-none tracking-[-0.035em] text-signal">
                       {fact.value}
                     </span>
                     <span className="mt-3 block max-w-[18ch] text-[0.8125rem] leading-snug text-ink-300">
@@ -502,7 +502,7 @@ export default function Home() {
           <div className="max-w-3xl">
             <h2
               id="cta-heading"
-              className="text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0"
+              className="text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0"
             >
               See it with your own cohort in mind.
             </h2>

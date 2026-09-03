@@ -50,7 +50,7 @@ export default async function SolutionPage({
       <Section ground="ink" size="lg" bordered={false} labelledBy="sol-heading">
         <Reveal>
           <Eyebrow id="sol-heading">{solution.audience}</Eyebrow>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
             {solution.name}
           </h1>
           <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
@@ -123,7 +123,7 @@ export default async function SolutionPage({
                   href={`/solutions/${other.slug}`}
                   className="group block border-t border-ink-700 pt-6"
                 >
-                  <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
+                  <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
                     {other.audience}
                   </p>
                   <p className="mt-2 text-xl font-semibold text-paper-0 group-hover:text-signal">

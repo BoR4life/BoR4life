@@ -53,7 +53,7 @@ export default function CustomersPage() {
     <Main>
       <Section ground="ink" size="lg" bordered={false}>
         <Eyebrow>For customers</Eyebrow>
-        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
           Already working with us? Start here.
         </h1>
         <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
@@ -66,7 +66,7 @@ export default function CustomersPage() {
       <Section ground="paper" size="md" labelledBy="reach-heading">
         <h2
           id="reach-heading"
-          className="text-xs uppercase tracking-[0.12em] text-ink-500"
+          className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
         >
           How to reach us
         </h2>
@@ -107,7 +107,7 @@ export default function CustomersPage() {
         <ol className="mt-10 grid gap-8 md:grid-cols-3">
           {SUPPORT_STEPS.map((step, i) => (
             <li key={step.title}>
-              <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
+              <p className="text-xs uppercase tracking-[0.12em] font-label text-ink-300">
                 {i + 1}
               </p>
               <h3 className="mt-2 text-lg font-semibold text-paper-0">
@@ -124,7 +124,7 @@ export default function CustomersPage() {
       <Section ground="paper" size="md" labelledBy="coming-heading">
         <h2
           id="coming-heading"
-          className="text-xs uppercase tracking-[0.12em] text-ink-500"
+          className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
         >
           What this page will become
         </h2>

@@ -101,7 +101,7 @@ export default function ResourcesPage() {
     <Main>
       <Section ground="ink" size="lg" bordered={false}>
         <Eyebrow>Resources</Eyebrow>
-        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+        <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-paper-0">
           Everything a review committee asks for, in one place.
         </h1>
         <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-ink-300">
@@ -115,7 +115,7 @@ export default function ResourcesPage() {
       <Section ground="paper" size="md" labelledBy="published-heading">
         <h2
           id="published-heading"
-          className="text-xs uppercase tracking-[0.12em] text-ink-500"
+          className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
         >
           Published here
         </h2>
@@ -169,7 +169,7 @@ export default function ResourcesPage() {
       <Section ground="paper" size="md" labelledBy="claims-heading">
         <h2
           id="claims-heading"
-          className="text-xs uppercase tracking-[0.12em] text-ink-500"
+          className="text-xs uppercase tracking-[0.12em] font-label text-ink-500"
         >
           What you will not find here
         </h2>
