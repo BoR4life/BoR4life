@@ -7,6 +7,13 @@ import { cover, COVER_VIEWBOX } from '@/lib/cover';
  * nothing for the client to compute and no reason to ship the generator to
  * a browser. It costs no request, no image file and no decode.
  *
+ * Sized as a mark, not a hero. Held to a small max-width wherever it sits
+ * beside body copy: at half-page width a generated abstraction stops
+ * reading as artwork and starts reading as a wireframe — several stacked
+ * bars at that scale are the universal sign for content still loading. It
+ * carries a card header well and cannot carry a hero, and pretending
+ * otherwise would be worse than the empty-room renders it replaced.
+ *
  * Decorative by construction. The title it is generated from is always
  * rendered as text beside it, so the cover carries no information a reader
  * would lose — which is why it is aria-hidden rather than given a label

@@ -109,14 +109,24 @@ export function cover(name: string): Cover {
       }
     }
   } else if (archetype === 'bands') {
-    // Heights are bounded so a single band can never fill the frame — the
-    // first cut let one grow to most of the height and it read as a flat
-    // grey slab, which looks like an image that failed to load.
+    // Heights are bounded so a single band can never fill the frame — an
+    // early cut let one grow to most of the height and it read as an image
+    // that had failed to load.
+    //
+    // Widths and starts vary for a related reason, found by looking at one
+    // of these at half-page width rather than at card size: bands that all
+    // began at the same x and ran the full width read unmistakably as
+    // skeleton loading placeholders. Identical stacked bars are the
+    // universal sign for "content is still arriving", and a page that
+    // permanently looks like it is loading is worse than a page with no
+    // artwork at all.
     let y = 9;
     let i = 0;
     while (y < H - 12 && i < 7) {
       const h = 2.5 + next() * 5;
-      shapes.push({ kind: 'rect', x: 12, y, w: W - 24, h, accent: i === accentAt });
+      const x = 12 + next() * 26;
+      const w = (W - 24 - (x - 12)) * (0.45 + next() * 0.55);
+      shapes.push({ kind: 'rect', x, y, w, h, accent: i === accentAt });
       y += h + 3.5 + next() * 4;
       i++;
     }

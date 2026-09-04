@@ -3,6 +3,7 @@ import { pageMetadata } from '@/lib/seo';
 
 import { PARTNERS } from '@/lib/partners';
 import { Main } from '@/components/site/Main';
+import { Cover } from '@/components/site/Cover';
 import { Cta } from '@/components/site/Cta';
 import { PlatformClip } from '@/components/site/PlatformClip';
 
@@ -13,24 +14,25 @@ export const metadata: Metadata = pageMetadata({
   path: '/platform',
 });
 
+/*
+  No image per pillar any more. Each carried one of the untextured
+  empty-room renders from the abandoned 3D concept — mid-grey and teal on a
+  paper ground, and a picture of an empty room arguing for a product that
+  puts people in it. Artwork is generated from the pillar's own title
+  instead; see lib/cover.ts.
+*/
 const PILLARS = [
   {
     title: 'Contextual environments',
     body: 'Learners step into the clinical space the scenario actually happens in — a ward, a resus bay, a patient’s home — rather than a lecture theatre or a checklist. Context is what makes recall transfer to the real setting.',
-    image: '/images/hero-bay-poster',
-    alt: 'A clinical resuscitation bay, lit and equipped, with a patient monitor showing live vital signs.',
   },
   {
     title: 'AI-driven roleplay',
     body: 'Simulated patients and colleagues respond to what the learner actually says, adapting as the conversation develops. Communication is practised and assessed rather than scripted and skipped.',
-    image: '/images/pillar-environment',
-    alt: 'Bedside view of the clinical bay, at the vantage a clinician works from.',
   },
   {
     title: 'Learning analytics',
     body: 'Every scenario produces data: which decisions were made and when, how escalation was handled, where procedure diverged from the expected pathway. Visible per learner and per cohort.',
-    image: '/images/pillar-analytics',
-    alt: 'A patient monitor displaying ECG, oxygen saturation and respiration traces with numeric values.',
   },
 ];
 
@@ -76,19 +78,7 @@ export default function PlatformPage() {
                 {pillar.body}
               </p>
             </div>
-            <figure className="overflow-hidden rounded border border-rule">
-              <picture>
-                <source srcSet={`${pillar.image}.avif`} type="image/avif" />
-                <source srcSet={`${pillar.image}.webp`} type="image/webp" />
-                <img
-                  src={`${pillar.image}.webp`}
-                  alt={pillar.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[16/9] w-full object-cover"
-                />
-              </picture>
-            </figure>
+            <Cover name={pillar.title} className="rounded border border-rule" />
           </div>
         </section>
       ))}

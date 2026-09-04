@@ -8,6 +8,14 @@
  * Every `proof` line below is a capability the platform genuinely has or a
  * relationship already confirmed. None is an outcome claim, because none
  * has been supplied with a citation.
+ *
+ * No `image` field any more. Each solution used to carry one of the
+ * untextured empty-room renders left over from the abandoned 3D concept.
+ * They were made for a dark teal palette that no longer exists — measured
+ * dominant #a8a8a8 against a #F2F4F3 ground — and an empty room with no
+ * people, no light and no product in it argues the opposite of what these
+ * pages claim. Artwork now comes from lib/cover.ts, generated from the
+ * solution's own name.
  */
 
 export type Solution = {
@@ -17,8 +25,6 @@ export type Solution = {
   summary: string;
   lede: string;
   points: { title: string; body: string }[];
-  image: string;
-  alt: string;
 };
 
 export const SOLUTIONS: Solution[] = [
@@ -43,8 +49,6 @@ export const SOLUTIONS: Solution[] = [
         body: 'Decisions, communication and procedural accuracy are captured per attempt, at individual and cohort level, in the form an accreditation review asks for.',
       },
     ],
-    image: '/images/hero-bay-poster',
-    alt: 'A clinical resuscitation bay with a patient monitor showing live vital signs.',
   },
   {
     slug: 'patient',
@@ -72,8 +76,6 @@ export const SOLUTIONS: Solution[] = [
     // be in" — and a bay at night lit by one warm light reads as an
     // emergency, which is the wrong register for a calm pre-procedure
     // explanation and quietly contradicts the argument the page makes.
-    image: '/images/bay-doorway',
-    alt: 'A clinical room seen from the doorway in daylight: bed made and empty, a patient monitor on the wall, an over-bed table and a supply trolley.',
   },
   {
     slug: 'custom',
@@ -96,8 +98,6 @@ export const SOLUTIONS: Solution[] = [
         body: 'From a single department to programs running across an institution or a region — the same content, delivered consistently wherever it is needed.',
       },
     ],
-    image: '/images/pillar-environment',
-    alt: 'Bedside view of a clinical bay, at the vantage a clinician works from.',
   },
 ];
 

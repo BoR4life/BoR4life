@@ -22,6 +22,13 @@ test('an enquiry carries its entry referrer, campaign and path', async ({
   );
   await page.getByRole('link', { name: /nursing/i }).first().click();
   await page.waitForURL(/\/solutions\/nursing/);
+  // Wait for the page to actually render, not merely for the URL to change.
+  // waitForURL resolves on the soft navigation, which can happen before
+  // React flushes the effect that appends this path to the captured visit —
+  // so leaving immediately raced the capture. It passed for months only
+  // because the page carried a large image and was slow enough to hide it;
+  // deleting that image exposed the race rather than causing it.
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.goto('/contact');
 
   // The hidden field must be populated with what was captured on entry,

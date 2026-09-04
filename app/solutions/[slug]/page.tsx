@@ -6,6 +6,7 @@ import { SOLUTIONS, solutionBySlug } from '@/lib/solutions';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
 import { Main } from '@/components/site/Main';
+import { Cover } from '@/components/site/Cover';
 import { Cta } from '@/components/site/Cta';
 
 /**
@@ -59,21 +60,7 @@ export default async function SolutionPage({
         </Reveal>
 
         <Reveal step={1}>
-          <figure className="mt-12 overflow-hidden rounded border border-rule">
-            <picture>
-              <source srcSet={`${solution.image}.avif`} type="image/avif" />
-              <source srcSet={`${solution.image}.webp`} type="image/webp" />
-              <img
-                src={`${solution.image}.webp`}
-                alt={solution.alt}
-                width={2400}
-                height={1350}
-                loading="lazy"
-                decoding="async"
-                className="aspect-[16/9] w-full object-cover"
-              />
-            </picture>
-          </figure>
+          <Cover name={solution.name} className="mt-12 w-full max-w-xs rounded border border-rule" />
         </Reveal>
       </Section>
 
