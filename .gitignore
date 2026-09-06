@@ -38,3 +38,16 @@ renders/
 
 # Reference-reader output (scripts/taste.mjs). Local instrument, not an artefact.
 .taste/
+
+# The Lab — live case material. This repository is public, and de-identified
+# is not the same as publishable: a case that is anonymous to a stranger can
+# still be obvious to the ward that treated the patient. Real submissions,
+# contributor details, assembled issues and metrics stay on Brad's machine.
+# Tracked under lab/ are only the templates, the fabricated test samples,
+# the worked example built from them, and the allowlist.
+lab/cases/
+lab/contributors/
+lab/issues/
+lab/questions/
+lab/metrics/
+lab/deid-allowlist.local.txt
