@@ -1,4 +1,4 @@
-# Evidence — 2026-10-rhythm-01
+# Evidence — SAMPLE-rhythm-00
 
 **Worked example, built from a fabricated case. Citations below are real and
 were verified against PubMed on 6 Sep 2026.**

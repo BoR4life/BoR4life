@@ -1,4 +1,4 @@
-# De-identification log — 2026-10-rhythm-01
+# De-identification log — SAMPLE-rhythm-00
 
 **Worked example built from `lab/samples/dirty-01-rhythm.md`, which is
 fabricated. No real patient, contributor, clinician or facility appears

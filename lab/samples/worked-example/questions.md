@@ -1,4 +1,4 @@
-# Questions — 2026-10-rhythm-01
+# Questions — SAMPLE-rhythm-00
 
 **Worked example, built from a fabricated case. Held for clinical review.**
 

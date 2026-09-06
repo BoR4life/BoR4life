@@ -23,8 +23,15 @@ depends on.
    collisions.
 
 2. **Create `lab/cases/<case-id>/`** and write the submission to `raw.md`
-   exactly as received. If it came as an image, transcribe it and note at the
-   top that it is a transcription, and of what. If a word is genuinely
+   exactly as received — **the contributor's words and nothing else**. No
+   heading, no received-date line, no editor note. Provenance goes in a
+   separate `intake.md`: format received, date, who sent it, and whether it is
+   a transcription. Keeping them apart matters because `raw.md` is scanned as
+   case content, and an intake date blocks the scan for a date that has
+   nothing to do with the patient.
+
+   If it came as an image, transcribe it into `raw.md` and record in
+   `intake.md` that it is a transcription, and of what. If a word is genuinely
    illegible, write `[ILLEGIBLE]` — never guess at a number in a handwritten
    observation.
 
@@ -47,10 +54,19 @@ depends on.
    submission should be full of identifiers, and a raw submission that scans
    clean is more likely to be a truncated file than a careful nurse.
 
-6. **Report** the case ID, the contributor, the consent state, the BLOCK and
-   FLAG counts, and anything in the submission that looks like it is
-   missing — an observation set with no blood pressure, an outcome that stops
-   mid-sentence. Do not chase these yourself; list them for Brad.
+6. **Write `gaps.md`.** Every template field marked supplied or missing, then
+   the questions the contributor has to answer — clinically specific, in the
+   order a case is told. A submission is usually a finding rather than a case,
+   and naming the gaps precisely is most of the value of intake.
+
+   Include a de-identification note here even though de-identification is a
+   later stage: say whether the presentation is common or distinctive, because
+   **mosaic risk grows as the gaps are filled**. A rare presentation is far
+   easier to handle before a unit, a season and an outcome have been attached
+   to it than after.
+
+7. **Report** the case ID, the contributor, the consent state, the BLOCK and
+   FLAG counts, and the gaps. Do not chase them yourself; put them to Brad.
 
 ## Do not
 

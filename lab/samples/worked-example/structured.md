@@ -1,6 +1,6 @@
 # Case — Fast atrial fibrillation in a woman who was not tolerating it
 
-Case ID: 2026-10-rhythm-01
+Case ID: SAMPLE-rhythm-00
 Status: draft · not reviewed
 De-identification sign-off: **false**
 
