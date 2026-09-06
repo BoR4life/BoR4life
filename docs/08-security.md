@@ -39,12 +39,52 @@ against injected scripts, and the reason the rest of the header list is
 supporting rather than primary.
 
 ```
-default-src 'self'; script-src 'self' 'nonce-<per-request>' 'strict-dynamic';
+default-src 'self';
+script-src 'self' 'nonce-<per-request>' 'strict-dynamic';
 style-src 'self' 'nonce-...'; img-src 'self' data:; font-src 'self';
-connect-src 'self'; media-src 'self'; worker-src 'self' blob:;
+connect-src 'self' [analytics origin, only when configured];
+media-src 'self'; frame-src https://www.youtube-nocookie.com;
 frame-ancestors 'none'; base-uri 'self'; form-action 'self';
 object-src 'none'; upgrade-insecure-requests
 ```
+
+### WebAssembly and `blob:` — granted for the 3D scene, withdrawn with it
+
+While the live 3D scene shipped, `script-src` carried `'wasm-unsafe-eval'`
+(WebAssembly compilation only — never `eval()`) and `connect-src` and
+`worker-src` carried `blob:` for the decoder workers. The scene is parked
+(`docs/03-3d-production-spec.md`), so all three grants are withdrawn and
+`tests/csp-build.spec.ts` now asserts their absence. The policy is as tight
+as it was before 3D existed.
+
+What was learned stays written down, because it will matter the day 3D
+returns: **Draco and KTX2 cannot be used on this site.** Both decoders are
+Emscripten *embind*, which builds invoker functions at runtime with
+`new Function`, and under this policy that throws `EvalError` inside the
+decoder worker — silently, behind a poster that keeps the page looking
+correct. meshopt was the only geometry compression that could run here.
+
+**Never point a loader at a CDN to fix a decoder problem.** three's
+`DRACOLoader` and drei's `useGLTF` both default to Google's gstatic
+endpoint, which would put every visitor's IP in front of a third party on a
+healthcare vendor's site.
+
+### Inline styles are refused, and that broke first paint
+
+`style-src 'self' 'nonce-...'` refuses inline `style="..."` attributes, and a
+CSP nonce **cannot** be attached to a style attribute — the browser says so
+explicitly. React `style` props are server-rendered by Next.js as exactly
+those attributes, so every one of them was silently dropped until hydration.
+
+On the homepage that was 28 refusals, and it mattered: the scroll
+narrative's three stacked frames all rendered at their CSS default opacity,
+so the last in DOM order covered the opening frame for the entire
+pre-hydration window — the LCP window the narrative exists to fill. Fixed by
+moving to utility classes, which the stylesheet applies at first paint.
+
+**Rule: no `style` prop on anything whose appearance must be correct before
+JavaScript runs.** Use a class. `tests/hero3d.spec.ts` and the a11y suite
+would not have caught this; it was found by reading console output.
 
 `connect-src 'self'` means the browser cannot reach any third-party host.
 **This caught a real bug during the build:** drei's `<Environment preset>`
@@ -52,6 +92,23 @@ silently fetches an HDRI from `raw.githack.com` at runtime — an undeclared
 third-party dependency and a privacy leak (every visitor's IP reaching that
 CDN). It was removed in favour of local lights. Widen `connect-src`
 deliberately and never as a quick fix for a blocked request.
+
+**The one configured exception.** `connect-src` gains exactly one origin —
+the configured PostHog host — and only when `NEXT_PUBLIC_POSTHOG_KEY` is
+also set. This was itself a latent bug: the policy was `'self'` only while
+`PostHogProvider` was free to initialise, so setting the key produced a
+site where analytics ran and had every request refused by the browser. That
+fails *silently* — no server log, no visible error, just an empty dashboard
+and a false belief that traffic is measured.
+
+The allow-list is built in `lib/csp.ts` and hardened against its own inputs:
+the host is parsed with `new URL()`, reduced to a bare origin (a path in a
+CSP source expression is matched as a prefix and would not match the real
+request URLs), rejected unless it is `https:`, and dropped entirely if it
+does not parse — so an env var can never inject a `;` and rewrite the rest
+of the policy. `tests/csp-build.spec.ts` covers each of those cases; it is
+a unit test precisely because these configurations are not the one the dev
+server runs under.
 
 ### Response headers
 
@@ -98,6 +155,32 @@ Set once in `next.config.mjs`; verified live with `curl -I`.
 Use the **EU host** (`https://eu.i.posthog.com`) if data residency matters
 to institutional customers — for AU/UK/EU health buyers it usually does.
 
+### The published statements
+
+`/privacy` and `/accessibility` are written *from this implementation*, not
+from a template, and both name the files that make each claim true. That is
+a maintenance obligation, not a stylistic flourish: **if the behaviour
+changes, the page changes in the same commit.** A privacy notice that has
+drifted from the code is not merely stale — it is a written
+misrepresentation to a health-sector buyer, and it is the document they are
+most likely to check against observed behaviour.
+
+Specifically, changing any of the following requires editing
+`app/privacy/page.tsx`:
+
+- `persistence`, `maskAllInputs`, `maskTextSelector`, `respect_dnt`,
+  `element_allowlist` or `sanitize_properties` in `PostHogProvider.tsx`
+- the `connect-src` allow-list in `lib/csp.ts`
+- the field list in `EnquirySchema` (`lib/enquiry.ts`)
+- the delivery provider or its processing region (`app/contact/actions.ts`)
+- whether `lib/rate-limit.ts` persists anything beyond process memory
+
+And changing the a11y gate, the reduced-motion path, or the manual
+pre-release checks requires editing `app/accessibility/page.tsx`.
+
+`/resources` deliberately publishes **no certification claims**. Add a
+standard to that page only once we have actually been assessed against it.
+
 ## Deliberately NOT done, and why
 
 - **No CORS configuration.** The site exposes no API, so there is nothing to
@@ -117,10 +200,17 @@ removes the CSRF surface a hand-rolled `/api` endpoint would have.
 
 Controls, in execution order:
 
-1. **Rate limit** — 5 submissions per IP per 10 minutes. See the scope
-   caveat in `lib/rate-limit.ts`: state is per-process, so it does not
-   hold across serverless instances. Adequate here alongside the other
-   controls; swap for Upstash/Redis before the form ever becomes a login.
+1. **Rate limit** — two budgets per IP per 10 minutes: 5 *enquiries*, and
+   30 *attempts*. The enquiry budget is charged only once a submission
+   passes validation, so a visitor who mistypes their email does not spend
+   it; the attempts budget is charged on every request, so a flood of
+   malformed submissions is still bounded. Before this split, four typos
+   met "too many enquiries from this connection" on the one page whose job
+   is to convert a buyer. Bots send complete-looking data and so spend from
+   both. See the scope caveat in `lib/rate-limit.ts`: state is per-process,
+   so it does not hold across serverless instances. Adequate here alongside
+   the other controls; swap for Upstash/Redis before the form ever becomes
+   a login.
 2. **Schema validation** (zod), server-side. Client validation is a
    convenience, never the boundary.
 3. **Honeypot + timing** — a visually-hidden (not `type="hidden"`) field
@@ -144,7 +234,10 @@ is Brad's to make — for AU/UK/EU health buyers it usually matters.
 
 ## Before production
 
-- [ ] Choose an email/delivery provider and set `ENQUIRY_WEBHOOK_URL`.
+- [ ] Choose an email/delivery provider and configure it. **Verify a sending
+      subdomain, never the root domain** — a second SPF record at the root
+      breaks SPF for all mail from the domain. Sequence in
+      `docs/09-go-live.md`.
       Until then enquiries are logged (without PII) and **not delivered**.
 - [ ] Confirm HTTPS on every subdomain **before** the HSTS preload takes hold.
 - [ ] Add `npm run audit` and `npm run verify` to CI as blocking checks.

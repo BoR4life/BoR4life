@@ -81,8 +81,16 @@ imagery. Using it as a decorative accent cheapens it and confuses meaning.
 
 One family, two registers.
 
-- **Display**: neo-grotesque, tight tracking (-0.02em to -0.04em), weights 400
-  and 600 only. Clamp from 2.5rem to 7rem.
+**The face is Inter Tight**, self-hosted at weights 400, 500 and 600
+(`app/fonts/`, licence in `docs/asset-licences.md`). It replaced the native
+stack that stood in while no face was chosen. It is the display cut of a
+family drawn for screen legibility: narrower sidebearings, so a long headline
+holds together at -0.04em where a general-purpose grotesque would collide.
+
+- **Display**: tight tracking (-0.03em to -0.04em at the largest sizes, easing
+  toward -0.02em by 2rem), weights 400 and 600 only, leading below 1 at the
+  hero scale. Clamp from 2.5rem to 5.25rem — the previous 7rem ceiling was
+  never reached at any real viewport and only widened the clamp needlessly.
 - **Micro**: same family, 0.75rem, uppercase, +0.12em tracking, for eyebrows,
   labels and data captions.
 - **Body**: 1.0625rem, 1.6 line-height, max 68ch.

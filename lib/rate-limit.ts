@@ -26,10 +26,30 @@ const MAX_KEYS = 10_000;
 
 export function rateLimit(
   key: string,
-  { limit, windowMs }: { limit: number; windowMs: number },
+  {
+    limit,
+    windowMs,
+    consume = true,
+  }: { limit: number; windowMs: number; consume?: boolean },
 ): { ok: boolean; retryAfterSec: number } {
   const now = Date.now();
   const existing = buckets.get(key);
+
+  // `consume: false` asks "would this be allowed?" without spending from the
+  // budget. It lets a caller check the limit early — before doing any work —
+  // and only charge for the requests that were actually worth something.
+  // See app/contact/actions.ts for why that distinction matters there.
+  if (!consume) {
+    if (!existing || now >= existing.resetAt) {
+      return { ok: true, retryAfterSec: 0 };
+    }
+    return existing.count >= limit
+      ? {
+          ok: false,
+          retryAfterSec: Math.max(1, Math.ceil((existing.resetAt - now) / 1000)),
+        }
+      : { ok: true, retryAfterSec: 0 };
+  }
 
   if (!existing || now >= existing.resetAt) {
     if (buckets.size >= MAX_KEYS) {

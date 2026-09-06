@@ -1,39 +1,42 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { pageMetadata } from '@/lib/seo';
+import { Main } from '@/components/site/Main';
+import { Cta } from '@/components/site/Cta';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'About',
   description:
     'Bundle of Rays was founded in 2018 by a nurse who saw that conventional training does not prepare people for high-consequence moments.',
-};
+  path: '/about',
+});
 
 /**
  * Founder story.
  *
- * HARD CONSTRAINT: Brad's PhD institution must never appear here. ACU is
- * under a critical NDA, and "PhD research-backed" invites the completion
+ * HARD CONSTRAINT: Brad's PhD institution must never appear here, and the
+ * reason is not ours to write down. "PhD research-backed" invites the completion
  * "...at [university]" in a bio, a schema.org alumniOf field, or a
  * conference blurb. Describe the research, never the institution.
- * See docs/00-brand-brief.md, "The ACU trap".
+ * See docs/00-brand-brief.md, "The PhD trap".
  */
 
 export default function AboutPage() {
   return (
-    <main id="main">
+    <Main>
       <section className="px-6 py-20 md:px-16">
         <div className="mx-auto max-w-content">
-          <p className="text-xs uppercase tracking-[0.12em] text-ink-300">
+          <p className="text-xs uppercase tracking-[0.12em] font-label text-muted">
             About
           </p>
-          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-semibold leading-tight tracking-[-0.02em] text-paper-0">
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-ink">
             Built by nurses, for nurses.
           </h1>
         </div>
       </section>
 
-      <section className="border-t border-ink-700 px-6 py-16 md:px-16">
+      <section className="border-t border-rule px-6 py-16 md:px-16">
         <div className="mx-auto max-w-content">
-          <figure className="mb-16 overflow-hidden rounded border border-ink-700">
+          <figure className="mb-16 overflow-hidden rounded border border-rule">
             <picture>
               <source
                 srcSet="/images/team-learning-development.avif"
@@ -53,13 +56,13 @@ export default function AboutPage() {
                 className="w-full object-cover"
               />
             </picture>
-            <figcaption className="border-t border-ink-700 px-4 py-3 text-xs text-ink-300">
+            <figcaption className="border-t border-rule px-4 py-3 text-xs text-muted">
               A hospital learning and development team during a Bundle of Rays
               session.
             </figcaption>
           </figure>
 
-          <div className="max-w-prose space-y-6 text-[1.0625rem] leading-relaxed text-ink-300">
+          <div className="max-w-prose space-y-6 text-[1.0625rem] leading-relaxed text-muted">
             <p>
               Bundle of Rays was founded in 2018 by Brad Chesham, a nurse who
               worked across Australia, the United Kingdom, Afghanistan and
@@ -81,32 +84,27 @@ export default function AboutPage() {
               by clinicians rather than by a software team with an adviser
               on retainer.
             </p>
-            <p className="text-paper-100">
-              Every competitor in this space is a software company that hired
+            <p className="text-ink">
+              Most companies in this space are software companies that hired
               a clinical expert. Bundle of Rays is the inverse. That is the
               whole difference, and it shows up in every scenario.
             </p>
           </div>
 
-          <div className="mt-16 border-t border-ink-700 pt-10">
-            <h2 className="text-xs uppercase tracking-[0.12em] text-ink-300">
+          <div className="mt-16 border-t border-rule pt-10">
+            <h2 className="text-xs uppercase tracking-[0.12em] font-label text-muted">
               Where we work
             </h2>
-            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-paper-100">
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
               Australia, the United Kingdom, the United States, Sri Lanka,
               South Korea and India — from single institutions through to
               programs operating at state scale.
             </p>
           </div>
 
-          <Link
-            href="/contact"
-            className="mt-12 inline-block rounded-full bg-signal px-6 py-3 text-sm font-semibold text-ink-900 transition-opacity hover:opacity-90"
-          >
-            Talk to us
-          </Link>
+          <Cta className="mt-12">Talk to us</Cta>
         </div>
       </section>
-    </main>
+    </Main>
   );
 }

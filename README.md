@@ -1,8 +1,8 @@
 # Bundle of Rays — Web Studio Agent
 
 An agent system that builds and maintains the Bundle of Rays website: a
-cinematic, 3D-led site for a healthcare immersive-learning company, held to
-machine-enforced performance and accessibility budgets.
+type-led, evidence-first site for a healthcare immersive-learning company,
+held to machine-enforced performance, accessibility and security budgets.
 
 ## Why it is built this way
 
@@ -17,10 +17,12 @@ past the gate, and is explicitly forbidden from widening it.
 **2. Beautiful and effective are not the same goal here.** Bundle of Rays sells
 to Queensland Health (five years and counting), Ohio State, and institutions
 across India and South Korea. Those readers want evidence, accreditation and outcomes — fast, on a
-locked-down laptop. The art direction takes the craft vocabulary of a
-high-end 3D portfolio and grafts it onto an evidence-led information
-architecture. Where the two conflict, evidence wins, and the agent is
-instructed to say so out loud rather than quietly compromise.
+locked-down laptop. The art direction is typographic and restrained, built
+around the few real assets the company has — recorded scenario footage, a
+partner's de-escalation roleplay, one photograph of a session — rather than
+around renders that stand in for them. Where craft and evidence conflict,
+evidence wins, and the agent is instructed to say so out loud rather than
+quietly compromise.
 
 ## Using it
 
@@ -35,25 +37,35 @@ instructed to say so out loud rather than quietly compromise.
 Specialist subagents in `.claude/agents/`: `art-director`, `threed-pipeline`,
 `frontend-engineer`, `evidence-copywriter`, `quality-auditor`.
 
-## The 3D strategy
+## Where the 3D went
 
-Hybrid, and deliberately lopsided:
+The first build opened with a three-stage scroll narrative and a live WebGL
+resuscitation bay. It was removed in September 2026: the founder looked at
+it and said it had not hit the spot, and the agent's own review agreed —
+the opening frame was the weakest image on the site and the one every
+visitor saw first. Meanwhile the site had one environment shown nine times
+while the copy promised several.
 
-- **~70% pre-rendered stills** (AVIF + WebP) — offline path-traced quality,
-  instant load, works everywhere.
-- **Pre-rendered loops** (AV1 + H.264, poster frame mandatory) for section
-  heroes.
-- **Exactly one live WebGL scene** — the hero, poster-first and
-  capability-gated.
+What replaced it is cheaper and more honest: a statement, real footage, and
+the client list inside the first viewport. The whole 3D pipeline — Blender
+scene scripts, glTF optimisation, budget validation, the poster-first
+runtime pattern — stays in the repo, parked, for when 3D or 360° video comes
+back with the photography and the second environment to justify it. See
+`docs/03-3d-production-spec.md` (parked) and `docs/09-go-live.md`.
 
-One live scene rather than ten because every WebGL scene is a permanent tax:
-device compatibility, mobile memory, main-thread contention with LCP, and
-another accessibility surface. One scene built properly gives ~90% of the
-credibility signal at ~10% of the risk.
+Two things learned in that build are worth more than the scene was, and
+are written down in `docs/08-security.md`: Draco and KTX2 decoders cannot
+run under a strict CSP, and every failure mode of a lazy 3D scene looks
+exactly like a working page.
 
-```
-SOURCE → AUTHOR → OPTIMISE → VALIDATE → SHIP
-```
+## Analytics
+
+Two layers, both privacy-first (`docs/10-analytics.md`): every enquiry
+email says where the lead came from — referrer, campaign tag, landing page,
+country — with no vendor involved; and PostHog, off until keyed, for
+aggregate traffic and returning visitors.
+
+## The asset pipeline (parked)
 
 ```bash
 ./scripts/optimize-gltf.sh source.glb public/models/hero-ward.glb hero
@@ -86,10 +98,11 @@ scripts/optimize-gltf.sh       Draco + KTX2 optimisation
 Two things need Brad:
 
 1. **Verify the `[VERIFY]` claims** in `docs/00-brand-brief.md` — client names,
-   Client facts are now **confirmed** (Queensland Health 5yrs, Ohio State via
-   the Brad Innovation Fellowship, TSU, DY Patil Pune). Note the **PROHIBITED**
-   list in that doc — ACU (critical NDA), Aspen Medical, growth percentages,
-   and any institution attached to Brad's PhD. Agents check copy against it.
+   Client facts are now **confirmed** (Queensland Health 5yrs, Ohio State
+   Innovation Fellow, TSU, DY Patil Pune). That doc also carries the
+   **PROHIBITED** list, which names no parties: the parties themselves live in
+   an untracked file, `docs/constraints.local.md`. Agents check copy against
+   both.
 2. **Point the pipeline at existing Unity/Unreal product scenes.** They are the
    best 3D source available — authentic, differentiated, zero licence risk —
    and better than anything that can be bought.

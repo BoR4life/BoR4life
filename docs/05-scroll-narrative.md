@@ -1,5 +1,12 @@
 # The Scroll Narrative — decision record
 
+> **Parked, September 2026.** The live 3D scene and the scroll narrative
+> were removed from the site after review — the opening frame did not
+> land, and the founder chose to go type-led with real footage for
+> now. Everything below still works and stays for when 3D or 360 video
+> returns. Nothing in it currently ships.
+
+
 Brad's proposal: *"This company is building the new frontier. The background 3D
 environment could be a landscape, and as people scroll the landscape evolves."*
 

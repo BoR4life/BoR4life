@@ -41,7 +41,7 @@ export function ScenarioVideo({ className = '' }: { className?: string }) {
   };
 
   return (
-    <figure className={`overflow-hidden rounded border border-ink-700 ${className}`}>
+    <figure className={`overflow-hidden rounded border border-rule ${className}`}>
       <div className="relative">
         <video
           ref={videoRef}
@@ -55,7 +55,7 @@ export function ScenarioVideo({ className = '' }: { className?: string }) {
           width={720}
           height={405}
           aria-label="A recorded Bundle of Rays scenario: ultrasound-guided vascular access, seen from the learner's point of view."
-          className="aspect-[16/9] w-full bg-ink-700 object-cover"
+          className="aspect-[16/9] w-full bg-surface object-cover"
         >
           <source src="/video/scenario-av1.mp4" type="video/mp4; codecs=av01.0.05M.08" />
           <source src="/video/scenario-h264.mp4" type="video/mp4" />
@@ -65,13 +65,13 @@ export function ScenarioVideo({ className = '' }: { className?: string }) {
           <button
             type="button"
             onClick={toggle}
-            className="absolute bottom-3 right-3 rounded-full bg-ink-900/90 px-4 py-2 text-xs font-semibold text-paper-100"
+            className="absolute bottom-3 right-3 rounded-full bg-paper/90 px-4 py-2 text-xs font-semibold text-ink"
           >
             {playing ? 'Pause clip' : 'Play clip'}
           </button>
         )}
       </div>
-      <figcaption className="border-t border-ink-700 px-4 py-3 text-xs text-ink-300">
+      <figcaption className="border-t border-rule px-4 py-3 text-xs text-muted">
         Recorded in-headset: ultrasound-guided vascular access, from the
         learner&rsquo;s point of view.
       </figcaption>

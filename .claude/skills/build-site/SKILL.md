@@ -79,7 +79,7 @@ observed fact.
 3. **No unsourced clinical claims. Ever.** This is a regulated-adjacent sector;
    an invented efficacy statistic is a genuine liability.
 3a. **Check every piece of copy against the PROHIBITED list** in
-   `docs/00-brand-brief.md`: never name ACU (NDA), never mention Aspen Medical
+   `docs/00-brand-brief.md` and the untracked `docs/constraints.local.md`
    or "nationally accredited", never publish a growth percentage, and never
    attach an institution to Brad's PhD.
 4. **Never invent evidence.** No fake client names, testimonials, or numbers to

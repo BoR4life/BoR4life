@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from 'next';
 import { headers } from 'next/headers';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
+import { LeadSourceCapture } from '@/components/analytics/LeadSourceCapture';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 import { SOCIAL_LINKS } from '@/lib/social';
 import { siteUrl } from '@/lib/site';
 import './globals.css';
+import { archivo, sourceSerif } from './fonts';
 
 /**
  * Site-wide metadata. `metadataBase` is required for correct absolute
@@ -75,19 +77,21 @@ export default async function RootLayout({
       addressRegion: 'QLD',
       addressCountry: 'AU',
     },
-    // Deliberately no `founder.alumniOf` — naming the PhD institution
-    // would breach the ACU NDA. See docs/00-brand-brief.md.
+    // Deliberately no `founder.alumniOf`. The founder's PhD institution is
+    // not named anywhere on this site; see docs/00-brand-brief.md. Structured
+    // data is the easiest place to leak it by reflex, so the omission is
+    // recorded here rather than left looking like an oversight.
     founder: { '@type': 'Person', name: 'Brad Chesham' },
     sameAs: SOCIAL_LINKS.map((s) => s.href),
   };
 
   return (
-    <html lang="en" className="h-full">
-      <body className="min-h-full font-sans antialiased" data-nonce={nonce}>
+    <html lang="en" className={`h-full ${archivo.variable} ${sourceSerif.variable}`}>
+      <body className="min-h-full font-body antialiased" data-nonce={nonce}>
         {/* Skip link: first focusable element on the page, per WCAG 2.4.1 */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-signal focus:px-4 focus:py-2 focus:text-ink-900"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-ink"
         >
           Skip to content
         </a>
@@ -95,8 +99,16 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           nonce={nonce}
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+          // `<` is escaped so the payload can never close this script tag.
+          // Every value above is a static constant today, so this changes
+          // nothing now — it is here because the first person to put a
+          // dynamic value into the schema should not also have to discover
+          // that a closing script tag inside JSON ends the block.
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(orgSchema).replace(/</g, '\\u003c'),
+          }}
         />
+        <LeadSourceCapture />
         <PostHogProvider>
           <Header />
           {children}

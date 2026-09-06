@@ -49,8 +49,15 @@ Look-dev rules that make a render read clinical rather than videogame:
 ```
 
 Order matters — strip and shrink before compressing:
-dedup → prune → resize → weld/simplify → UASTC (normal/ORM) → ETC1S
-(albedo/emissive) → Draco.
+dedup → prune → resize → weld/simplify → join → **meshopt**.
+
+**Geometry is meshopt, never Draco, and textures are never KTX2.** Both of
+those decoders are Emscripten embind, which builds invoker functions with
+`new Function`; the site's CSP forbids `unsafe-eval`, so they throw inside
+the decoder worker and the model silently never renders while the poster
+underneath keeps the page looking correct. Texture memory is controlled by
+the dimension clamp and `maxGpuTextureMb` instead. Full reasoning in
+`docs/03-3d-production-spec.md`. Do not "restore" Draco.
 
 If a model needs punishing compression to fit budget it was authored too
 heavy. Send it back to look-dev rather than compressing it into mush.

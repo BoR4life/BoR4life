@@ -35,11 +35,13 @@ regulatory and reputational risk, not merely weak copy.
   **Ohio State** (2 projects, Brad Innovation Fellowship), **Taegu Science
   University** (repeat projects), **DY Patil, Pune**. These are the strongest
   assets on the site — use them.
-- **PROHIBITED, without exception** — read `docs/00-brand-brief.md`:
-  never name **ACU** (critical NDA), never mention **Aspen Medical** or
-  describe anything as "nationally accredited", never publish a **growth
-  percentage**, and never attach an institution to **Brad's PhD**. That last
-  one is the easy mistake: "PhD research-backed" must never become "PhD at X".
+- **PROHIBITED, without exception** — read `docs/00-brand-brief.md` and the
+  untracked `docs/constraints.local.md`, which names the parties this file
+  deliberately does not. In summary: some client and partner relationships
+  may not be named at all, no offering is described as "nationally
+  accredited", no growth percentage is published, and no institution is ever
+  attached to **Brad's PhD**. That last one is the easy mistake: "PhD
+  research-backed" must never become "PhD at X".
 - Do not state the India state-wide programs as fact. Allude to trajectory only.
 - Numbers beat adjectives, but only real ones. Never invent a statistic to
   fill a layout. If the number does not exist, change the layout.

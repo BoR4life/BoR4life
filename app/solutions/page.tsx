@@ -1,0 +1,101 @@
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
+import Link from 'next/link';
+import { SOLUTIONS } from '@/lib/solutions';
+import { Section, Eyebrow } from '@/components/site/Section';
+import { Reveal } from '@/components/site/Reveal';
+import { Main } from '@/components/site/Main';
+import { Cover } from '@/components/site/Cover';
+import { Cta } from '@/components/site/Cta';
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Solutions',
+  description:
+    'Immersive clinical training for nursing education, patient education, and custom content built to your own protocols.',
+  path: '/solutions',
+});
+
+export default function SolutionsPage() {
+  return (
+    <Main>
+      <Section ground="paper" size="lg" bordered={false} labelledBy="sol-heading">
+        <Reveal>
+          <Eyebrow id="sol-heading">Solutions</Eyebrow>
+          <h1 className="mt-4 max-w-4xl text-[clamp(2rem,4.5vw,3.5rem)] font-hero leading-tight tracking-[-0.02em] text-ink">
+            Three ways the same platform gets used.
+          </h1>
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
+            The technology underneath is identical. What changes is who is
+            standing in the scenario and what they need to walk away able to
+            do.
+          </p>
+        </Reveal>
+      </Section>
+
+      {SOLUTIONS.map((solution, i) => (
+        <Section
+          key={solution.slug}
+          ground={i % 2 === 0 ? 'surface' : 'paper'}
+          size="lg"
+          labelledBy={`sol-${solution.slug}`}
+        >
+          <div
+            className={`grid items-center gap-12 lg:grid-cols-2 lg:gap-20 ${
+              i % 2 === 1 ? 'lg:[&>*:first-child]:order-last' : ''
+            }`}
+          >
+            <Reveal>
+              <Cover name={solution.name} className="w-full max-w-xs rounded border border-rule" />
+            </Reveal>
+
+            <Reveal step={1}>
+              <Eyebrow>
+                {solution.audience}
+              </Eyebrow>
+              <h2
+                id={`sol-${solution.slug}`}
+                className={`mt-4 text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] ${
+                  i % 2 === 0 ? 'text-ink' : 'text-ink'
+                }`}
+              >
+                {solution.name}
+              </h2>
+              <p
+                className={`mt-5 max-w-prose text-[1.0625rem] leading-relaxed ${
+                  i % 2 === 0 ? 'text-muted' : 'text-muted'
+                }`}
+              >
+                {solution.summary}
+              </p>
+              <Link
+                href={`/solutions/${solution.slug}`}
+                className={`mt-8 inline-block text-sm font-semibold underline-offset-4 hover:underline ${
+                  i % 2 === 0 ? 'text-ink underline' : 'text-accent'
+                }`}
+              >
+                {solution.name} in detail →
+              </Link>
+            </Reveal>
+          </div>
+        </Section>
+      ))}
+
+      <Section ground="paper" size="lg" labelledBy="sol-cta">
+        <Reveal>
+          <h2
+            id="sol-cta"
+            className="max-w-3xl text-[clamp(1.75rem,4vw,3rem)] font-hero leading-tight tracking-[-0.02em] text-ink"
+          >
+            Not sure which fits?
+          </h2>
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
+            Most conversations start with a cohort and a problem rather than a
+            product. Tell us both and we will tell you honestly whether this
+            helps.
+          </p>
+          <Cta className="mt-10" />
+        </Reveal>
+      </Section>
+    </Main>
+  );
+}

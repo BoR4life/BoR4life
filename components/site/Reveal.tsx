@@ -19,14 +19,40 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
  *
  * The motion itself is deliberately small: 12px and an opacity fade. Larger
  * travel reads as decoration and competes with the content.
+ *
+ * The stagger is a `step` index rather than a millisecond value, for two
+ * reasons. The delay used to be applied with an inline `style` prop, which
+ * Next.js server-renders as a `style="..."` attribute — and a strict
+ * `style-src` refuses those, because a CSP nonce cannot be attached to a
+ * style attribute. So every reveal on the page was silently unstyled until
+ * hydration. Static utility classes are applied by the stylesheet and are
+ * therefore correct at first paint, which is the whole point. Fixing it this
+ * way also removed the arbitrary 60/80/90/100/120ms values that had
+ * accumulated across call sites; one rhythm reads as deliberate.
  */
+
+/**
+ * Written out in full so Tailwind's scanner can see each class literally —
+ * a computed `delay-[${n}ms]` produces no CSS at all, and would fail
+ * silently in exactly the same way the inline styles did.
+ */
+const STEP_DELAY = [
+  'delay-0',
+  'delay-[90ms]',
+  'delay-[180ms]',
+  'delay-[270ms]',
+  'delay-[360ms]',
+  'delay-[450ms]',
+] as const;
+
 export function Reveal({
   children,
-  delay = 0,
+  step = 0,
   className = '',
 }: {
   children: ReactNode;
-  delay?: number;
+  /** Stagger position, 0-5. Clamped — a longer list should not crawl in. */
+  step?: number;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -68,14 +94,18 @@ export function Reveal({
   }, []);
 
   const hidden = armed && !shown;
+  // Delay only on the way in. Applying it while hidden would postpone the
+  // hide as well, which shows a flash of the final state first.
+  const delayClass = hidden
+    ? 'delay-0'
+    : STEP_DELAY[Math.min(Math.max(step, 0), STEP_DELAY.length - 1)];
 
   return (
     <div
       ref={ref}
-      className={`transition-[opacity,transform] duration-700 ease-reveal ${
+      className={`transition-[opacity,transform] duration-700 ease-reveal ${delayClass} ${
         hidden ? 'translate-y-3 opacity-0' : 'translate-y-0 opacity-100'
       } ${className}`}
-      style={{ transitionDelay: hidden ? '0ms' : `${delay}ms` }}
     >
       {children}
     </div>
