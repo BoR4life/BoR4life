@@ -104,7 +104,7 @@ export default function Home() {
         className="border-b border-rule px-6 pb-20 pt-20 md:px-16 md:pb-28 md:pt-32"
       >
         <div className="mx-auto grid max-w-content gap-16 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-6">
             <p className="text-xs uppercase tracking-[0.14em] font-label text-accent">
               Immersive clinical training
             </p>
@@ -135,13 +135,36 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Proof, beside the claim. Hairline-separated rather than boxed:
-              a list of institutions needs no container to read as a list, and
-              a border would make it look like a widget rather than a fact. */}
-          <div className="lg:col-span-4 lg:col-start-9">
+          {/*
+            The product, in the first screen.
+
+            This company sells immersive training and the opening screen
+            carried no image or video at all — a full screen of type arguing
+            for the most visual product category there is, with the one
+            question a visitor actually has ("what does this look like?")
+            answered only after 900px of scrolling.
+
+            The clip is 720x404 native and that number decides the layout.
+            Run full-bleed it would be twice upscaled and soft, and a blurry
+            video of your own product is worse than none — so it takes a
+            five-column slot where it renders at or below native width and
+            stays sharp. The sharp 1280px clip on this site belongs to a
+            partner, and a partner's software should not be the first thing
+            anyone sees of Bundle of Rays.
+
+            A hero that runs edge to edge needs a ~1920px capture of a real
+            scenario. That asset does not exist yet.
+
+            The client list keeps its place directly beneath, so the claim
+            and the evidence for it are still in the same glance.
+          */}
+          <div className="lg:col-span-5 lg:col-start-8">
+            <Reveal>
+              <ScenarioVideo />
+            </Reveal>
             <h2
               id="clients-heading"
-              className="text-xs uppercase tracking-[0.14em] font-label text-muted"
+              className="mt-10 text-xs uppercase tracking-[0.14em] font-label text-muted"
             >
               Trusted in practice
             </h2>
@@ -229,22 +252,20 @@ export default function Home() {
           </p>
         </Reveal>
 
-        <div className="mt-14 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <Reveal>
-            <ScenarioVideo />
-          </Reveal>
-          <Reveal step={1}>
-            <h3 className="text-xl font-semibold text-ink">
-              This is a scenario, not a showreel.
-            </h3>
-            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
-              Sterile field, ultrasound guidance, a colleague who responds to
-              what you say. The learner works the procedure in sequence and
-              the system records every decision along the way — including the
-              ones not taken.
-            </p>
-          </Reveal>
-        </div>
+        {/*
+          The scenario clip that used to sit here now opens the page, so
+          this is its copy rather than a second showing of the same six
+          seconds. A visitor who has just watched it at the top does not
+          need it again forty per cent of the way down.
+        */}
+        <Reveal step={1}>
+          <p className="mt-10 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
+            Sterile field, ultrasound guidance, a colleague who responds to
+            what you say. The learner works the procedure in sequence and the
+            system records every decision along the way — including the ones
+            not taken.
+          </p>
+        </Reveal>
 
         <div className="mt-16 grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
           <Reveal className="lg:col-span-3">
