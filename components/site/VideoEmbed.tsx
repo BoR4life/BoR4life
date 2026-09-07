@@ -32,14 +32,31 @@ import { useState } from 'react';
 
 export function VideoEmbed({
   videoId,
+  poster,
   title,
   source,
   summary,
 }: {
   /** YouTube video id — the part after `?v=` or `youtu.be/`. */
   videoId: string;
+  /**
+   * Basename under /public/images of a still to show behind the play
+   * button, without extension. Optional, and its absence is visible: the
+   * card falls back to a flat ground, which is honest but empty.
+   *
+   * It is NOT taken from YouTube's own thumbnail service. img.youtube.com
+   * and i.ytimg.com are not in lib/csp.ts img-src, and fetching one would
+   * put a request to Google on the page before the visitor has pressed
+   * anything — which is the exact thing this click-to-load component
+   * exists to prevent. A local still, or nothing.
+   */
+  poster?: string;
   title: string;
-  /** Who made it. Required: this is someone else's work and it is labelled. */
+  /**
+   * Whose video it is. Required and rendered either way: for a partner's
+   * footage a reader must not have to guess, and for our own the label is
+   * what distinguishes the two at a glance.
+   */
   source: string;
   summary: string;
 }) {
@@ -65,6 +82,17 @@ export function VideoEmbed({
             onClick={() => setPlaying(true)}
             className="group absolute inset-0 flex flex-col items-start justify-end gap-3 p-6 text-left transition-colors hover:bg-surface/40 md:p-8"
           >
+            {poster ? (
+              <picture>
+                <source srcSet={`/images/${poster}.avif`} type="image/avif" />
+                <img
+                  src={`/images/${poster}.webp`}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </picture>
+            ) : null}
             <span
               aria-hidden="true"
               className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-ink transition-transform group-hover:scale-105"

@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Section, Eyebrow } from '@/components/site/Section';
 import { Reveal } from '@/components/site/Reveal';
-import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 import { VideoEmbed } from '@/components/site/VideoEmbed';
 import { Main } from '@/components/site/Main';
 import { Cta } from '@/components/site/Cta';
@@ -161,7 +160,12 @@ export default function Home() {
           */}
           <div className="lg:col-span-5 lg:col-start-8">
             <Reveal>
-              <ScenarioVideo />
+              <VideoEmbed
+                videoId="Mvlq5wXhW7c"
+                source="Bundle of Rays"
+                title="A look at what we build"
+                summary="A short trailer of the scenarios and environments we deliver."
+              />
             </Reveal>
             <h2
               id="clients-heading"
@@ -368,8 +372,9 @@ export default function Home() {
               width: the sources are 686px and 745px wide, so anything
               wider than about a third of the grid is upscaling, and an
               upscaled screenshot of a product looks worse than no
-              screenshot at all. Same reasoning as the scenario clip —
-              see components/site/ScenarioVideo.tsx.
+              screenshot at all. Same reasoning that governed the scenario
+              clip when it sat in this page — hold an asset at the size its
+              source can actually carry.
 
               The second one is the more useful of the pair. It shows the
               behaviours being named — raised pitch, eye contact — which is

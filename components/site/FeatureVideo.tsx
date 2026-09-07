@@ -15,13 +15,17 @@
  * Because nothing autoplays there is no prefers-reduced-motion case to
  * handle — motion only ever begins on a deliberate press.
  *
- * ON THE AUDIO. Measured, this file's RMS sits between -22 and -24dB for
- * its whole duration. Speech swings far wider than that between phrases, so
- * the track reads as continuous background music rather than narration.
- * That inference is from statistics, not from listening, and it matters:
- * if there IS speech carrying information, WCAG 1.2.2 requires captions and
- * this component needs a <track> before the video is conformant. The prop
- * exists for exactly that.
+ * SILENT BY CONSTRUCTION. The encoded file carries NO audio stream at all —
+ * `ffmpeg -an` — rather than merely being played muted. The distinction is
+ * the point: a muted element can be unmuted by anyone with the native
+ * controls, whereas a file with no audio track cannot make sound under any
+ * circumstance. `muted` is set here as well, so the control reflects the
+ * truth rather than offering a volume slider that does nothing.
+ *
+ * A pleasant side effect: WCAG 1.2.2 (captions for prerecorded audio) does
+ * not apply to a video with no audio, so the open question about whether
+ * the original track carried speech is moot. `captionsSrc` remains for any
+ * future video that does have a voice on it.
  *
  * `source` is required and rendered as its own line. The caption should
  * therefore NOT name the software as well: the first version did, and the
@@ -61,6 +65,7 @@ export function FeatureVideo({
         height={height}
         poster={`/video/${stem}.webp`}
         controls
+        muted
         preload="none"
         playsInline
         aria-label={label}

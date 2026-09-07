@@ -123,7 +123,7 @@ unicode-range split is what keeps this to 157KB.
 | Source | Supplied by Brad; a screen recording of a teaching session |
 | Shows | 3D Organon anatomy alongside a photographed specimen and an annotated ECG rhythm strip |
 | Software on screen | 3D Organon — a platform Bundle of Rays distributes and supports, credited visibly beneath the video |
-| Encode | H.264 only, 1280x600, 1757KB |
+| Encode | H.264 only, 1280x600, 1364KB, NO audio stream |
 
 **H.264 only, and that is deliberate.** AV1 was tried and lost: 3147KB at
 CRF 40 and still 2300KB at CRF 48, against a 1500KB budget, where H.264
@@ -133,12 +133,15 @@ down far enough to fit would destroy the detail the video exists to show.
 Measured, not assumed — and the budget was not widened to accommodate it.
 The asset gate requires no AV1 sibling.
 
-**Open question: captions.** The audio holds an RMS of -22 to -24dB for the
-whole duration, which reads as continuous background music rather than
-speech — narration swings much wider between phrases. That is inferred from
-statistics, not from listening. If there IS speech carrying information,
-WCAG 1.2.2 requires captions and `FeatureVideo` takes a `captionsSrc` prop
-for a WebVTT track. Confirm before treating this page as conformant.
+**Silent by construction.** Encoded with `ffmpeg -an`, so the file carries
+no audio stream at all rather than merely being played muted — a muted
+element can be unmuted through the native controls; a file with no audio
+track cannot make sound under any circumstance. Brad's instruction was "no
+sound ever", and this is the only way to actually guarantee it.
+
+This also settles a question raised when the clip first landed: WCAG 1.2.2
+requires captions for prerecorded audio, and there is now no audio, so it
+does not apply.
 
 **Organon loop** — `public/video/organon-{av1,h264}.mp4`, poster
 `public/video/organon.{avif,webp}`
