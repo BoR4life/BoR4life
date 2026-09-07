@@ -2,7 +2,7 @@
   "name": "bor-web-studio",
   "version": "0.1.0",
   "private": true,
-  "description": "Bundle of Rays website \u2014 Next.js app plus the agent system that builds and maintains it.",
+  "description": "Bundle of Rays website — Next.js app plus the agent system that builds and maintains it.",
   "type": "module",
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "validate:assets": "node scripts/validate-assets.mjs",
+    "test": "playwright test",
     "optimize:gltf": "./scripts/optimize-gltf.sh",
+    "taste": "node scripts/taste.mjs",
     "audit": "npm audit --omit=dev --audit-level=high",
     "verify": "npm run typecheck && npm run lint && npm run validate:assets && npm run build",
     "lighthouse": "echo 'Add once deployed to a stable URL: lhci autorun'",
@@ -19,13 +21,10 @@
     "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
-    "@react-three/drei": "10.7.8",
-    "@react-three/fiber": "9.7.0",
     "next": "15.5.24",
     "posthog-js": "1.203.1",
     "react": "19.1.1",
     "react-dom": "19.1.1",
-    "three": "0.180.0",
     "zod": "3.24.1"
   },
   "devDependencies": {
@@ -36,7 +35,6 @@
     "@types/node": "22.10.5",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
-    "@types/three": "0.180.0",
     "autoprefixer": "10.4.20",
     "eslint": "9.39.1",
     "eslint-config-next": "15.5.24",

@@ -1,4 +1,13 @@
+import { existsSync } from 'node:fs';
 import { defineConfig, devices } from '@playwright/test';
+
+const SANDBOX_CHROMIUM = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+
+function resolveChromium(): string | undefined {
+  if (process.env.PLAYWRIGHT_CHROMIUM_PATH) return process.env.PLAYWRIGHT_CHROMIUM_PATH;
+  if (existsSync(SANDBOX_CHROMIUM)) return SANDBOX_CHROMIUM;
+  return undefined;
+}
 
 export default defineConfig({
   testDir: './tests',
@@ -14,14 +23,18 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        // This environment ships a pinned Chromium build that may not match
-        // the version Playwright expects. Point at the pre-installed binary
-        // rather than downloading another one — PLAYWRIGHT_CHROMIUM_PATH
-        // lets CI override it without editing this file.
+        // Three places this runs, three different browsers:
+        //   - the remote dev sandbox ships a pinned Chromium at a fixed
+        //     path and forbids downloading another, so use it when present;
+        //   - CI installs Playwright's own managed Chromium, and must be
+        //     left to find it — a hard-coded sandbox path there launched
+        //     nothing and failed all 54 browser tests on the first run;
+        //   - PLAYWRIGHT_CHROMIUM_PATH overrides both, for anything else.
+        // executablePath is therefore set only when there is a binary to
+        // set it to. Undefined means "Playwright's default", which is the
+        // only correct answer on a machine that is not this sandbox.
         launchOptions: {
-          executablePath:
-            process.env.PLAYWRIGHT_CHROMIUM_PATH ||
-            '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
+          executablePath: resolveChromium(),
         },
       },
     },

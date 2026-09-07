@@ -472,6 +472,14 @@ VIEWS = {
     'bedside': {'lens': 40.0, 'loc': (1.55, 1.95, 1.32), 'target': (2.75, 3.55, 0.98)},
     # The monitor, where measurement becomes visible.
     'monitor': {'lens': 62.0, 'loc': (2.15, 3.30, 1.72), 'target': (3.22, 5.38, 1.84)},
+    # From the doorway, at standing height: the room as a person walking in
+    # sees it, rather than as a clinician working in it. This exists for the
+    # patient-education page, whose copy is about consent conversations —
+    # "the room they will be in". That page was illustrated with the night
+    # resus framing, which reads as an emergency and is the wrong register
+    # for a calm pre-procedure explanation. 28mm is as wide as the spec
+    # allows before an interior starts to read as an estate-agent photo.
+    'doorway': {'lens': 28.0, 'loc': (0.62, 0.72, 1.66), 'target': (2.90, 3.90, 1.15)},
 }
 
 

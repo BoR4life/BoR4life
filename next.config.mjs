@@ -68,8 +68,15 @@ const nextConfig = {
     return [{ source: '/:path*', headers: securityHeaders }];
   },
 
-  // Model files and fonts are versioned by filename, not by query string —
-  // cache them hard, since a changed asset gets a changed name.
+  // No redirects yet. When the apex/www pair is configured, do it at the
+  // platform's domain settings rather than here — a redirect in application
+  // code still costs a serverless invocation per hop.
+  //
+  // The comment that used to sit here claimed model files and fonts were
+  // "versioned by filename" and should therefore be cached hard. They are
+  // not: hero-bay.glb ships under a stable name, so immutable caching would
+  // serve returning visitors a stale model after every update. Content-hash
+  // the filenames first if that caching is wanted (docs/09-go-live.md).
   async redirects() {
     return [];
   },

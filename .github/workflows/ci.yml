@@ -1,0 +1,58 @@
+# Every safety net on this site — the accessibility gate, the asset budgets,
+# the security-policy checks, the live-scene checks — existed as a script and
+# ran only when someone remembered to run it. A change that broke any of them
+# would have deployed. This turns each of those from a promise into a
+# guarantee: nothing merges red.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck, lint, budgets, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run verify
+      - run: npm run audit
+
+  browser:
+    name: Accessibility, CSP, images, enquiry, 3D
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      # Chromium only: it is the one browser the suite is written against,
+      # and pulling the other two triples install time for no extra coverage.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npx playwright test
+        env:
+          CI: 'true'
+      - name: Keep failure traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

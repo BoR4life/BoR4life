@@ -15,13 +15,28 @@ names its **3D slot** so the shot list falls straight out of the sitemap.
 /case-studies            Index
 /case-studies/[slug]     Deployment stories
 /about                   Founder story, clinical team
-/resources               Whitepapers, procurement pack, security & data handling
+/resources               Procurement entry point — published + answered-on-request
+/privacy                 Privacy notice, written from the implementation
+/accessibility           WCAG 2.2 AA conformance statement
 /contact                 Book a demo
 ```
 
 `/evidence` and the procurement pack under `/resources` are the two pages that
 close institutional deals, and are the two most commonly missing from
 immersive-tech sites. Build them first, not last.
+
+**How `/resources` was actually built, and why it is not what the brief above
+implies.** The obvious version — a downloadable "security pack" and a grid of
+compliance badges — could not be built honestly, because every badge would be
+a claim we cannot substantiate. In health-sector procurement an unsupported
+certification claim is not weak marketing; it ends the deal at the point it is
+checked, and it *is* checked. So the page inverts the structure: it publishes
+what is genuinely published (`/evidence`, `/privacy`, `/accessibility`,
+`/solutions` — all backed by real implementation), and for everything else it
+names the question, says plainly that the answer comes from a person, and
+routes to the enquiry form. This is the same argument `/evidence` makes about
+efficacy statistics, applied to compliance. Whitepapers belong here once they
+exist; nothing goes on the page before it does.
 
 ## Home page
 

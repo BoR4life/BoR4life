@@ -66,6 +66,30 @@ function readGlbJson(path) {
   }
 }
 
+/**
+ * Extract the BIN chunk from a .glb container — where embedded texture bytes
+ * live. Same failure contract as readGlbJson: null means "could not
+ * inspect", never "passed".
+ */
+function readGlbBin(path) {
+  try {
+    const buf = readFileSync(path);
+    if (buf.length < 20) return null;
+    if (buf.readUInt32LE(0) !== 0x46546c67) return null; // 'glTF'
+    const jsonLength = buf.readUInt32LE(12);
+    // Chunks are 4-byte aligned; the BIN header sits immediately after the
+    // padded JSON chunk.
+    let offset = 20 + jsonLength;
+    offset += (4 - (offset % 4)) % 4;
+    if (offset + 8 > buf.length) return null;
+    const binLength = buf.readUInt32LE(offset);
+    if (buf.readUInt32LE(offset + 4) !== 0x004e4942) return null; // 'BIN\0'
+    return buf.subarray(offset + 8, offset + 8 + binLength);
+  } catch {
+    return null;
+  }
+}
+
 function readModelJson(path) {
   if (extname(path).toLowerCase() === '.glb') return readGlbJson(path);
   try {
@@ -106,6 +130,50 @@ function countDrawCalls(gltf) {
 /* ------------------------------------------------------------------ */
 /* Checks                                                              */
 /* ------------------------------------------------------------------ */
+
+/**
+ * Pixel dimensions of an embedded glTF image, without decoding it.
+ *
+ * PNG carries them in the IHDR chunk at a fixed offset. JPEG requires
+ * walking the segment markers to a start-of-frame. Anything else returns
+ * null rather than guessing — a wrong number here would either wave through
+ * a texture that blows the memory budget or block a legitimate one.
+ */
+function imageSize(modelPath, gltf, img) {
+  if (img.bufferView === undefined) return null;
+  const view = gltf.bufferViews?.[img.bufferView];
+  if (!view) return null;
+
+  const bin = readGlbBin(modelPath);
+  if (!bin) return null;
+
+  const start = (view.byteOffset ?? 0);
+  const bytes = bin.subarray(start, start + view.byteLength);
+
+  // PNG: \x89PNG\r\n\x1a\n, then IHDR with width/height as big-endian u32.
+  if (bytes.length > 24 && bytes[0] === 0x89 && bytes[1] === 0x50) {
+    return {
+      width: bytes.readUInt32BE(16),
+      height: bytes.readUInt32BE(20),
+    };
+  }
+
+  // JPEG: walk segments to any SOF marker (0xC0-0xCF, excluding the
+  // non-frame markers 0xC4 / 0xC8 / 0xCC).
+  if (bytes.length > 4 && bytes[0] === 0xff && bytes[1] === 0xd8) {
+    let i = 2;
+    while (i + 9 < bytes.length) {
+      if (bytes[i] !== 0xff) { i++; continue; }
+      const marker = bytes[i + 1];
+      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+        return { height: bytes.readUInt16BE(i + 5), width: bytes.readUInt16BE(i + 7) };
+      }
+      i += 2 + bytes.readUInt16BE(i + 2);
+    }
+  }
+
+  return null;
+}
 
 function checkModels(files) {
   const m = BUDGETS.models;
@@ -157,14 +225,40 @@ function checkModels(files) {
       fail(rel(f), `~${draws} draw calls exceeds budget of ${m.maxDrawCalls} — merge meshes and atlas materials`);
     }
 
-    // Uncompressed textures embedded in or referenced by the model
+    // GPU-resident texture memory.
+    //
+    // This used to require KTX2 and reject any embedded PNG/JPEG. That gate
+    // could never pass here: the Basis transcoder KTX2 needs is Emscripten
+    // embind, which builds invoker functions with `new Function`, and this
+    // site's CSP forbids 'unsafe-eval' — so a KTX2 texture throws inside the
+    // decoder worker and the model silently never renders. Requiring a
+    // format the site cannot decode is not a strict gate, it is a broken
+    // one.
+    //
+    // So measure the thing the format was a proxy for. An uncompressed
+    // texture costs width * height * 4 bytes resident, plus a third again
+    // for the mip chain, no matter how small the PNG is on disk — which is
+    // why a 29KB file can cost 3.5MB of VRAM. Dimensions are the lever, and
+    // this checks them directly.
+    let gpuBytes = 0;
     for (const img of gltf.images ?? []) {
       if (img.uri && m.forbiddenTextureFormats.some((e) => img.uri.toLowerCase().endsWith(e))) {
-        fail(rel(f), `references uncompressed texture "${img.uri}" — convert to KTX2`);
+        fail(rel(f), `references an external texture "${img.uri}" — embed it in the .glb so it cannot go missing`);
       }
-      if (img.mimeType && /image\/(png|jpeg)/.test(img.mimeType)) {
-        fail(rel(f), 'embeds a PNG/JPEG texture — convert to KTX2 (ETC1S albedo, UASTC normal/ORM)');
+      const dim = imageSize(f, gltf, img);
+      if (!dim) continue;
+      if (dim.width > m.maxTextureSize || dim.height > m.maxTextureSize) {
+        fail(rel(f), `texture is ${dim.width}x${dim.height}, over the ${m.maxTextureSize}px limit`);
       }
+      // 4 bytes per texel, x1.34 for the mip chain.
+      gpuBytes += dim.width * dim.height * 4 * 1.34;
+    }
+
+    const gpuMb = gpuBytes / 1024 / 1024;
+    if (m.maxGpuTextureMb && gpuMb > m.maxGpuTextureMb) {
+      fail(rel(f), `textures need ~${gpuMb.toFixed(1)}MB of GPU memory, over the ${m.maxGpuTextureMb}MB budget — reduce texture dimensions`);
+    } else if (gpuMb > 0) {
+      notes.push(`${rel(f)}: ~${gpuMb.toFixed(1)}MB GPU texture memory (budget ${m.maxGpuTextureMb}MB)`);
     }
 
   }

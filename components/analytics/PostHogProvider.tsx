@@ -28,9 +28,17 @@ function initPostHog() {
 
   posthog.init(key, {
     api_host: host,
-    // Cookieless by default: no consent banner needed for basic analytics
-    // in most jurisdictions, and nothing persistent stored on the device.
-    persistence: 'memory',
+    // localStorage, not a cookie and not memory-only.
+    //
+    // Memory-only was the original setting: nothing on the device, but also
+    // no way to tell a returning reader from a new one, which for a site
+    // whose warm customers come back to check something is most of what
+    // the numbers are for. A cookie would make this a cross-site tracking
+    // question. localStorage is the middle: an anonymous id that stays on
+    // this origin only, can never be read by any other site, and lets the
+    // dashboard answer "did the person who read the evidence page in July
+    // come back and enquire in September". /privacy says exactly this.
+    persistence: 'localStorage',
     // Don't auto-fire pageviews; App Router navigations are handled below
     // so SPA route changes aren't missed or double-counted.
     capture_pageview: false,
@@ -84,6 +92,21 @@ function initPostHog() {
   });
 
   return true;
+}
+
+/**
+ * The one business event that matters: an enquiry was sent. Called from
+ * the form on success. Carries the role the visitor chose — the only field
+ * that is a category rather than personal data — and nothing they typed.
+ * Safe to call when analytics are off; it simply does nothing.
+ */
+export function trackEnquiry(role: string): void {
+  try {
+    if (!posthog.__loaded) return;
+    posthog.capture('enquiry_sent', { role });
+  } catch {
+    /* analytics must never break the form */
+  }
 }
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {

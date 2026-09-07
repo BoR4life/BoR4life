@@ -1,8 +1,23 @@
 import { test } from '@playwright/test';
 
+// Capture destination. Overridable so a run can drop the frames somewhere
+// other than /tmp without editing this file.
+const OUT = process.env.SHOT_DIR ?? '/tmp';
+
 // Visual capture helper — not an assertion suite. Run with:
 //   npx playwright test tests/screens.spec.ts
-const PAGES = ['/', '/platform', '/evidence', '/about', '/contact'];
+const PAGES = [
+  '/',
+  '/platform',
+  '/solutions',
+  '/evidence',
+  '/resources',
+  '/about',
+  '/contact',
+  '/privacy',
+  '/accessibility',
+  '/customers',
+];
 
 for (const route of PAGES) {
   test(`capture ${route}`, async ({ page }) => {
@@ -20,7 +35,7 @@ for (const route of PAGES) {
     });
     await page.waitForTimeout(1200);
     const name = route === '/' ? 'home' : route.slice(1).replace(/\//g, '-');
-    await page.screenshot({ path: `/tmp/shot-${name}.png` });
-    await page.screenshot({ path: `/tmp/full-${name}.png`, fullPage: true });
+    await page.screenshot({ path: `${OUT}/shot-${name}.png` });
+    await page.screenshot({ path: `${OUT}/full-${name}.png`, fullPage: true });
   });
 }

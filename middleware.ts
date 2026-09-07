@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+import { buildCsp } from '@/lib/csp';
+
 /**
  * Per-request CSP nonce.
  *
@@ -11,9 +13,11 @@ import type { NextRequest } from 'next/server';
  * headers() in app/layout.tsx and stamps it onto its own inline bootstrap
  * script, which is the one legitimate inline script the policy allows.
  *
- * connect-src is scoped to 'self' only — this site calls no third-party
- * APIs from the browser. Widen it deliberately if that ever changes, never
- * as a quick fix for a blocked request.
+ * The directive list lives in lib/csp.ts so it can be unit-tested without
+ * a running server. connect-src is 'self' only unless analytics are
+ * configured, in which case exactly that one origin is added. Widen it
+ * deliberately if that ever changes, never as a quick fix for a blocked
+ * request.
  */
 export function middleware(request: NextRequest) {
   // Web Crypto + btoa, NOT Buffer. Middleware runs in the Edge Runtime,
@@ -25,21 +29,7 @@ export function middleware(request: NextRequest) {
   crypto.getRandomValues(bytes);
   const nonce = btoa(String.fromCharCode(...bytes));
 
-  const csp = [
-    `default-src 'self'`,
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
-    `style-src 'self' 'nonce-${nonce}'`,
-    `img-src 'self' data:`,
-    `font-src 'self'`,
-    `connect-src 'self'`,
-    `media-src 'self'`,
-    `worker-src 'self' blob:`, // three.js/R3F workers
-    `frame-ancestors 'none'`,
-    `base-uri 'self'`,
-    `form-action 'self'`,
-    `object-src 'none'`,
-    `upgrade-insecure-requests`,
-  ].join('; ');
+  const csp = buildCsp(nonce, process.env);
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-nonce', nonce);

@@ -52,29 +52,36 @@ claim.
 This list is a hard constraint on every agent. Check copy against it before
 shipping.
 
-1. **ACU (Australian Catholic University) — NDA is critical.** Never named as a
-   client, partner, or in any case study.
-2. **Aspen Medical — do not mention.** Remove the partnership and the
-   nationally-accredited BLS claim entirely. Do not describe any offering as
+**The parties are named in `docs/constraints.local.md`, which is not in
+version control, and they must not be written into any tracked file — this
+one included.** That is not bureaucratic caution. This repository is public.
+An earlier version of this section named the parties and explained why each
+was being withheld, which disclosed both the relationships and the
+agreements protecting them: a note reading "never name X, they are under an
+NDA" is itself the disclosure. Keep the rules here and the names there.
+
+1. **An institution connected to Brad's PhD may never be named** — not as a
+   client, not as a partner, not in a case study, not in a bio, and not in a
+   schema.org `alumniOf` field. Describe the research, never the
+   institution.
+2. **One partner relationship, and the accredited offering that came with
+   it, are excluded entirely.** No offering on this site is described as
    "nationally accredited".
-3. **No growth percentages.** The "300% year-on-year" figure from public
-   sources is not to be used. Say "growing" and let the five-year Queensland
-   Health relationship carry the credibility.
+3. **No growth percentages.** A figure circulating in public sources is not
+   one Brad will stand behind. Say "growing" and let the five-year
+   Queensland Health relationship carry the credibility.
+4. **No efficacy percentages** that cannot be cited to a published source.
 
-### The ACU trap — read this before writing the founder story
+### The PhD trap — read this before writing the founder story
 
-Brad's PhD is a core credibility asset and the brief instructs you to lead with
-"PhD research-backed". **Brad's PhD is enrolled at ACU, and ACU is under a
-critical NDA.**
+Brad's PhD is a core credibility asset and the brief instructs you to lead
+with "PhD research-backed". The natural next sentence is "...at X", and a
+copywriter, a bio, a conference blurb or a structured-data field will reach
+for it automatically.
 
-The natural next sentence after "PhD research-backed" is "...at ACU", and a
-copywriter, a bio, a conference blurb or a schema.org `alumniOf` field will
-reach for it automatically. It must not appear.
-
-**Rule: describe the research, never the institution.** "Doctoral research into
-immersive learning" is safe. Any university name attached to Brad's PhD is not,
-until Brad clears it in writing — the NDA question (client relationship vs.
-enrolment) is his to answer, not ours to assume.
+**Rule: describe the research, never the institution.** "Doctoral research
+into immersive learning" is safe. Any university name attached to Brad's PhD
+is not, until Brad clears it in writing.
 
 ## Audience — and why this changes the design
 
@@ -102,7 +109,7 @@ Three pillars to structure the whole site around:
 
 - **Clinician-led** — nurses wrote it, not a studio guessing. This is the moat.
 - **Research-backed** — grounded in Brad's doctoral research into immersive
-  learning. (Institution unnamed — see the ACU trap above.)
+  learning. (Institution unnamed — see the PhD trap above.)
 - **Proven in service** — five years with Queensland Health, repeat work at
   Ohio State and TSU, live deployment in India. Longevity and repeat business
   are the proof, not a growth percentage.

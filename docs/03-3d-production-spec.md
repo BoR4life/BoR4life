@@ -1,5 +1,12 @@
 # 3D Production Spec
 
+> **Parked, September 2026.** The live 3D scene and the scroll narrative
+> were removed from the site after review — the opening frame did not
+> land, and the founder chose to go type-led with real footage for
+> now. Everything below still works and stays for when 3D or 360 video
+> returns. Nothing in it currently ships.
+
+
 The answer to "what do we need to do to make this happen". Decisions are locked
 here so the agent does not relitigate them on every run.
 
@@ -31,7 +38,7 @@ the visitor can look around, one they'd otherwise need a headset to see.
   Licensed models   Blender scene    ┌─ still  → AVIF+WebP ─┐
   Poly Haven HDRIs  Look-dev         ├─ loop   → AV1+H264  ─┼─ validate ─→ /public
   AI-gen (concept)  Shot list        └─ live   → glTF      ─┘   -assets      /models
-  Your Unity/UE     Camera + light        Draco + KTX2         .mjs
+  Your Unity/UE     Camera + light        meshopt              .mjs
   product scenes                          gltf-transform
 ```
 
@@ -100,15 +107,39 @@ Run `scripts/optimize-gltf.sh` (wraps `gltf-transform`). It performs, in order:
 1. `dedup` — merge duplicate accessors and materials
 2. `prune` — strip unused nodes, materials, textures
 3. `resize` — clamp textures to the budget max
-4. `uastc`/`etc1s` — KTX2 texture compression
-   - **UASTC** for normal and ORM maps (quality-critical, higher size)
-   - **ETC1S** for albedo and emissive (size-critical)
-5. `draco` — geometry compression
-6. `weld` + `simplify` — vertex welding and decimation to the triangle budget
+4. `weld` + `simplify` — vertex welding and decimation to the triangle budget
+5. `join` — merge meshes sharing a material, for the draw-call budget
+6. `meshopt` — geometry compression
 
-Typical result: a 45MB source glTF lands at 1.2–1.8MB. If it does not, the
-model was authored too heavy — go back to step 2 rather than over-compressing
-into mush.
+Typical result: the procedural bay goes 880KB → 196KB. A 45MB authored glTF
+should land near 1.2–1.8MB. If it does not, the model was authored too heavy
+— go back to step 2 rather than over-compressing into mush.
+
+### Why not Draco and KTX2
+
+This is the least obvious constraint in the project, so it is written here
+as well as in `docs/08-security.md`.
+
+**Neither can be used on this site.** Draco's decoder and the Basis
+transcoder KTX2 needs are both Emscripten *embind* builds, and embind
+constructs its invoker functions at runtime with `new Function`. The site's
+CSP has no `'unsafe-eval'`, so both throw `EvalError` inside the decoder
+worker and the model never renders — silently, because the poster underneath
+the canvas keeps painting a page that looks entirely correct.
+
+meshoptimizer's decoder contains no `eval`, and embeds its own WebAssembly
+as base64 so there is no decoder file to host and no CDN fetch. It is the
+only geometry compression this site can actually run.
+
+Textures are therefore **not supercompressed at all**. GPU memory is
+controlled by clamping dimensions instead: an uncompressed texture costs
+width × height × 4 bytes resident regardless of its size on disk, which is
+how a 29KB PNG came to cost 3.5MB of VRAM. `maxGpuTextureMb` in
+`budgets.json` measures that directly.
+
+**Never point a loader at a CDN to work around a decoder problem.** three's
+`DRACOLoader` and drei's `useGLTF` both default to Google's gstatic
+endpoint, which would put every visitor's IP in front of a third party.
 
 ### Step 4 — Validate
 
@@ -155,6 +186,6 @@ just a compliance one.
 - [ ] Look-dev frame approved before the full render run
 - [ ] Stills: AVIF + WebP, alt text written for each
 - [ ] Loops: AV1 + H.264 + poster frame
-- [ ] Hero model: Draco + KTX2, under budget, validator green
+- [ ] Hero model: meshopt, under budget, validator green (never Draco/KTX2 — see above)
 - [ ] Reduced-motion and no-WebGL paths tested on a real device
 - [ ] `validate-assets.mjs` passing in CI
