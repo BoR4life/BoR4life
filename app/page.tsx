@@ -5,6 +5,7 @@ import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 import { VideoEmbed } from '@/components/site/VideoEmbed';
 import { Main } from '@/components/site/Main';
 import { Cta } from '@/components/site/Cta';
+import { FeatureVideo } from '@/components/site/FeatureVideo';
 import { AudienceSelect } from '@/components/site/AudienceSelect';
 import { PARTNERS } from '@/lib/partners';
 import type { Metadata } from 'next';
@@ -217,6 +218,51 @@ export default function Home() {
         <Reveal step={1}>
           <AudienceSelect />
         </Reveal>
+      </Section>
+
+      {/*
+        Placed straight after the self-select band, because a visitor who
+        has just said who they are is at the exact moment of asking "so what
+        is it, then". Brad's framing, and it is the right one: the argument
+        is not that there is more content here. It is that the content stops
+        behaving like a textbook.
+
+        The clip earns the length. Three panels run at once — the structure
+        as a model that turns, the same structure in real tissue, and the
+        rhythm it produces — and someone draws on the trace while it plays.
+        No still frame carries that, which is why this is the one video on
+        the site that is watched rather than looped.
+      */}
+      <Section ground="paper" size="lg" labelledBy="beyond-heading">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-5">
+            <Eyebrow id="beyond-heading">Beyond the textbook</Eyebrow>
+            <h2 className="mt-4 text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-ink">
+              A textbook shows one view at a time.
+            </h2>
+            <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
+              Here the same structure is three things at once: a model that
+              turns, real tissue, and the rhythm it produces — side by side,
+              and marked up while someone talks through it.
+            </p>
+            <p className="mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
+              What changes is not how much content there is. It is that a
+              learner can move between those three without losing the thread,
+              which is the part a printed page has never been able to do.
+            </p>
+          </Reveal>
+
+          <Reveal step={1} className="lg:col-span-7">
+            <FeatureVideo
+              stem="anatomy"
+              width={1280}
+              height={600}
+              source="3D Organon"
+              label="A screen recording showing three panels at once: an interactive 3D heart model with the anterior interventricular branch of the left coronary artery labelled, a photographed anatomical specimen of the same region, and an ECG rhythm strip being annotated in red as it is discussed."
+              caption="Anatomy, specimen and rhythm together, annotated live — on a platform we distribute and support."
+            />
+          </Reveal>
+        </div>
       </Section>
 
       <Section ground="surface" size="lg" labelledBy="problem-heading">
