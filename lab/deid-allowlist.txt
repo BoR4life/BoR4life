@@ -1,0 +1,48 @@
+# Terms that are ordinary vocabulary here, so a capitalised pair containing
+# one of them is not treated as a personal name.
+#
+# One term per line. Comments after '#'. Case-insensitive. Add a term only
+# when it has produced a false flag in a real scan — this file makes the
+# scanner quieter, which is the direction that carries risk. Never add a
+# surname to it.
+#
+# Site and locality names are business-sensitive and this repository is
+# public, so they do NOT go here. Put them in `lab/deid-allowlist.local.txt`,
+# which is untracked and read in addition to this file. Same rule as
+# `docs/constraints.local.md`, same reason.
+
+Hudson            # Hudson mask
+Foley             # Foley catheter
+Glasgow           # Glasgow Coma Scale
+Guedel            # Guedel airway
+Yankauer          # Yankauer sucker
+Ryles             # Ryle's tube
+Venturi           # Venturi mask
+Bair              # Bair Hugger
+Hugger
+Trendelenburg
+Fowlers
+Valsalva
+Cushing           # Cushing's reflex / triad
+Beck              # Beck's triad
+Virchow           # Virchow's triad
+Charcot           # Charcot's triad
+Murphy            # Murphy's sign
+Kussmaul
+Cheyne            # Cheyne-Stokes
+Stokes
+Wells             # Wells score
+Ottawa            # Ottawa rules
+Braden            # Braden scale
+Waterlow
+Norton
+Barthel
+Katz
+Morse             # Morse falls scale
+Richmond          # RASS
+Ramsay
+Aldrete
+Apgar
+Bristol           # Bristol stool chart
+Wong              # Wong-Baker faces
+Baker
