@@ -303,19 +303,11 @@ export default function Home() {
         </Reveal>
 
         {/*
-          The scenario clip that used to sit here now opens the page, so
-          this is its copy rather than a second showing of the same six
-          seconds. A visitor who has just watched it at the top does not
-          need it again forty per cent of the way down.
+          The scenario clip and the paragraph describing it have both moved
+          to /platform. They belong together, and a detailed description of
+          one procedure with no footage beside it was copy pointing at
+          nothing.
         */}
-        <Reveal step={1}>
-          <p className="mt-10 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
-            Sterile field, ultrasound guidance, a colleague who responds to
-            what you say. The learner works the procedure in sequence and the
-            system records every decision along the way — including the ones
-            not taken.
-          </p>
-        </Reveal>
 
         <div className="mt-16 grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
           <Reveal className="lg:col-span-3">

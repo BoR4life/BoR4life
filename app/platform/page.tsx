@@ -6,6 +6,7 @@ import { Main } from '@/components/site/Main';
 import { Cover } from '@/components/site/Cover';
 import { Cta } from '@/components/site/Cta';
 import { PlatformClip } from '@/components/site/PlatformClip';
+import { ScenarioVideo } from '@/components/site/ScenarioVideo';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Platform',
@@ -160,6 +161,44 @@ export default function PlatformPage() {
           clip is cropped to its content: the source recording had the
           application window inset in a desktop, and those dead bands
           were the same value as this site's background anyway. */}
+      {/*
+        Ours first, then a partner's. The page distributes four platforms and
+        builds its own, and a reader should be able to tell which is which
+        without reading the attribution line — so our own scenario opens and
+        the distributed one follows.
+
+        This clip and its copy came off the homepage when the trailer took
+        the hero. It is good owned footage; orphaning it in the repository
+        would have been waste, and /platform is where "what it actually
+        does" already lives.
+      */}
+      <section
+        aria-labelledby="ours-heading"
+        className="border-t border-rule px-6 py-20 md:px-16"
+      >
+        <div className="mx-auto max-w-content">
+          <p
+            id="ours-heading"
+            className="text-xs uppercase tracking-[0.12em] font-label text-muted"
+          >
+            One of ours, running
+          </p>
+          <p className="mt-6 max-w-3xl text-[clamp(1.5rem,3vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-ink">
+            This is a scenario, not a showreel.
+          </p>
+          <p className="mt-6 max-w-prose text-[1.0625rem] leading-relaxed text-muted">
+            Sterile field, ultrasound guidance, a colleague who responds to
+            what you say. The learner works the procedure in sequence and the
+            system records every decision along the way — including the ones
+            not taken.
+          </p>
+
+          <div className="mt-12 max-w-2xl">
+            <ScenarioVideo />
+          </div>
+        </div>
+      </section>
+
       <section
         aria-labelledby="in-use-heading"
         className="border-t border-rule px-6 py-20 md:px-16"
