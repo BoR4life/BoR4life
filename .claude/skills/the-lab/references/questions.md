@@ -59,6 +59,31 @@ No citation is required for a model answer that reasons from the case. Any
 claim about outcomes, incidence or effect size needs a citation, per the
 standing rule.
 
+## Role scope
+
+A case has one set of facts and more than one decision in it, because more
+than one kind of worker was in the room. Draft to the scope of the reader,
+not to the most senior person present.
+
+- **Registered nurse.** Management decisions, escalation, when to act and
+  when to wait.
+- **Enrolled nurse.** Observation, interpretation within scope, escalation.
+- **Personal care worker or AIN.** What did you notice, what do you escalate,
+  and in what words. Never drugs, doses or diagnoses. The distractors are the
+  real alternatives — wait for the next round, write it in the notes, raise
+  it at handover, tell the family.
+
+Where an issue goes to a mixed workforce, the same case carries a question
+for each scope. That is not padding; the PCA is usually the person who
+notices first, and a question they cannot answer teaches them the case was
+not for them.
+
+**Plain English is a design requirement, not a courtesy**, wherever
+unregulated staff are in the audience. Short sentences, no abbreviations, no
+Latin, no double negatives. A stem in clinical register tests reading rather
+than judgement, and the result is a competency record that means nothing.
+See `sectors.md`.
+
 ## The four strands
 
 Draft only for the strands the case actually contains. A case with no imaging

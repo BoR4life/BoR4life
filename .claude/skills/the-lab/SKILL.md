@@ -122,6 +122,19 @@ More in `references/tone.md`. What an audit actually asks for, and why the
 issue returns a draft reflection rather than a certificate:
 `references/cpd-requirements.md`.
 
+## Sectors
+
+The program was specified for private acute hospitals. It ports to
+residential aged care, but the obligation there is the provider's and it is
+**assessed competency against a mapped role**, not self-declared hours —
+about half that workforce are personal care workers with no Ahpra CPD
+requirement at all. Questions are scoped by role, plain English is a design
+requirement rather than a courtesy, and de-identification is harder in a
+small stable population, not easier.
+
+Read `references/sectors.md` before drafting anything for an aged care
+audience.
+
 ## Working files
 
 Live under `lab/`. Everything holding case content is **untracked** — this

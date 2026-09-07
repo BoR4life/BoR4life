@@ -72,6 +72,17 @@ Over-flagging costs a reviewer ten seconds. Under-flagging publishes a
 patient. These are not comparable errors and you should not try to balance
 them.
 
+## Small, stable populations
+
+The standard above — would a colleague on that unit know who this is —
+tightens sharply as the population shrinks and stabilises. A residential aged
+care home of sixty residents with a settled staff group is the hard case:
+detail that is innocuous on a medical ward names the person here, and season
+plus home plus an unusual presentation is often enough on its own.
+
+`sectors.md` sets out what changes. Read it before de-identifying any case
+from residential aged care, community or a small rural service.
+
 ## The contributor is not the patient
 
 Contributor names, roles and units are **credited deliberately** — that is
