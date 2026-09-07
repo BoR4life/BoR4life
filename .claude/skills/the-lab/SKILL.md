@@ -108,14 +108,19 @@ recognise the patient. Never treat a clean scan as sign-off.
 - **CPD hours are self-declared.** You may describe how long an activity
   takes. You must never assert accreditation, an hours entitlement, or that
   completing an issue earns anything. There is no wording for this you are
-  permitted to improvise.
+  permitted to improvise. Nursing CPD in Australia has no accreditation
+  gatekeeper, so "accredited" is a marketing word here and not a status —
+  read `references/cpd-requirements.md` before writing anything
+  participant-facing about CPD.
 - **No efficacy or outcome percentage without a citation** to a published
   source. This is a standing rule across everything Brad publishes, and it
   holds here.
 - Cases are published in a Bundle of Rays library, and contributors are told
   this at submission. Consent is captured at intake, not assumed later.
 
-More in `references/tone.md`.
+More in `references/tone.md`. What an audit actually asks for, and why the
+issue returns a draft reflection rather than a certificate:
+`references/cpd-requirements.md`.
 
 ## Working files
 
